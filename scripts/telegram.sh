@@ -17,12 +17,22 @@ case "$cmd" in
     : "${TELEGRAM_CHAT_ID:?Set TELEGRAM_CHAT_ID dalam .env}"
     slug="$(basename "$dir")"
     [ -f "$dir/video.mp4" ] || { echo "Tiada $dir/video.mp4"; exit 1; }
+    video="$dir/video.mp4"
+    # Had bot Telegram 50MB: mampat ikut bitrate supaya muat ~45MB
+    if [ "$(stat -c %s "$video")" -gt 47000000 ]; then
+      dur="$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")"
+      kbps="$(python3 -c "print(int(45*8*1024/float('$dur') - 160))")"
+      echo "Video besar, mampat ke ~${kbps}kbps untuk Telegram..."
+      ffmpeg -v error -y -i "$video" -c:v libx264 -preset medium -b:v "${kbps}k" -maxrate "${kbps}k" -bufsize "$((kbps*2))k" \
+        -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart "$dir/video_telegram.mp4"
+      video="$dir/video_telegram.mp4"
+    fi
     caption="$(head -c 1000 "$dir/caption.txt" 2>/dev/null || echo "$slug")"
     review="$(head -c 3000 "$dir/review.md" 2>/dev/null || echo '-')"
     keyboard=$(printf '{"inline_keyboard":[[{"text":"✅ Approve","callback_data":"ok:%s"},{"text":"❌ Reject","callback_data":"no:%s"}]]}' "$slug" "$slug")
     curl -sS -f "$API/sendVideo" \
       -F chat_id="$TELEGRAM_CHAT_ID" \
-      -F video=@"$dir/video.mp4" \
+      -F video=@"$video" \
       -F supports_streaming=true \
       -F caption="🎬 $slug
 
