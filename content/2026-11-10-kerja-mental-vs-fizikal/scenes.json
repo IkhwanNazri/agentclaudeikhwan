@@ -1,0 +1,179 @@
+{
+  "title": "Kerja Mental vs Kerja Fizikal",
+  "theme": {},
+  "voiceStyle": "Cakap dalam BM Malaysia santai, nada relatable dan mesra macam kawan bercerita. Sedikit dramatik di babak 1, 4, 5 dan 6 (perlahan sikit, tekan \"lori langgar\" dan \"mata segar\"), kemudian naik hangat dan ceria di babak 7. Sebut nombor dengan jelas.",
+  "scenes": [
+    {
+      "duration": 10,
+      "say": "Ali duduk je sepanjang hari. Tak angkat apa-apa pun. Tapi kenapa balik rumah rasa macam lori langgar?",
+      "align": "flex-start",
+      "scene3d": {
+        "set": "office",
+        "camera": "medium",
+        "time": "night",
+        "actors": [
+          {
+            "outfit": "office",
+            "action": "typing",
+            "expression": "tired",
+            "x": 0,
+            "z": 0,
+            "energy": 1,
+            "energyTo": 0.6
+          }
+        ]
+      },
+      "elements": [
+        {
+          "text": "Duduk je. Kenapa penat gila?",
+          "style": "hook",
+          "animation": "pop",
+          "delay": 0.2
+        }
+      ],
+      "voice": "2026-11-10-kerja-mental-vs-fizikal_0.wav"
+    },
+    {
+      "duration": 9.7,
+      "say": "Abu pula angkat simen dari pagi sampai petang. Badan penat, memang. Tapi cerita dia lain.",
+      "align": "flex-start",
+      "scene3d": {
+        "set": "site",
+        "camera": "low",
+        "time": "day",
+        "actors": [
+          {
+            "outfit": "worker",
+            "action": "carrying",
+            "expression": "tired",
+            "x": 0,
+            "z": 0
+          }
+        ]
+      },
+      "elements": [],
+      "voice": "2026-11-10-kerja-mental-vs-fizikal_1.wav"
+    },
+    {
+      "duration": 12.5,
+      "say": "Otak kau cuma dua peratus berat badan, tapi guna lebih kurang dua puluh peratus tenaga badan masa rehat. Otak memang kuat makan.",
+      "align": "flex-start",
+      "scene3d": {
+        "set": "office",
+        "camera": "close",
+        "time": "night",
+        "actors": [
+          {
+            "outfit": "office",
+            "action": "thinking",
+            "expression": "normal",
+            "x": 0,
+            "z": 0,
+            "energy": 0.6,
+            "energyTo": 0.45
+          }
+        ]
+      },
+      "elements": [],
+      "voice": "2026-11-10-kerja-mental-vs-fizikal_2.wav"
+    },
+    {
+      "duration": 11.6,
+      "say": "Satu kajian cadangkan, fikir berat enam jam buat glutamate bertimbun dalam bahagian otak untuk buat keputusan. Tanda otak letih.",
+      "align": "flex-start",
+      "scene3d": {
+        "set": "office",
+        "camera": "close",
+        "time": "night",
+        "actors": [
+          {
+            "outfit": "office",
+            "action": "stressed",
+            "expression": "stressed",
+            "x": 0,
+            "z": 0,
+            "energy": 0.45,
+            "energyTo": 0.25
+          }
+        ]
+      },
+      "elements": [],
+      "voice": "2026-11-10-kerja-mental-vs-fizikal_3.wav"
+    },
+    {
+      "duration": 13.6,
+      "say": "Kajian lain, lepas sembilan puluh minit kerja otak berat, orang cepat give up berbasikal. Enam ratus empat puluh saat, berbanding tujuh ratus lima puluh empat.",
+      "align": "flex-start",
+      "scene3d": {
+        "set": "office",
+        "camera": "medium",
+        "time": "night",
+        "actors": [
+          {
+            "outfit": "office",
+            "action": "head_on_desk",
+            "expression": "tired",
+            "x": 0,
+            "z": 0,
+            "energy": 0.25,
+            "energyTo": 0.08
+          }
+        ]
+      },
+      "elements": [],
+      "voice": "2026-11-10-kerja-mental-vs-fizikal_4.wav"
+    },
+    {
+      "duration": 13.2,
+      "say": "Malam, Ali baring tapi mata segar. Stres memang dikaitkan dengan tidur terganggu. Kajian juga nampak senaman biasa bantu kualiti tidur.",
+      "align": "flex-start",
+      "scene3d": {
+        "set": "bedroom",
+        "camera": "close",
+        "time": "night",
+        "focusX": 0.15,
+        "actors": [
+          {
+            "outfit": "office",
+            "action": "lying_awake",
+            "expression": "stressed",
+            "x": 0.15,
+            "z": -0.5
+          }
+        ]
+      },
+      "elements": [],
+      "voice": "2026-11-10-kerja-mental-vs-fizikal_5.wav"
+    },
+    {
+      "duration": 7.3,
+      "say": "Penat otak tu betul. Kau tak lemah. Follow untuk fakta kerja & otak yang korang tak tahu.",
+      "align": "flex-start",
+      "scene3d": {
+        "set": "studio",
+        "camera": "wide",
+        "time": "night",
+        "actors": [
+          {
+            "outfit": "office",
+            "action": "stretch",
+            "expression": "happy",
+            "x": -0.7,
+            "z": 0,
+            "energy": 0.08,
+            "energyTo": 0.7
+          },
+          {
+            "outfit": "worker",
+            "action": "idle",
+            "expression": "happy",
+            "x": 0.7,
+            "z": 0
+          }
+        ]
+      },
+      "elements": [],
+      "voice": "2026-11-10-kerja-mental-vs-fizikal_6.wav"
+    }
+  ]
+}

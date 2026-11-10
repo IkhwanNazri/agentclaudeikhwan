@@ -47,6 +47,22 @@ Kau MAKER. Kau tukar skrip jadi animasi ikut spek owner dan render video.
    - medan pilihan: `delay`, `animDuration`, `color`, `bg`, `size`, `highlight`, `highlightWords`
    - `theme` boleh override warna spec.json untuk video ni sahaja
    - **Gaya 3D low-poly PS2 (default)**: `bg3d` peringkat atas = latar semua scene; `bg3d` dalam scene = override. Medan: `shape` (dari `spec.json.style3d.shapes`, pilih yang kena dengan isi: coin=duit, crystal=misteri, cube=tech), `color`, `sky`, `floorColor`, `gridColor`, `pixelation` (0.2-0.4), `speed`. Guna `align: flex-start` supaya teks di atas dan objek 3D di tengah.
+   - **Animasi watak 3D (`scene3d`) — guna ini bila brand.md minta animasi bercerita.** Bila `scene3d` ada, `bg3d` diabaikan dan subtitle keluar automatik dari `say`, jadi `elements` biasanya kosong (kecuali hook babak pertama). Format:
+     ```json
+     "scene3d": {
+       "set": "office | site | bedroom | studio",
+       "camera": "wide | medium | close | over_shoulder | low",
+       "time": "day | night", "focusX": 0, "angle": 35,
+       "actors": [{ "outfit": "office | worker | casual",
+         "action": "idle | typing | tired_desk | head_on_desk | stressed | thinking | lifting | carrying | walking | wipe_sweat | stretch | lying_awake | sleeping",
+         "expression": "normal | tired | stressed | happy",
+         "x": 0, "z": 0, "facing": 0, "energy": 0.9, "energyTo": 0.2 }]
+     }
+     ```
+     - Satu watak di pejabat: action meja (typing/tired_desk/head_on_desk/stressed) → meja & kerusi auto.
+     - Perbandingan dua watak: `set: "studio"`, actors x -0.7 dan 0.7, camera wide.
+     - `energy`/`energyTo` = bateri atas kepala yang menurun — guna untuk tunjuk penat mental vs fizikal.
+     - `bedroom` + `lying_awake`: x 0.15, z -0.5. Tukar camera antara babak (wide→close) supaya sinematik.
    - `say` = teks suara scene tu (dari kolum Suara). Jangan isi `voice` — skrip TTS isi sendiri.
    - Ikut jadual skrip satu-satu: teks sama, masa sama, animasi sama.
 2. Suara: `node pipeline/tts.mjs <folder kerja>/scenes.json` (Gemini TTS, suara Leda, durasi scene dilaras ikut suara). Kalau gagal (tiada key / had percuma), teruskan tanpa suara dan laporkan.

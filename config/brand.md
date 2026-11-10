@@ -1,27 +1,25 @@
-# Brand & Niche (ISI BAHAGIAN NI DULU)
-
-Semua agent baca fail ni sebelum mula. Lagi jelas kau isi, lagi tepat hasil dia.
+# Brand & Niche
 
 ## Niche
-- Niche utama: <!-- cth: fakta duit & side income untuk anak muda Malaysia -->
-- Sub-topik yang boleh: <!-- cth: tips jimat, AI tools, fakta pelik -->
-- Topik yang JANGAN sentuh: <!-- cth: politik, agama, kesihatan tanpa sumber -->
+- Niche utama: fakta psikologi & realiti kehidupan/kerja anak muda Malaysia
+- Sub-topik: kerja, penat, duit, otak & tabiat harian
+- Topik yang JANGAN sentuh: politik, agama, kesihatan tanpa sumber sahih
 
 ## Audiens
-- Umur / lokasi: <!-- cth: 18-30, Malaysia -->
-- Bahasa: <!-- cth: BM santai + sikit English (rojak) -->
+- Umur / lokasi: 18-35, Malaysia
+- Bahasa: BM santai (rojak sikit OK)
 
 ## Gaya & Tone
-- Tone: <!-- cth: laju, kelakar, direct -->
-- Gaya animasi: <!-- cth: kinetic typography, teks besar, emoji, warna neon -->
-- Contoh akaun TikTok yang aku suka gayanya: <!-- @akaun1, @akaun2 -->
+- Tone: relatable, macam kawan bercerita, sikit kelakar
+- Gaya animasi: **ANIMASI BERCERITA 3D low-poly gaya PS2 dengan watak manusia** (bukan infografik teks). Watak buat aksi sebenar (menaip, letih, angkat barang, baring tak boleh tidur). Teks atas skrin minima — hook sahaja; subtitle automatik dari suara.
+- Suara: Gemini TTS "Leda" (perempuan), nada ikut tema video
 
 ## Format video
-- Panjang: 15-30 saat
-- Struktur: Hook (0-2s) → Isi (3-5 point) → CTA penutup
-- CTA: <!-- cth: "Follow untuk part 2" -->
+- Panjang: 30-80 saat
+- Struktur: Hook (0-3s) → cerita/perbandingan 3-5 babak → kesimpulan → CTA
+- CTA: "Follow untuk fakta kerja & otak yang korang tak tahu"
 
 ## Peraturan wajib
-- Hook mesti dalam 2 saat pertama
-- Teks dalam safe area TikTok (jangan bawah sangat, kena tutup caption/butang)
+- Hook mesti dalam 3 saat pertama
+- Teks dalam safe area TikTok
 - Fakta mesti ada sumber dalam research.md

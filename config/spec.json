@@ -4,7 +4,7 @@
   "height": 1920,
   "fps": 30,
   "minDurationSec": 12,
-  "maxDurationSec": 60,
+  "maxDurationSec": 90,
   "safeArea": {
     "top": 160,
     "bottom": 420,

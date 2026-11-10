@@ -6,6 +6,7 @@ import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/800.css';
 import spec from '../../config/spec.json';
 import { LowPoly3D, type Bg3d } from './LowPoly3D';
+import { World3D, type Scene3d } from './World3D';
 
 const fontFamily = 'Poppins, sans-serif';
 
@@ -29,6 +30,8 @@ export type Scene = {
   duration: number;
   bg?: string;
   bg3d?: Bg3d;
+  scene3d?: Scene3d;
+  say?: string;
   voice?: string;
   align?: CSSProperties['justifyContent'];
   elements?: SceneElement[];
@@ -104,6 +107,27 @@ const Element = ({ element, theme }: { element: SceneElement; theme: Theme }) =>
   return <div style={style}>{renderText(element, theme)}</div>;
 };
 
+const Subtitle = ({ text, theme }: { text: string; theme: Theme }) => {
+  const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
+  const words = text.split(/\s+/).filter(Boolean);
+  // tunjuk 4 perkataan sekali, perkataan semasa diwarnakan
+  const progress = interpolate(frame, [0, durationInFrames * 0.92], [0, words.length], { extrapolateRight: 'clamp' });
+  const current = Math.min(words.length - 1, Math.floor(progress));
+  const start = Math.floor(current / 4) * 4;
+  const chunk = words.slice(start, start + 4);
+  return (
+    <div style={{ position: 'absolute', left: spec.safeArea.left, right: spec.safeArea.right, bottom: spec.safeArea.bottom + 60,
+      display: 'flex', flexWrap: 'wrap', justifyContent: 'center', columnGap: 30, rowGap: 4, fontFamily, fontWeight: 800, fontSize: theme.captionSize + 14, lineHeight: 1.2, color: '#fff',
+      textShadow: '0 0 6px #000, 0 4px 0 #000, 0 -2px 0 #000, 3px 0 0 #000, -3px 0 0 #000', textTransform: 'uppercase' }}>
+      {chunk.map((w, i) => (
+        <span key={start + i} style={{ color: start + i === current ? '#ffe600' : '#fff',
+          display: 'inline-block', transform: start + i === current ? 'scale(1.06)' : 'none' }}>{w}</span>
+      ))}
+    </div>
+  );
+};
+
 const ProgressBar = ({ color }: { color: string }) => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
@@ -132,9 +156,11 @@ export const TikTokVideo = ({ scenes, theme: themeOverride, music, bg3d }: Video
                 padding: `${sa.top}px ${sa.right}px ${sa.bottom}px ${sa.left}px`,
               }}
             >
-              {(scene.bg3d ?? bg3d) ? <LowPoly3D bg={{ ...bg3d, ...scene.bg3d }} accent={theme.accent} /> : null}
+              {scene.scene3d ? <World3D scene={scene.scene3d} accent={theme.accent} /> : null}
+              {!scene.scene3d && (scene.bg3d ?? bg3d) ? <LowPoly3D bg={{ ...bg3d, ...scene.bg3d }} accent={theme.accent} /> : null}
               {(scene.elements ?? []).map((element, j) => <Element key={j} element={element} theme={theme} />)}
               {scene.voice ? <Audio src={staticFile(scene.voice)} /> : null}
+              {scene.say && scene.scene3d ? <Subtitle text={scene.say} theme={theme} /> : null}
             </AbsoluteFill>
           </Sequence>
         );
