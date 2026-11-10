@@ -1,0 +1,9 @@
+node_modules/
+.env
+content/*/frames/
+content/**/*.mp4
+!content/.gitkeep
+content/**/preview.html
+content/**/thumb.png
+content/**/qc_*.png
+content/.tg_offset

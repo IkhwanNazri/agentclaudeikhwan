@@ -1,0 +1,22 @@
+{
+  "platform": "tiktok",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "minDurationSec": 12,
+  "maxDurationSec": 35,
+  "safeArea": { "top": 160, "bottom": 420, "left": 60, "right": 160 },
+  "theme": {
+    "background": "#0f0f14",
+    "backgroundAlt": "#1c1b29",
+    "primary": "#ffffff",
+    "accent": "#ff2d55",
+    "accent2": "#25f4ee",
+    "fontFamily": "Poppins, 'Segoe UI', Arial, sans-serif",
+    "hookSize": 110,
+    "bodySize": 72,
+    "captionSize": 54
+  },
+  "animations": ["pop", "slideUp", "slideLeft", "fadeIn", "zoom", "bounce", "shake", "typewriter"],
+  "music": null
+}

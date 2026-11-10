@@ -1,0 +1,19 @@
+{
+  "title": "Demo pipeline",
+  "scenes": [
+    { "duration": 2.5, "elements": [
+      { "text": "🤯", "style": "emoji", "animation": "zoom" },
+      { "text": "90% orang buat silap ni", "style": "hook", "animation": "pop", "delay": 0.2, "highlightWords": ["90%"] } ] },
+    { "duration": 3, "elements": [
+      { "text": "1", "style": "emoji", "animation": "bounce", "color": "#ff2d55" },
+      { "text": "Simpan duit LEPAS belanja", "style": "body", "animation": "slideUp", "delay": 0.3 } ] },
+    { "duration": 3, "elements": [
+      { "text": "2", "style": "emoji", "animation": "bounce", "color": "#25f4ee" },
+      { "text": "Tiada dana kecemasan", "style": "body", "animation": "slideLeft", "delay": 0.3 } ] },
+    { "duration": 3, "elements": [
+      { "text": "3", "style": "emoji", "animation": "bounce", "color": "#ff2d55" },
+      { "text": "Beli sebab FOMO", "style": "body", "animation": "shake", "delay": 0.3 } ] },
+    { "duration": 2.5, "elements": [
+      { "text": "Follow untuk part 2 👀", "style": "body", "animation": "pop", "bg": "#ff2d55" } ] }
+  ]
+}
