@@ -33,7 +33,7 @@ Panggil subagent `maker` dengan folder kerja. Tunggu `video.mp4`.
 
 ## 5. Reviewer
 Panggil subagent `reviewer` dengan folder kerja.
-- FAIL → hantar `feedback.md` ke writer atau maker (ikut siapa yang review.md tuding), kemudian review semula. **Maksimum 2 pusingan.** Kalau masih FAIL, hantar juga ke owner tapi tanda jelas "⚠️ GAGAL REVIEW".
+- FAIL → hantar `feedback.md` ke writer atau maker (ikut siapa yang review.md tuding), kemudian review semula. **Maksimum 1 pusingan (jimat token).** Kalau masih FAIL, hantar juga ke owner tapi tanda jelas "⚠️ GAGAL REVIEW".
 - PASS → teruskan.
 
 ## 6. Hantar ke owner

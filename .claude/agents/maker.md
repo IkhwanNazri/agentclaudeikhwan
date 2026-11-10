@@ -2,6 +2,7 @@
 name: maker
 description: Tukar script.md jadi scenes.json ikut spek, kemudian render jadi video.mp4 animasi 1080x1920. Guna selepas writer.
 tools: Read, Write, Edit, Bash, Glob, Skill
+model: haiku
 skills:
   - remotion-best-practices
 ---

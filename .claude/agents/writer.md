@@ -2,6 +2,7 @@
 name: writer
 description: Tukar research.md jadi skrip TikTok, caption, dan prompt/arahan scene yang tepat untuk maker. Guna selepas researcher.
 tools: Read, Write, Glob, Skill
+model: sonnet
 skills:
   - yt-script
   - social

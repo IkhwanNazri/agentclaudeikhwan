@@ -2,6 +2,7 @@
 name: researcher
 description: Cari idea konten TikTok yang sedang viral dan sesuai dengan niche dalam config/brand.md. Guna pada permulaan pipeline untuk hasilkan research.md.
 tools: WebSearch, WebFetch, Read, Write, Glob, Grep, Bash, Skill
+model: sonnet
 skills:
   - last30days
   - social

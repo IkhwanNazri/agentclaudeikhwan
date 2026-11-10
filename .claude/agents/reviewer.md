@@ -2,6 +2,7 @@
 name: reviewer
 description: Quality control terakhir sebelum video dihantar ke owner melalui Telegram. Semak fakta, skrip, visual dan spek. Guna selepas maker.
 tools: Read, Write, Bash, Glob, WebFetch, Skill
+model: sonnet
 skills:
   - copy-editing
   - marketing-psychology
