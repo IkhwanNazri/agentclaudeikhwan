@@ -45,3 +45,5 @@ Jangan tambah API berbayar atau set API key berbayar. Kalau sesuatu perlukan bay
 - Jangan reka fakta; semua fakta perlu sumber dalam research.md.
 - Jangan commit `.env` atau `*.mp4`.
 - Owner berkomunikasi dalam Bahasa Melayu santai — balas dalam BM.
+- Jawapan ringkas, tepat, efisien. Tiada penerangan panjang kecuali diminta.
+- Jimat token: elak kerja/research berlebihan.
