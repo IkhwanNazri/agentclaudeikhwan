@@ -35,7 +35,11 @@
   "music": null,
   "voice": {
     "provider": "gemini (Google AI Studio, tier percuma)",
-    "model": "gemini-2.5-flash-preview-tts",
+    "models": [
+      "gemini-3.8-flash-tts",
+      "gemini-3.1-flash-tts-preview",
+      "gemini-2.5-flash-preview-tts"
+    ],
     "voiceName": "Leda",
     "defaultStyle": "Cakap dalam Bahasa Melayu Malaysia, nada mesra, bersemangat dan laju macam TikToker"
   },

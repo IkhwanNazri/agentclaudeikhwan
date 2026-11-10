@@ -25,13 +25,14 @@ mkdirSync(publicDir, { recursive: true });
 const style = doc.voiceStyle || voice.defaultStyle;
 // Dalam cloud sandbox, proxy masukkan key sebenar; nilai dummy ni diganti.
 const apiKey = process.env.GEMINI_API_KEY || 'proxy-injected';
-const url = `https://generativelanguage.googleapis.com/v1beta/models/${voice.model}:generateContent`;
+const endpoint = (model) => `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+let modelIndex = 0;
 
 for (const [i, scene] of doc.scenes.entries()) {
   if (!scene.say) continue;
   const file = `${slug}_${i}.wav`;
   const pcm = join(outDir, `.voice_${i}.pcm`);
-  synthesize(`${style}: ${scene.say}`, pcm);
+  synthesize(directorPrompt(style, scene.say), pcm);
   run('ffmpeg', ['-v', 'error', '-y', '-f', 's16le', '-ar', '24000', '-ac', '1', '-i', pcm, join(publicDir, file)]);
   const seconds = audioSeconds(join(publicDir, file));
   scene.voice = file;
@@ -44,6 +45,19 @@ console.log('Suara siap. Seterusnya: node pipeline/render.mjs ' + scenesPath);
 
 // ---------------------------------------------------------------------------
 
+// Arahan nada diasingkan dari transkrip supaya model tak baca arahan tu kuat-kuat.
+function directorPrompt(styleNote, transcript) {
+  return [
+    '### DIRECTOR NOTES (do NOT read aloud)',
+    `Voice style: ${styleNote}`,
+    'Language: Malaysian Malay (Bahasa Melayu Malaysia), natural casual accent.',
+    'Speak ONLY the transcript below, nothing else.',
+    '',
+    '### TRANSCRIPT',
+    transcript,
+  ].join('\n');
+}
+
 function synthesize(text, pcmPath) {
   const body = JSON.stringify({
     contents: [{ parts: [{ text }] }],
@@ -54,8 +68,8 @@ function synthesize(text, pcmPath) {
   });
   const bodyFile = pcmPath + '.req.json';
   writeFileSync(bodyFile, body);
-  for (let attempt = 1; attempt <= 4; attempt++) {
-    const res = spawnSync('curl', ['-sS', '-X', 'POST', url, '-H', 'Content-Type: application/json',
+  for (let attempt = 1; attempt <= 6; attempt++) {
+    const res = spawnSync('curl', ['-sS', '-X', 'POST', endpoint(voice.models[modelIndex]), '-H', 'Content-Type: application/json',
       '-H', `x-goog-api-key: ${apiKey}`, '--data-binary', `@${bodyFile}`, '-w', '\n%{http_code}'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
     const out = res.stdout || '';
     const code = out.slice(out.lastIndexOf('\n') + 1);
@@ -66,10 +80,17 @@ function synthesize(text, pcmPath) {
       writeFileSync(pcmPath, Buffer.from(data, 'base64'));
       return;
     }
-    if (code === '429' && attempt < 4) {
-      console.log(`Had percuma (429), tunggu ${20 * attempt}s...`);
-      spawnSync('sleep', [String(20 * attempt)]);
-      continue;
+    if (code === '429' || code === '404' || code === '503') {
+      if (modelIndex < voice.models.length - 1) {
+        modelIndex++;
+        console.log(`HTTP ${code}: tukar ke model ${voice.models[modelIndex]}`);
+        continue;
+      }
+      if (code === '429' && attempt < 6) {
+        console.log(`Had percuma (429), tunggu ${20 * attempt}s...`);
+        spawnSync('sleep', [String(20 * attempt)]);
+        continue;
+      }
     }
     console.error(`Gemini TTS gagal (HTTP ${code}): ${json.slice(0, 500)}`);
     process.exit(3);

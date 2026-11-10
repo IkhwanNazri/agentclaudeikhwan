@@ -1,114 +1,125 @@
 {
- "title": "Demo 3D PS2",
- "scenes": [
-  {
-   "duration": 2.5,
-   "elements": [
+  "title": "Demo 3D PS2",
+  "scenes": [
     {
-     "text": "🤯",
-     "style": "body",
-     "animation": "zoom",
-     "size": 150
+      "duration": 5.2,
+      "elements": [
+        {
+          "text": "🤯",
+          "style": "body",
+          "animation": "zoom",
+          "size": 150
+        },
+        {
+          "text": "90% orang buat silap ni",
+          "style": "hook",
+          "animation": "pop",
+          "delay": 0.2,
+          "highlightWords": [
+            "90%"
+          ]
+        }
+      ],
+      "bg3d": {
+        "shape": "icosahedron"
+      },
+      "align": "flex-start",
+      "say": "Weh, sembilan puluh peratus orang buat silap duit ni, kau pun mungkin!",
+      "voice": "contoh-3d_0.wav"
     },
     {
-     "text": "90% orang buat silap ni",
-     "style": "hook",
-     "animation": "pop",
-     "delay": 0.2,
-     "highlightWords": [
-      "90%"
-     ]
-    }
-   ],
-   "bg3d": {
-    "shape": "icosahedron"
-   },
-   "align": "flex-start"
-  },
-  {
-   "duration": 3,
-   "elements": [
-    {
-     "text": "1",
-     "style": "body",
-     "animation": "bounce",
-     "color": "#ff2d55",
-     "size": 150
+      "duration": 4.7,
+      "elements": [
+        {
+          "text": "1",
+          "style": "body",
+          "animation": "bounce",
+          "color": "#ff2d55",
+          "size": 150
+        },
+        {
+          "text": "Simpan duit LEPAS belanja",
+          "style": "body",
+          "animation": "slideUp",
+          "delay": 0.3
+        }
+      ],
+      "bg3d": {
+        "shape": "crystal"
+      },
+      "align": "flex-start",
+      "say": "Satu, kau simpan duit lepas belanja. Patutnya simpan dulu, baru belanja.",
+      "voice": "contoh-3d_1.wav"
     },
     {
-     "text": "Simpan duit LEPAS belanja",
-     "style": "body",
-     "animation": "slideUp",
-     "delay": 0.3
-    }
-   ],
-   "bg3d": {
-    "shape": "crystal"
-   },
-   "align": "flex-start"
-  },
-  {
-   "duration": 3,
-   "elements": [
-    {
-     "text": "2",
-     "style": "body",
-     "animation": "bounce",
-     "color": "#25f4ee",
-     "size": 150
+      "duration": 6.3,
+      "elements": [
+        {
+          "text": "2",
+          "style": "body",
+          "animation": "bounce",
+          "color": "#25f4ee",
+          "size": 150
+        },
+        {
+          "text": "Tiada dana kecemasan",
+          "style": "body",
+          "animation": "slideLeft",
+          "delay": 0.3
+        }
+      ],
+      "bg3d": {
+        "shape": "coin"
+      },
+      "align": "flex-start",
+      "say": "Dua, takde dana kecemasan langsung. Bila jadi apa-apa, terus sesak.",
+      "voice": "contoh-3d_2.wav"
     },
     {
-     "text": "Tiada dana kecemasan",
-     "style": "body",
-     "animation": "slideLeft",
-     "delay": 0.3
-    }
-   ],
-   "bg3d": {
-    "shape": "coin"
-   },
-   "align": "flex-start"
-  },
-  {
-   "duration": 3,
-   "elements": [
-    {
-     "text": "3",
-     "style": "body",
-     "animation": "bounce",
-     "color": "#ff2d55",
-     "size": 150
+      "duration": 4.5,
+      "elements": [
+        {
+          "text": "3",
+          "style": "body",
+          "animation": "bounce",
+          "color": "#ff2d55",
+          "size": 150
+        },
+        {
+          "text": "Beli sebab FOMO",
+          "style": "body",
+          "animation": "shake",
+          "delay": 0.3
+        }
+      ],
+      "bg3d": {
+        "shape": "torusKnot"
+      },
+      "align": "flex-start",
+      "say": "Tiga, beli barang sebab FOMO. Kawan beli, kau pun nak.",
+      "voice": "contoh-3d_3.wav"
     },
     {
-     "text": "Beli sebab FOMO",
-     "style": "body",
-     "animation": "shake",
-     "delay": 0.3
+      "duration": 4.1,
+      "elements": [
+        {
+          "text": "Follow untuk part 2 👀",
+          "style": "body",
+          "animation": "pop",
+          "bg": "#ff2d55"
+        }
+      ],
+      "bg3d": {
+        "shape": "cube"
+      },
+      "align": "flex-start",
+      "say": "Follow untuk part dua, ada lagi silap yang lagi teruk!",
+      "voice": "contoh-3d_4.wav"
     }
-   ],
-   "bg3d": {
-    "shape": "torusKnot"
-   },
-   "align": "flex-start"
+  ],
+  "bg3d": {
+    "shape": "icosahedron",
+    "pixelation": 0.3
   },
-  {
-   "duration": 2.5,
-   "elements": [
-    {
-     "text": "Follow untuk part 2 👀",
-     "style": "body",
-     "animation": "pop",
-     "bg": "#ff2d55"
-    }
-   ],
-   "bg3d": {
-    "shape": "cube"
-   },
-   "align": "flex-start"
-  }
- ],
- "bg3d": {
-  "shape": "icosahedron",
-  "pixelation": 0.3
- }
+  "voiceStyle": "Cakap dalam Bahasa Melayu Malaysia, nada mesra, bersemangat dan laju macam TikToker"
 }
