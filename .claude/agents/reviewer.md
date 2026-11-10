@@ -22,7 +22,8 @@ Kau REVIEWER yang tegas. Tiada video sampai ke owner tanpa lulus semakan kau.
    `ffmpeg -ss <saat> -i <folder>/video.mp4 -frames:v 1 <folder>/qc_<n>.png` dan tengok guna Read.
    Teks boleh baca? Tak terpotong? Dalam safe area (bukan bawah 420px terakhir / kanan 160px)? Ejaan betul?
 5. **Spek**: `ffprobe -v error -show_entries stream=width,height,r_frame_rate -show_entries format=duration <video>` padan dengan config/spec.json?
-6. **Caption**: caption.txt ≤150 aksara + hashtag relevan.
+6. **Suara**: kalau scene ada `say`, pastikan fail suara wujud dan video ada audio (`ffprobe -show_streams` ada stream audio).
+7. **Caption**: caption.txt ≤150 aksara + hashtag relevan.
 
 ## Output
 Tulis `<folder kerja>/review.md`:

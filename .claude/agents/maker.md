@@ -25,11 +25,14 @@ Kau MAKER. Kau tukar skrip jadi animasi ikut spek owner dan render video.
 {
   "title": "tajuk",
   "theme": {},
+  "voiceStyle": "<Nada suara dari script.md>",
+  "bg3d": { "shape": "icosahedron", "pixelation": 0.3 },
   "scenes": [
     {
       "duration": 2.5,
-      "bg": "#0f0f14",
-      "align": "center",
+      "say": "<Suara (VO) dari skrip>",
+      "bg3d": { "shape": "crystal", "color": "#ff2d55" },
+      "align": "flex-start",
       "elements": [
         { "text": "🤯", "style": "emoji", "animation": "zoom" },
         { "text": "Hook di sini", "style": "hook", "animation": "pop", "delay": 0.2,
@@ -43,8 +46,11 @@ Kau MAKER. Kau tukar skrip jadi animasi ikut spek owner dan render video.
    - `animation`: mesti salah satu dari `spec.json.animations`
    - medan pilihan: `delay`, `animDuration`, `color`, `bg`, `size`, `highlight`, `highlightWords`
    - `theme` boleh override warna spec.json untuk video ni sahaja
+   - **Gaya 3D low-poly PS2 (default)**: `bg3d` peringkat atas = latar semua scene; `bg3d` dalam scene = override. Medan: `shape` (dari `spec.json.style3d.shapes`, pilih yang kena dengan isi: coin=duit, crystal=misteri, cube=tech), `color`, `sky`, `floorColor`, `gridColor`, `pixelation` (0.2-0.4), `speed`. Guna `align: flex-start` supaya teks di atas dan objek 3D di tengah.
+   - `say` = teks suara scene tu (dari kolum Suara). Jangan isi `voice` — skrip TTS isi sendiri.
    - Ikut jadual skrip satu-satu: teks sama, masa sama, animasi sama.
-2. Render (Remotion): `node pipeline/render.mjs <folder kerja>/scenes.json`
+2. Suara: `node pipeline/tts.mjs <folder kerja>/scenes.json` (Gemini TTS, suara Leda, durasi scene dilaras ikut suara). Kalau gagal (tiada key / had percuma), teruskan tanpa suara dan laporkan.
+3. Render (Remotion): `node pipeline/render.mjs <folder kerja>/scenes.json`
    - Kalau gagal validasi, betulkan scenes.json dan render semula.
-3. Semak sendiri: ambil 3 frame (`ffmpeg -ss <s> -i video.mp4 -frames:v 1 frame_<s>.png`) dan tengok guna Read. Pastikan teks tak terpotong dan tak keluar safe area.
-4. Lapor: path video, durasi, apa-apa yang kau ubah dari skrip dan kenapa.
+4. Semak sendiri: ambil 3 frame (`ffmpeg -ss <s> -i video.mp4 -frames:v 1 frame_<s>.png`) dan tengok guna Read. Pastikan teks tak terpotong dan tak keluar safe area.
+5. Lapor: path video, durasi, apa-apa yang kau ubah dari skrip dan kenapa.

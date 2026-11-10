@@ -35,8 +35,10 @@ Kau WRITER. Kau tulis skrip dan "prompt" (arahan scene) yang maker akan ikut 100
 1. `<folder kerja>/script.md`:
 ```
 # <tajuk>
-| # | Masa | Teks atas skrin | Visual / emoji | Animasi | Nota |
+| # | Masa | Teks atas skrin | Suara (VO) | Visual 3D / emoji | Animasi |
 ```
+Selepas jadual, tulis baris `Nada suara:` — arahan nada untuk suara Leda yang sesuai tema (cth "Cakap dalam BM Malaysia, nada misteri dan perlahan" untuk fakta seram, "nada ceria dan laju" untuk tips). Suara (VO) = ayat penuh yang dibaca, lebih panjang dari teks skrin tapi ≤ 25 patah perkataan per scene, BM santai.
+
 Diikuti senarai semak: hook ≤2s? fakta bersumber? durasi OK? CTA ada?
 
 2. `<folder kerja>/caption.txt`: caption TikTok (≤150 aksara, gaya brand) + hashtag dari research.

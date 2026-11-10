@@ -4,8 +4,13 @@
   "height": 1920,
   "fps": 30,
   "minDurationSec": 12,
-  "maxDurationSec": 35,
-  "safeArea": { "top": 160, "bottom": 420, "left": 60, "right": 160 },
+  "maxDurationSec": 60,
+  "safeArea": {
+    "top": 160,
+    "bottom": 420,
+    "left": 60,
+    "right": 160
+  },
   "theme": {
     "background": "#0f0f14",
     "backgroundAlt": "#1c1b29",
@@ -17,6 +22,37 @@
     "bodySize": 72,
     "captionSize": 54
   },
-  "animations": ["pop", "slideUp", "slideLeft", "fadeIn", "zoom", "bounce", "shake", "typewriter"],
-  "music": null
+  "animations": [
+    "pop",
+    "slideUp",
+    "slideLeft",
+    "fadeIn",
+    "zoom",
+    "bounce",
+    "shake",
+    "typewriter"
+  ],
+  "music": null,
+  "voice": {
+    "provider": "gemini (Google AI Studio, tier percuma)",
+    "model": "gemini-2.5-flash-preview-tts",
+    "voiceName": "Leda",
+    "defaultStyle": "Cakap dalam Bahasa Melayu Malaysia, nada mesra, bersemangat dan laju macam TikToker"
+  },
+  "style3d": {
+    "enabled": true,
+    "default": {
+      "shape": "icosahedron",
+      "pixelation": 0.3
+    },
+    "shapes": [
+      "icosahedron",
+      "octahedron",
+      "torusKnot",
+      "crystal",
+      "cube",
+      "coin",
+      "none"
+    ]
+  }
 }

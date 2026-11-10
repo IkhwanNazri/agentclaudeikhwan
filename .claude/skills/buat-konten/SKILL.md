@@ -23,7 +23,10 @@ Kalau arg = "semak", berhenti selepas langkah ni.
 Kalau `config/brand.md` masih ada placeholder `<!--` di bahagian Niche, BERHENTI dan minta owner isi dulu.
 
 ## 2. Researcher
-Panggil subagent `researcher` dengan folder kerja (dan topik jika owner beri). Tunggu `research.md`.
+Panggil subagent `researcher` dengan folder kerja.
+- Owner beri idea/topik → researcher HANYA sahkan fakta & cari sumber untuk idea tu (jangan cari trend lain — jimat token).
+- Tiada idea → researcher cari trend penuh.
+Tunggu `research.md`.
 
 ## 3. Writer
 Panggil subagent `writer` dengan folder kerja. Tunggu `script.md` + `caption.txt`.

@@ -5,6 +5,7 @@ import {
 import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/800.css';
 import spec from '../../config/spec.json';
+import { LowPoly3D, type Bg3d } from './LowPoly3D';
 
 const fontFamily = 'Poppins, sans-serif';
 
@@ -24,9 +25,22 @@ export type SceneElement = {
   highlightWords?: string[];
 };
 
-export type Scene = { duration: number; bg?: string; align?: CSSProperties['justifyContent']; elements?: SceneElement[] };
+export type Scene = {
+  duration: number;
+  bg?: string;
+  bg3d?: Bg3d;
+  voice?: string;
+  align?: CSSProperties['justifyContent'];
+  elements?: SceneElement[];
+};
 
-export type VideoProps = { title?: string; theme?: Partial<typeof spec.theme>; music?: string | null; scenes: Scene[] };
+export type VideoProps = {
+  title?: string;
+  theme?: Partial<typeof spec.theme>;
+  music?: string | null;
+  bg3d?: Bg3d;
+  scenes: Scene[];
+};
 
 type Theme = typeof spec.theme;
 
@@ -82,7 +96,8 @@ const Element = ({ element, theme }: { element: SceneElement; theme: Theme }) =>
     textAlign: 'center',
     fontSize: element.size ?? sizeFor(theme, element.style),
     color: element.color ?? (element.highlight ? theme.accent : theme.primary),
-    textShadow: element.style === 'hook' ? `0 0 40px ${theme.accent}88` : undefined,
+    position: 'relative',
+    textShadow: element.style === 'hook' ? `0 0 40px ${theme.accent}88, 0 6px 0 #000` : '0 5px 0 #000, 0 0 18px #000a',
     ...(element.bg ? { background: element.bg, padding: '16px 32px', borderRadius: 24 } : {}),
     ...entrance,
   };
@@ -95,7 +110,7 @@ const ProgressBar = ({ color }: { color: string }) => {
   return <div style={{ position: 'absolute', left: 0, bottom: 0, height: 12, background: color, width: `${(frame / durationInFrames) * 100}%` }} />;
 };
 
-export const TikTokVideo = ({ scenes, theme: themeOverride, music }: VideoProps) => {
+export const TikTokVideo = ({ scenes, theme: themeOverride, music, bg3d }: VideoProps) => {
   const { fps } = useVideoConfig();
   const theme: Theme = { ...spec.theme, ...themeOverride };
   const sa = spec.safeArea;
@@ -117,12 +132,14 @@ export const TikTokVideo = ({ scenes, theme: themeOverride, music }: VideoProps)
                 padding: `${sa.top}px ${sa.right}px ${sa.bottom}px ${sa.left}px`,
               }}
             >
+              {(scene.bg3d ?? bg3d) ? <LowPoly3D bg={{ ...bg3d, ...scene.bg3d }} accent={theme.accent} /> : null}
               {(scene.elements ?? []).map((element, j) => <Element key={j} element={element} theme={theme} />)}
+              {scene.voice ? <Audio src={staticFile(scene.voice)} /> : null}
             </AbsoluteFill>
           </Sequence>
         );
       })}
-      {music ? <Audio src={staticFile(music)} /> : null}
+      {music ? <Audio src={staticFile(music)} volume={0.15} /> : null}
       <ProgressBar color={theme.accent} />
     </AbsoluteFill>
   );

@@ -1,0 +1,1 @@
+VERDICT: PASS (demo 3D)
