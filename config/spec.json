@@ -58,5 +58,24 @@
       "coin",
       "none"
     ]
-  }
+  },
+  "images": {
+    "provider": "pollinations.ai (percuma, tanpa key)",
+    "model": "flux",
+    "stylePrefix": "",
+    "styleSuffix": "Screenshot from a 2003 PlayStation 2 game cutscene, low poly, blurry low resolution textures, cinematic game lighting, vertical, no text",
+    "pixelWidth": 150,
+    "cropBottom": 60
+  },
+  "captionStyle": "word",
+  "motions": [
+    "zoomIn",
+    "zoomOut",
+    "panLeft",
+    "panRight",
+    "panUp",
+    "panDown",
+    "shake",
+    "punch"
+  ]
 }
