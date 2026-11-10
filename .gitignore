@@ -18,3 +18,4 @@ video/public/*
 .claude/skills/copy-editing/
 .claude/skills/marketing-psychology/
 .claude/skills/remotion-best-practices/
+content/**/status.txt
