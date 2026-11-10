@@ -7,7 +7,10 @@ description: Jalankan pipeline penuh konten TikTok (researcher → writer → ma
 
 Kau ORCHESTRATOR. Kau tak buat kerja sendiri — kau agihkan ke subagent dan pastikan aliran betul.
 
-## 0. Semak balasan Telegram dulu
+## 0. Persediaan
+Kalau mana-mana skill dalam `scripts/install-skills.sh` belum ada di `.claude/skills/` (cth `prompt-master`, `last30days`), jalankan `scripts/install-skills.sh` dulu.
+
+## 0b. Semak balasan Telegram
 Jalankan `scripts/telegram.sh check` (abaikan jika token belum diset).
 - `approved` → beritahu owner video sedia untuk dipost. Selesai untuk slug tu.
 - `revise` → ada `feedback.md`; ulang dari langkah writer (atau maker sahaja kalau feedback hanya visual) untuk slug tu.

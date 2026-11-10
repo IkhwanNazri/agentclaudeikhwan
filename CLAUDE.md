@@ -17,10 +17,27 @@ researcher → writer → maker → reviewer → Telegram (owner approve) → ow
 
 Orchestrator: skill `/buat-konten` (`.claude/skills/buat-konten/SKILL.md`).
 
+## Skill komuniti (semua percuma & open-source)
+Dipasang oleh `scripts/install-skills.sh` (versi dikunci, tidak dicommit):
+
+| Skill | Repo | Agent |
+|---|---|---|
+| last30days | mvanhorn/last30days-skill | researcher |
+| social | coreyhaines31/marketingskills | researcher, writer |
+| yt-script | Jakeschincariol/youtube-agent-skill | writer |
+| prompt-master | nidhinjs/prompt-master | writer |
+| copy-editing | coreyhaines31/marketingskills | writer, reviewer |
+| marketing-psychology | coreyhaines31/marketingskills | reviewer |
+| remotion-best-practices | remotion-dev/skills | maker |
+
+## Prinsip kos sifar
+Jangan tambah API berbayar atau set API key berbayar. Kalau sesuatu perlukan bayaran, beritahu owner dan cari alternatif percuma.
+
 ## Fail penting
 - `config/brand.md` — niche, tone, gaya (owner isi). Sumber kebenaran untuk semua agent.
 - `config/spec.json` — spek teknikal render (saiz, fps, warna, animasi dibenarkan).
-- `pipeline/render.mjs` — scenes.json → mp4 (Playwright + ffmpeg). `--preview` untuk HTML sahaja.
+- `pipeline/render.mjs` — validasi scenes.json → render mp4 guna Remotion.
+- `video/` — projek Remotion (`video/src/TikTokVideo.tsx`). `cd video && npm run studio` untuk preview.
 - `scripts/telegram.sh` — `send`, `check`, `chatid`.
 - `content/<tarikh>-<slug>/` — satu folder setiap video.
 

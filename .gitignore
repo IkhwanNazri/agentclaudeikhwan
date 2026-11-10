@@ -7,3 +7,14 @@ content/**/preview.html
 content/**/thumb.png
 content/**/qc_*.png
 content/.tg_offset
+content/**/.render-props.json
+video/out/
+video/public/*
+# skill komuniti dipasang oleh scripts/install-skills.sh
+.claude/skills/last30days/
+.claude/skills/social/
+.claude/skills/yt-script/
+.claude/skills/prompt-master/
+.claude/skills/copy-editing/
+.claude/skills/marketing-psychology/
+.claude/skills/remotion-best-practices/
