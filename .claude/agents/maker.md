@@ -63,6 +63,22 @@ Kau MAKER. Kau tukar skrip jadi animasi ikut spek owner dan render video.
      - Perbandingan dua watak: `set: "studio"`, actors x -0.7 dan 0.7, camera wide.
      - `energy`/`energyTo` = bateri atas kepala yang menurun — guna untuk tunjuk penat mental vs fizikal.
      - `bedroom` + `lying_awake`: x 0.15, z -0.5. Tukar camera antara babak (wide→close) supaya sinematik.
+   - **Watak 3D rigged + set voxel/paper (gaya VoxelVerse/PaperWorld) — pilihan utama untuk animasi bercerita yang licin.** Dalam `scene3d`, letak `style` dan beri actor `model` (watak KayKit CC0 dengan animasi sebenar):
+     ```json
+     "scene3d": {
+       "style": "voxel | paper", "set": "room | office | street | studio",
+       "camera": "wide | medium | close | over_shoulder | low",
+       "cameraMove": "dolly | dolly_out | orbit | pan | crane | static", "orbitDeg": 40, "follow": true, "angle": 0,
+       "actors": [{ "model": "mannequin", "clip": "walk", "color": "#ff8a65",
+         "x": 0, "z": 0, "facing": 0,
+         "path": [[-2, 1], [2, 0.6]], "pathStart": 0, "pathEnd": 1, "endClip": "wave" }]
+     }
+     ```
+     - Model: `mannequin` (sahaja buat masa ni). `color` = tint badan supaya watak berbeza.
+     - `clip` alias: idle, idle2, walk, walk_tired, run, sneak, crouch, jump, wave, cheer, sit, sit_down, stand_up, sit_floor, lie, lie_down, pushups, situps, pickup, interact, use, throw, hit, fall, hold, work, type, hammer, dig, saw, chop, fish. Nama klip KayKit asal juga boleh (cth `Sit_Chair_Idle`).
+     - `path` = titik `[x, z]`; watak jalan dari titik pertama ke akhir antara `pathStart`–`pathEnd` (pecahan scene), auto hadap arah jalan, kemudian main `endClip`. `follow: true` = kamera ikut watak pertama.
+     - Set: `street` (jalan, z 0 = jalan raya, -2.2 = kaki lima), `office` (meja di x ±1.6, z -1.2), `room` (katil x 1.6, z -1.9). Kedudukan watak sekitar x -2..2, z -1..1.
+     - Uji dulu dengan still: `cd video && npx remotion still src/index.ts TikTok /tmp/s.png --props=<scenes.json> --frame=45 --scale=0.5`.
    - `say` = teks suara scene tu (dari kolum Suara). Jangan isi `voice` — skrip TTS isi sendiri.
    - Ikut jadual skrip satu-satu: teks sama, masa sama, animasi sama.
 2. Suara: `node pipeline/tts.mjs <folder kerja>/scenes.json` (Gemini TTS, suara Leda, durasi scene dilaras ikut suara). Kalau gagal (tiada key / had percuma), teruskan tanpa suara dan laporkan.

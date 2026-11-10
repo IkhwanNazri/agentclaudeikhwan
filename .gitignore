@@ -10,6 +10,7 @@ content/.tg_offset
 content/**/.render-props.json
 video/out/
 video/public/*
+!video/public/models/
 # skill komuniti dipasang oleh scripts/install-skills.sh
 .claude/skills/last30days/
 .claude/skills/social/

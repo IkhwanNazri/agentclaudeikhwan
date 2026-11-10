@@ -4,6 +4,8 @@ import { useThree } from '@react-three/fiber';
 import { ThreeCanvas } from '@remotion/three';
 import { interpolate, random, useCurrentFrame, useVideoConfig } from 'remotion';
 import * as THREE from 'three';
+import { Rigged, actorPosition, type RiggedActor } from './Rigged';
+import { StyledSetView, styledSky, type SetStyle, type StyledSet } from './Sets3D';
 
 // ---------------------------------------------------------------- types
 
@@ -12,7 +14,8 @@ export type Action =
   | 'lifting' | 'carrying' | 'walking' | 'wipe_sweat' | 'stretch' | 'lying_awake' | 'sleeping';
 export type Outfit = 'office' | 'worker' | 'casual';
 export type Expression = 'normal' | 'tired' | 'stressed' | 'happy';
-export type SetName = 'office' | 'site' | 'bedroom' | 'studio';
+export type SetName = 'office' | 'site' | 'bedroom' | 'studio' | 'room' | 'street';
+export type CameraMove = 'static' | 'dolly' | 'dolly_out' | 'orbit' | 'pan' | 'crane';
 export type CameraShot = 'wide' | 'medium' | 'close' | 'over_shoulder' | 'low';
 
 export type Actor = {
@@ -25,7 +28,7 @@ export type Actor = {
   skin?: string;
   energy?: number; // 0-1: bateri atas kepala (pilihan)
   energyTo?: number; // bateri berubah ke nilai ni sepanjang scene
-};
+} & Partial<RiggedActor>; // ada `model` → watak rigged (Rigged.tsx) ganti watak kod
 
 export type Scene3d = {
   set?: SetName;
@@ -35,6 +38,10 @@ export type Scene3d = {
   angle?: number; // darjah kamera pusing keliling watak (default: pejabat 35, bilik 25)
   time?: 'day' | 'night';
   pixelation?: number;
+  style?: SetStyle; // 'voxel' | 'paper' → set gaya baharu (Sets3D.tsx)
+  cameraMove?: CameraMove; // default 'dolly'
+  orbitDeg?: number; // jumlah pusing untuk orbit/pan (default 40)
+  follow?: boolean; // kamera ikut watak pertama (berguna dengan path)
 };
 
 type Pose = {
@@ -424,18 +431,24 @@ const headroom = (set: SetName, action: Action, shot: CameraShot) => {
   return 0;
 };
 
-const Rig = ({ shot, focusX, angle, lookY }: { shot: CameraShot; focusX: number; angle: number; lookY: number }) => {
+const Rig = ({ shot, focusX, focusZ = 0, angle, lookY, move = 'dolly', orbitDeg = 40 }: {
+  shot: CameraShot; focusX: number; focusZ?: number; angle: number; lookY: number; move?: CameraMove; orbitDeg?: number;
+}) => {
   const camera = useThree((s) => s.camera);
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
   const { pos, look } = SHOTS[shot];
-  const push = interpolate(frame, [0, durationInFrames], [1, 0.88]); // dolly-in perlahan
+  const u = interpolate(frame, [0, durationInFrames], [0, 1]);
+  const ease = u * u * (3 - 2 * u);
+  const push = move === 'dolly' ? 1 - 0.12 * u : move === 'dolly_out' ? 0.8 + 0.25 * ease : 1;
+  const spin = move === 'orbit' ? orbitDeg * (ease - 0.5) : move === 'pan' ? orbitDeg * 0.3 * (ease - 0.5) : 0;
+  const crane = move === 'crane' ? 1.2 * (1 - ease) : 0;
   // Set terus semasa render (bukan useEffect) supaya frame yang dirakam guna kedudukan kamera betul.
-  const a = (angle * Math.PI) / 180;
+  const a = ((angle + spin) * Math.PI) / 180;
   const ly = look[1] + lookY;
   const px = pos[0] * push, pz = pos[2] * push;
-  camera.position.set(focusX + px * Math.cos(a) + pz * Math.sin(a), ly + (pos[1] - look[1]) * push, -px * Math.sin(a) + pz * Math.cos(a));
-  camera.lookAt(focusX + look[0], ly, look[2]);
+  camera.position.set(focusX + px * Math.cos(a) + pz * Math.sin(a), ly + (pos[1] - look[1]) * push + crane, focusZ - px * Math.sin(a) + pz * Math.cos(a));
+  camera.lookAt(focusX + look[0], ly, focusZ + look[2]);
   camera.updateMatrixWorld();
   return null;
 };
@@ -444,10 +457,14 @@ const Rig = ({ shot, focusX, angle, lookY }: { shot: CameraShot; focusX: number;
 
 export const World3D = ({ scene, accent }: { scene: Scene3d; accent: string }) => {
   const { width, height } = useVideoConfig();
-  const set = scene.set ?? 'studio';
-  const night = (scene.time ?? (set === 'office' || set === 'bedroom' ? 'night' : 'day')) === 'night';
+  const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
+  const style = scene.style;
+  const set = scene.set ?? (style ? 'room' : 'studio');
+  const styledSet: StyledSet | null = style ? (set === 'bedroom' ? 'room' : set === 'site' ? 'street' : (set as StyledSet)) : null;
+  const night = (scene.time ?? (scene.style ? 'day' : set === 'office' || set === 'bedroom' ? 'night' : 'day')) === 'night';
   const actors = scene.actors ?? [{}];
-  const sky = set === 'site' ? '#f2b27a' : set === 'studio' ? '#141022' : night ? '#0b0f1e' : '#9fc4e8';
+  const sky = styledSet ? styledSky(styledSet) : set === 'site' ? '#f2b27a' : set === 'studio' ? '#141022' : night ? '#0b0f1e' : '#9fc4e8';
   const deskXs = set === 'office'
     ? actors.filter((a) => ['typing', 'tired_desk', 'head_on_desk', 'stressed'].includes(a.action ?? '')).map((a) => a.x ?? 0)
     : [];
@@ -456,22 +473,26 @@ export const World3D = ({ scene, accent }: { scene: Scene3d; accent: string }) =
   if (set === 'office') content = <OfficeSet desks={deskXs.length ? deskXs : [0]} night={night} />;
   if (set === 'site') content = <SiteSet />;
   if (set === 'bedroom') content = <BedroomSet />;
+  if (styledSet && style) content = <StyledSetView set={styledSet} style={style} />;
+  const lead = actors[0];
+  const leadPos = scene.follow && lead?.model ? actorPosition(lead as RiggedActor, frame / durationInFrames) : null;
 
   return (
     <ThreeCanvas
       width={width}
       height={height}
-      dpr={scene.pixelation ?? 0.38}
+      dpr={scene.pixelation ?? (style ? 0.75 : 0.38)}
       gl={{ antialias: false }}
       shadows
       style={{ position: 'absolute', inset: 0, imageRendering: 'pixelated' }}
       camera={{ fov: 50, near: 0.05, far: 60 }}
     >
-      <Rig shot={scene.camera ?? 'medium'} focusX={scene.focusX ?? 0}
+      <Rig shot={scene.camera ?? 'medium'} focusX={leadPos?.x ?? scene.focusX ?? 0} focusZ={leadPos?.z ?? 0}
+        move={scene.cameraMove} orbitDeg={scene.orbitDeg}
         angle={scene.angle ?? (set === 'office' ? 35 : set === 'bedroom' ? 20 : 0)}
-        lookY={headroom(set, actors[0]?.action ?? 'idle', scene.camera ?? 'medium')} />
+        lookY={lead?.model ? 0.1 : headroom(set, lead?.action ?? 'idle', scene.camera ?? 'medium')} />
       <color attach="background" args={[sky]} />
-      <fog attach="fog" args={[sky, 5, set === 'site' ? 22 : 12]} />
+      <fog attach="fog" args={[sky, style ? 10 : 5, set === 'site' || set === 'street' ? 26 : 14]} />
       <hemisphereLight args={[night ? '#7080c0' : '#fff4e0', '#3a2a20', night ? 0.7 : 0.8]} />
       <directionalLight
         position={set === 'site' ? [4, 7, 4] : [2, 4, 3]}
@@ -483,7 +504,9 @@ export const World3D = ({ scene, accent }: { scene: Scene3d; accent: string }) =
       />
       {set === 'studio' ? <spotLight position={[0, 5, 2]} angle={0.6} intensity={30} color={accent} castShadow /> : null}
       {content}
-      {actors.map((a, i) => <Human key={i} actor={a} index={i} seated={set === 'office'} />)}
+      {actors.map((a, i) => a.model
+        ? <Rigged key={i} actor={a as RiggedActor} index={i} />
+        : <Human key={i} actor={a} index={i} seated={set === 'office' && !style} />)}
     </ThreeCanvas>
   );
 };

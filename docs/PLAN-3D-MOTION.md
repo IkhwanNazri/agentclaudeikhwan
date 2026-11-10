@@ -3,6 +3,10 @@
 Masalah: mod gambar (PS2 story) tiada pergerakan watak; watak kod sendiri (World3D) nampak kasar.
 Penyelesaian: guna **watak 3D rigged percuma (CC0) yang dah siap ada animasi** dan mainkan dalam Remotion + Three.js.
 
+## Status (2026-11-10)
+Langkah 1–7 siap: `Rigged.tsx` (mannequin KayKit + 5 pek klip), `Sets3D.tsx` (voxel/paper: room, office, street, studio), `scene3d.style/cameraMove/follow` + `actors[].model/clip/path`, `maker.md` dikemas kini. Diuji: still voxel & paper + render 3s.
+Belum: model watak lain (hanya mannequin); frame pertama kadang-kadang hitam bila render selari (concurrency > 1).
+
 ## Aset percuma (CC0, boleh guna komersial)
 - `NoLimitNexus/game-models` — watak Quaternius + KayKit dalam GLB sedia untuk web, dengan klip animasi (idle, walk, run, sit, interact, dll).
 - `KayKit-Game-Assets/KayKit-Character-Pack-Adventures-1.0` — watak low-poly + animasi (semak LICENSE dalam repo; KayKit = CC0).

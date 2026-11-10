@@ -39,6 +39,8 @@ Jangan tambah API berbayar atau set API key berbayar. Kalau sesuatu perlukan bay
 - `pipeline/render.mjs` — validasi scenes.json → render mp4 guna Remotion.
 - `video/` — projek Remotion (`video/src/TikTokVideo.tsx`). `cd video && npm run studio` untuk preview.
 - `video/src/LowPoly3D.tsx` — latar 3D low-poly gaya PS2 (Three.js).
+- `video/src/Rigged.tsx` — watak 3D rigged KayKit (CC0) + klip animasi, seek ikut frame. Model dalam `video/public/models/`.
+- `video/src/Sets3D.tsx` — set gaya voxel / paper (room, office, street, studio).
 - `pipeline/tts.mjs` — suara Gemini TTS (Leda), key `GEMINI_API_KEY` dari AI Studio (percuma).
 - `scripts/telegram.sh` — `send`, `check`, `chatid`.
 - `content/<tarikh>-<slug>/` — satu folder setiap video.
