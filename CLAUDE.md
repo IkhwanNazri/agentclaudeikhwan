@@ -29,11 +29,19 @@ Dipasang oleh `scripts/install-skills.sh` (versi dikunci, tidak dicommit):
 | copy-editing | coreyhaines31/marketingskills | writer, reviewer |
 | marketing-psychology | coreyhaines31/marketingskills | reviewer |
 | remotion-best-practices | remotion-dev/skills | maker |
+| caveman | JuliusBrussee/caveman | semua (jimat token) |
 
 ## Prinsip kos sifar
 Jangan tambah API berbayar atau set API key berbayar. Kalau sesuatu perlukan bayaran, beritahu owner dan cari alternatif percuma.
 
+## Mula setiap sesi
+1. Baca `MEMORY.md` (konteks & keputusan lepas).
+2. Skill belum ada? `scripts/install-skills.sh`.
+3. Akhir kerja: tambah log ringkas dalam `MEMORY.md`.
+
 ## Fail penting
+- `MEMORY.md` — memori antara sesi.
+- `config/watak.json` — cast tetap (rupa + seed) untuk visual konsisten. Writer/maker WAJIB guna nama watak dari sini.
 - `config/brand.md` — niche, tone, gaya (owner isi). Sumber kebenaran untuk semua agent.
 - `config/spec.json` — spek teknikal render (saiz, fps, warna, animasi dibenarkan).
 - `pipeline/render.mjs` — validasi scenes.json → render mp4 guna Remotion.

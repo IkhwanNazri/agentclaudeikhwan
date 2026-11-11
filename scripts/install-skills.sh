@@ -19,6 +19,7 @@ SKILLS=(
   "coreyhaines31/marketingskills|9d6d7ce|skills/copy-editing|copy-editing|writer+reviewer"
   "coreyhaines31/marketingskills|9d6d7ce|skills/marketing-psychology|marketing-psychology|reviewer"
   "remotion-dev/skills|1af7e69|skills/remotion-best-practices|remotion-best-practices|maker"
+  "JuliusBrussee/caveman|3dc497a|skills/caveman|caveman|semua (jimat token)"
 )
 
 clone() { # repo commit -> dir
@@ -50,7 +51,7 @@ for entry in "${SKILLS[@]}"; do
 done
 
 # Remotion: pasang dependency video kalau belum
-if [ ! -d video/node_modules ]; then
+if [ ! -d video/node_modules ] && [ "${SKIP_NPM:-}" != "1" ]; then
   echo "Pasang dependency Remotion (video/)..."
   (cd video && npm ci --silent)
 fi

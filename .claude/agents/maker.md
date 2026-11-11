@@ -70,3 +70,6 @@ Kau MAKER. Kau tukar skrip jadi animasi ikut spek owner dan render video.
    - Kalau gagal validasi, betulkan scenes.json dan render semula.
 4. Semak sendiri: ambil 3 frame (`ffmpeg -ss <s> -i video.mp4 -frames:v 1 frame_<s>.png`) dan tengok guna Read. Pastikan teks tak terpotong dan tak keluar safe area.
 5. Lapor: path video, durasi, apa-apa yang kau ubah dari skrip dan kenapa.
+
+## Konsistensi visual
+- Rupa watak & seed datang dari `config/watak.json` (auto-digabung oleh `pipeline/images.mjs`). Dalam `imagePrompt`, sebut nama watak (cth "Ali typing at desk") — JANGAN tulis semula rupa watak, dan jangan set `characters`/`seed` dalam scenes.json kecuali watak khas sekali guna.

@@ -23,8 +23,11 @@ const publicDir = join(ROOT, 'video', 'public');
 mkdirSync(publicDir, { recursive: true });
 
 // Watak dikunci dengan penerangan + seed yang sama supaya rupa konsisten antara babak
-const characters = doc.characters ?? {};
-const seed = doc.seed ?? 1234;
+// Cast tetap global (config/watak.json) + tambahan khas video dalam scenes.json
+const cast = existsSync(join(ROOT, 'config/watak.json'))
+  ? JSON.parse(readFileSync(join(ROOT, 'config/watak.json'), 'utf8')) : {};
+const characters = { ...(cast.characters ?? {}), ...(doc.characters ?? {}) };
+const seed = doc.seed ?? cast.seed ?? 1234;
 
 const jobs = [];
 for (const [i, scene] of doc.scenes.entries()) {

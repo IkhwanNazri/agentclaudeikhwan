@@ -18,5 +18,6 @@ video/public/*
 .claude/skills/copy-editing/
 .claude/skills/marketing-psychology/
 .claude/skills/remotion-best-practices/
+.claude/skills/caveman/
 content/**/status.txt
 content/**/.voice_*
