@@ -15,8 +15,9 @@ if (!scenesPath) {
 }
 
 const spec = JSON.parse(readFileSync(join(ROOT, 'config/spec.json'), 'utf8'));
-const cfg = spec.images;
 const doc = JSON.parse(readFileSync(scenesPath, 'utf8'));
+// Override gaya per video dalam scenes.json ("images"); spec.json global tak diubah
+const cfg = { ...spec.images, ...doc.images };
 const outDir = dirname(resolve(scenesPath));
 const slug = basename(outDir);
 const publicDir = join(ROOT, 'video', 'public');
@@ -47,9 +48,12 @@ for (const [n, { target: scene, key: i }] of jobs.entries()) {
   // Aksi babak dulu (model ikut bahagian awal prompt), kemudian rupa watak, kemudian gaya PS2
   const prompt = [scene.imagePrompt, castNotes, cfg.styleSuffix].filter(Boolean).join('. ');
   const raw = join(outDir, `.img_${i}.jpg`);
-  fetchImage(prompt, raw, seed + n);
-  // Potong watermark bawah, kecilkan (pixel PS2), besarkan semula tanpa smoothing
-  const filter = `crop=iw:ih-${cfg.cropBottom}:0:0,scale=${cfg.pixelWidth}:-2:flags=area,eq=contrast=1.08:saturation=0.9,scale=1080:1920:flags=neighbor:force_original_aspect_ratio=increase,crop=1080:1920`;
+  fetchImage(prompt, raw, cfg.fixedSeed ? seed : seed + n);
+  // Gaya PS2 (default): potong watermark bawah, kecilkan (pixel), besarkan semula tanpa smoothing
+  // Gaya cinematic (images.pixelate = false): skala licin tanpa pixel
+  const filter = cfg.pixelate === false
+    ? `crop=iw:ih-${cfg.cropBottom}:0:0,scale=1080:1920:flags=lanczos:force_original_aspect_ratio=increase,crop=1080:1920`
+    : `crop=iw:ih-${cfg.cropBottom}:0:0,scale=${cfg.pixelWidth}:-2:flags=area,eq=contrast=1.08:saturation=0.9,scale=1080:1920:flags=neighbor:force_original_aspect_ratio=increase,crop=1080:1920`;
   run('ffmpeg', ['-v', 'error', '-y', '-i', raw, '-vf', filter, finalPath]);
   scene.image = file;
   console.log(`scene ${i}: gambar siap`);
@@ -62,7 +66,7 @@ console.log('Gambar siap. Seterusnya: node pipeline/tts.mjs ' + scenesPath);
 
 function fetchImage(prompt, outPath, imgSeed) {
   const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}`
-    + `?width=576&height=1024&seed=${imgSeed}&model=${cfg.model}&nologo=true`;
+    + `?width=${cfg.genWidth ?? 576}&height=${cfg.genHeight ?? 1024}&seed=${imgSeed}&model=${cfg.model}&nologo=true`;
   for (let attempt = 1; attempt <= 4; attempt++) {
     const r = spawnSync('curl', ['-sS', '-L', '--max-time', '150', '-o', outPath, '-w', '%{http_code}', url], { encoding: 'utf8' });
     if (r.stdout === '200') return;

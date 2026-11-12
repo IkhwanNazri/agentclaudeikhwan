@@ -46,6 +46,8 @@ export type VideoProps = {
   theme?: Partial<typeof spec.theme>;
   music?: string | null;
   bg3d?: Bg3d;
+  // true = gambar tanpa pixelation (gaya cinematic); false/tiada = pixel PS2
+  smooth?: boolean;
   scenes: Scene[];
 };
 
@@ -114,7 +116,7 @@ const Element = ({ element, theme }: { element: SceneElement; theme: Theme }) =>
 };
 
 // Gambar babak dengan pergerakan kamera (Ken Burns + goyang + punch-in)
-const StoryImage = ({ src, motion }: { src: string; motion: Motion }) => {
+const StoryImage = ({ src, motion, smooth }: { src: string; motion: Motion; smooth?: boolean }) => {
   const frame = useCurrentFrame();
   const { durationInFrames, fps } = useVideoConfig();
   const p = interpolate(frame, [0, durationInFrames], [0, 1], { extrapolateRight: 'clamp' });
@@ -134,7 +136,7 @@ const StoryImage = ({ src, motion }: { src: string; motion: Motion }) => {
   x += Math.sin(frame / 13) * 4; y += Math.cos(frame / 17) * 4;
   return (
     <AbsoluteFill style={{ overflow: 'hidden' }}>
-      <Img src={staticFile(src)} style={{ width: '100%', height: '100%', objectFit: 'cover', imageRendering: 'pixelated',
+      <Img src={staticFile(src)} style={{ width: '100%', height: '100%', objectFit: 'cover', imageRendering: smooth ? 'auto' : 'pixelated',
         transform: `translate(${x}px, ${y}px) scale(${scale})` }} />
     </AbsoluteFill>
   );
@@ -197,7 +199,7 @@ const ProgressBar = ({ color }: { color: string }) => {
   return <div style={{ position: 'absolute', left: 0, bottom: 0, height: 12, background: color, width: `${(frame / durationInFrames) * 100}%` }} />;
 };
 
-export const TikTokVideo = ({ scenes, theme: themeOverride, music, bg3d }: VideoProps) => {
+export const TikTokVideo = ({ scenes, theme: themeOverride, music, bg3d, smooth }: VideoProps) => {
   const { fps } = useVideoConfig();
   const theme: Theme = { ...spec.theme, ...themeOverride };
   const sa = spec.safeArea;
@@ -219,7 +221,7 @@ export const TikTokVideo = ({ scenes, theme: themeOverride, music, bg3d }: Video
                 padding: `${sa.top}px ${sa.right}px ${sa.bottom}px ${sa.left}px`,
               }}
             >
-              {scene.image ? <StoryImage src={scene.image} motion={scene.motion ?? 'zoomIn'} /> : null}
+              {scene.image ? <StoryImage src={scene.image} motion={scene.motion ?? 'zoomIn'} smooth={smooth} /> : null}
               {!scene.image && scene.shots?.length ? <Shots shots={scene.shots} /> : null}
               {!scene.image && !scene.shots?.length && scene.scene3d ? <World3D scene={scene.scene3d} accent={theme.accent} /> : null}
               {!scene.image && !scene.scene3d && (scene.bg3d ?? bg3d) ? <LowPoly3D bg={{ ...bg3d, ...scene.bg3d }} accent={theme.accent} /> : null}
