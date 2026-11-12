@@ -48,6 +48,8 @@ export type VideoProps = {
   bg3d?: Bg3d;
   // true = gambar tanpa pixelation (gaya cinematic); false/tiada = pixel PS2
   smooth?: boolean;
+  // 'ps2' (default) = low-poly PS2; 'puppet' = felt cinematic (scene3d sahaja)
+  look?: 'ps2' | 'puppet';
   scenes: Scene[];
 };
 
@@ -199,7 +201,7 @@ const ProgressBar = ({ color }: { color: string }) => {
   return <div style={{ position: 'absolute', left: 0, bottom: 0, height: 12, background: color, width: `${(frame / durationInFrames) * 100}%` }} />;
 };
 
-export const TikTokVideo = ({ scenes, theme: themeOverride, music, bg3d, smooth }: VideoProps) => {
+export const TikTokVideo = ({ scenes, theme: themeOverride, music, bg3d, smooth, look }: VideoProps) => {
   const { fps } = useVideoConfig();
   const theme: Theme = { ...spec.theme, ...themeOverride };
   const sa = spec.safeArea;
@@ -223,7 +225,7 @@ export const TikTokVideo = ({ scenes, theme: themeOverride, music, bg3d, smooth 
             >
               {scene.image ? <StoryImage src={scene.image} motion={scene.motion ?? 'zoomIn'} smooth={smooth} /> : null}
               {!scene.image && scene.shots?.length ? <Shots shots={scene.shots} /> : null}
-              {!scene.image && !scene.shots?.length && scene.scene3d ? <World3D scene={scene.scene3d} accent={theme.accent} /> : null}
+              {!scene.image && !scene.shots?.length && scene.scene3d ? <World3D scene={scene.scene3d} accent={theme.accent} puppet={look === 'puppet'} /> : null}
               {!scene.image && !scene.scene3d && (scene.bg3d ?? bg3d) ? <LowPoly3D bg={{ ...bg3d, ...scene.bg3d }} accent={theme.accent} /> : null}
               {(scene.elements ?? []).map((element, j) => <Element key={j} element={element} theme={theme} />)}
               {scene.voice ? <Audio src={staticFile(scene.voice)} /> : null}

@@ -1,22 +1,11 @@
 {
   "title": "Kenapa waktu rasa sekejap zaman sekarang",
-  "seed": 4242,
-  "smooth": true,
-  "images": {
-    "styleSuffix": "Cinematic 3D cartoon puppet, realistic materials and lighting, vertical 9:16, no text",
-    "pixelate": false,
-    "fixedSeed": true,
-    "genWidth": 720,
-    "genHeight": 1280,
-    "cropBottom": 90
-  },
+  "look": "puppet",
   "voiceStyle": "Cakap dalam Bahasa Melayu Malaysia, nada mesra macam kawan bercerita, sederhana laju; lebih tenang dan jelas di babak fakta; hangat dan mengajak di hujung",
   "scenes": [
     {
       "duration": 3,
       "say": "Baru semalam Januari. Kenapa dah November?",
-      "imagePrompt": "Medium close-up of Aina holding a coffee cup in a miniature office pantry, eyes wide in shock, coffee about to spill, a giant wall calendar behind her showing a thick stack of pages with November on top, a single January page lying on the floor. Cold fluorescent top light, slow dolly-in, 35mm lens, comedic shock mood. Cinematic 3D cartoon puppet style, handcrafted felt-and-fabric textures with visible stitching, miniature diorama set, a young Malaysian woman puppet named Aina with a short black wool-thread bob, large glossy round eyes, light blue shirt and office lanyard, shallow depth of field, anamorphic lens bokeh, dramatic motivated lighting, subtle film grain, 9:16 vertical, no text, no subtitles, no logos.",
-      "motion": "zoomIn",
       "align": "flex-start",
       "elements": [
         {
@@ -29,62 +18,172 @@
           ]
         }
       ],
-      "image": "2026-11-12-waktu-rasa-sekejap_img_0.png"
+      "scene3d": {
+        "set": "office",
+        "camera": "close",
+        "time": "day",
+        "props": [
+          "calendar"
+        ],
+        "actors": [
+          {
+            "outfit": "office",
+            "skin": "#e9b994",
+            "action": "stressed",
+            "expression": "stressed",
+            "x": 0
+          }
+        ]
+      }
     },
     {
       "duration": 6,
       "say": "Bangun, kerja, balik, tidur. Ulang. Rutin sama je, dan bulan pun lesap macam tu.",
-      "imagePrompt": "Wide lateral tracking shot gliding right past connected miniature dioramas: Aina waking up in bed, typing at a desk, riding a train, lying down to sleep, same blank expression, paper calendar pages flying past the lens. Light shifts from cool morning blue to warm amber evening, slow smooth camera. Cinematic 3D cartoon puppet style, handcrafted felt-and-fabric textures with visible stitching, miniature diorama set, a young Malaysian woman puppet named Aina with a short black wool-thread bob, large glossy round eyes, light blue shirt and office lanyard, shallow depth of field, anamorphic lens bokeh, dramatic motivated lighting, subtle film grain, 9:16 vertical, no text, no subtitles, no logos.",
-      "motion": "panRight",
-      "image": "2026-11-12-waktu-rasa-sekejap_img_1.png"
+      "scene3d": {
+        "set": "office",
+        "camera": "wide",
+        "time": "day",
+        "props": [
+          "calendar"
+        ],
+        "actors": [
+          {
+            "outfit": "office",
+            "skin": "#e9b994",
+            "action": "typing",
+            "expression": "tired",
+            "x": 0,
+            "energy": 0.9,
+            "energyTo": 0.3
+          }
+        ]
+      }
     },
     {
       "duration": 8,
       "say": "Ni bukan kau sorang. Kajian 2005 di Munich tanya 499 orang umur 14 sampai 94. Untuk jam, minggu, bulan, jawapan tak beza ikut umur.",
-      "imagePrompt": "A row of puppets of different ages, from teenager to grandmother, sitting on chairs in a small retro lab, each holding a pocket watch and nodding together, blank whiteboard, large wall clock. Warm overhead spotlight, slow zoom-in with rack focus across faces, curious calm mood. Cinematic 3D cartoon puppet style, handcrafted felt-and-fabric textures with visible stitching, miniature diorama set, a young Malaysian woman puppet named Aina with a short black wool-thread bob, large glossy round eyes, light blue shirt and office lanyard, shallow depth of field, anamorphic lens bokeh, dramatic motivated lighting, subtle film grain, 9:16 vertical, no text, no subtitles, no logos.",
-      "motion": "zoomIn",
-      "image": "2026-11-12-waktu-rasa-sekejap_img_2.png"
+      "scene3d": {
+        "set": "studio",
+        "camera": "medium",
+        "props": [
+          "clock"
+        ],
+        "actors": [
+          {
+            "outfit": "office",
+            "skin": "#e9b994",
+            "action": "thinking",
+            "expression": "normal",
+            "x": 0
+          }
+        ]
+      }
     },
     {
       "duration": 8,
       "say": "Tapi bila tanya sepuluh tahun lepas rasa laju tak, baru nampak kesan umur. Kesan dia kecil, dan hanya untuk skala tahun.",
-      "imagePrompt": "Over-the-shoulder shot of adult Aina looking back along a long curved wooden path lined with ten stone markers, a small teenage puppet version of her far away at the start, light mist, dusk. Slow pan left, telephoto compression, golden-orange sunset light, nostalgic gentle mood, she gives a small shrug. Cinematic 3D cartoon puppet style, handcrafted felt-and-fabric textures with visible stitching, miniature diorama set, a young Malaysian woman puppet named Aina with a short black wool-thread bob, large glossy round eyes, light blue shirt and office lanyard, shallow depth of field, anamorphic lens bokeh, dramatic motivated lighting, subtle film grain, 9:16 vertical, no text, no subtitles, no logos.",
-      "motion": "panLeft",
-      "image": "2026-11-12-waktu-rasa-sekejap_img_3.png"
+      "scene3d": {
+        "set": "studio",
+        "camera": "medium",
+        "angle": 0,
+        "props": [
+          "posts"
+        ],
+        "actors": [
+          {
+            "outfit": "office",
+            "skin": "#e9b994",
+            "action": "idle",
+            "expression": "normal",
+            "x": 0,
+            "facing": 180
+          }
+        ]
+      }
     },
     {
       "duration": 8,
       "say": "Kenapa? Paul Janet, abad ke-19, kata setiap tahun makin kecil bila dibanding seluruh hidup kau. Tapi itu teori lama, bukan terbukti.",
-      "imagePrompt": "Close-up of a dusty old book and a paper pie cut into slices that get smaller and smaller, an elderly puppet professor with a wool beard pointing at it, Aina scratching her head in the background. Candlelight chiaroscuro, slow pull-back reveal, mysterious old-theory mood. Cinematic 3D cartoon puppet style, handcrafted felt-and-fabric textures with visible stitching, miniature diorama set, a young Malaysian woman puppet named Aina with a short black wool-thread bob, large glossy round eyes, light blue shirt and office lanyard, shallow depth of field, anamorphic lens bokeh, dramatic motivated lighting, subtle film grain, 9:16 vertical, no text, no subtitles, no logos.",
-      "motion": "zoomOut",
-      "image": "2026-11-12-waktu-rasa-sekejap_img_4.png"
+      "scene3d": {
+        "set": "studio",
+        "camera": "close",
+        "actors": [
+          {
+            "outfit": "office",
+            "skin": "#e9b994",
+            "action": "thinking",
+            "expression": "normal",
+            "x": 0
+          }
+        ]
+      }
     },
     {
       "duration": 8,
       "say": "Salah satu teori lain: rutin sama, kurang kenangan baru, tahun rasa padat. Tapi ini masih dipertikai, jangan telan bulat-bulat.",
-      "imagePrompt": "Low-angle crane shot rising along towering shelves of identical grey cardboard memory boxes, Aina walking between them, one small box glowing warm gold which she opens, then she tilts her hand in an unsure gesture. Dark blue ambience, single warm practical light, volumetric dust, quiet wondering mood. Cinematic 3D cartoon puppet style, handcrafted felt-and-fabric textures with visible stitching, miniature diorama set, a young Malaysian woman puppet named Aina with a short black wool-thread bob, large glossy round eyes, light blue shirt and office lanyard, shallow depth of field, anamorphic lens bokeh, dramatic motivated lighting, subtle film grain, 9:16 vertical, no text, no subtitles, no logos.",
-      "motion": "panUp",
-      "image": "2026-11-12-waktu-rasa-sekejap_img_5.png"
+      "scene3d": {
+        "set": "studio",
+        "camera": "medium",
+        "props": [
+          "shelf"
+        ],
+        "actors": [
+          {
+            "outfit": "office",
+            "skin": "#e9b994",
+            "action": "walking",
+            "expression": "tired",
+            "x": 0,
+            "z": 0.6
+          }
+        ]
+      }
     },
     {
       "duration": 8,
       "say": "Satu lagi, scroll. Kajian LMU Munich 2026 kata scroll buat masa terasa lebih pendek, dan kau susah nak ingat lepas tu.",
-      "imagePrompt": "Close-up of Aina on a sofa, face lit only by cool blue-white phone light, thumb endlessly scrolling, unblinking eyes, a large wall clock behind her with hands spinning fast and blurred. Slight handheld drift, hypnotic late-night mood. Cinematic 3D cartoon puppet style, handcrafted felt-and-fabric textures with visible stitching, miniature diorama set, a young Malaysian woman puppet named Aina with a short black wool-thread bob, large glossy round eyes, light blue shirt and office lanyard, shallow depth of field, anamorphic lens bokeh, dramatic motivated lighting, subtle film grain, 9:16 vertical, no text, no subtitles, no logos.",
-      "motion": "punch",
-      "image": "2026-11-12-waktu-rasa-sekejap_img_6.png"
+      "scene3d": {
+        "set": "bedroom",
+        "camera": "close",
+        "time": "night",
+        "props": [
+          "clock"
+        ],
+        "actors": [
+          {
+            "outfit": "office",
+            "skin": "#e9b994",
+            "action": "lying_awake",
+            "expression": "tired",
+            "x": 0.15,
+            "z": -0.5
+          }
+        ]
+      }
     },
     {
       "duration": 7,
       "say": "Minggu ni cuba satu benda baru. Tak janji masa perlahan, tapi sekurang-kurangnya ada cerita nak diingat.",
-      "imagePrompt": "Medium shot of Aina on a miniature apartment balcony at golden hour, putting down her phone and planting a small sapling in a clay pot, soil on her hands, smiling, a tiny glowing memory box beside her. Slow crane-down to her hands, warm rim light, soft bokeh city background, hopeful relieved mood. Cinematic 3D cartoon puppet style, handcrafted felt-and-fabric textures with visible stitching, miniature diorama set, a young Malaysian woman puppet named Aina with a short black wool-thread bob, large glossy round eyes, light blue shirt and office lanyard, shallow depth of field, anamorphic lens bokeh, dramatic motivated lighting, subtle film grain, 9:16 vertical, no text, no subtitles, no logos.",
-      "motion": "panDown",
-      "image": "2026-11-12-waktu-rasa-sekejap_img_7.png"
+      "scene3d": {
+        "set": "studio",
+        "camera": "medium",
+        "props": [
+          "plant"
+        ],
+        "actors": [
+          {
+            "outfit": "office",
+            "skin": "#e9b994",
+            "action": "idle",
+            "expression": "happy",
+            "x": -0.2
+          }
+        ]
+      }
     },
     {
       "duration": 5,
       "say": "Follow untuk fakta kerja dan otak yang korang tak tahu.",
-      "imagePrompt": "Close-up of Aina turning to the camera on the golden-hour balcony, warm friendly smile, giving a small wave, the new sapling in focus in the foreground, subject in the upper-center of the frame. Very slow push-in, soft golden bokeh, warm inviting mood. Cinematic 3D cartoon puppet style, handcrafted felt-and-fabric textures with visible stitching, miniature diorama set, a young Malaysian woman puppet named Aina with a short black wool-thread bob, large glossy round eyes, light blue shirt and office lanyard, shallow depth of field, anamorphic lens bokeh, dramatic motivated lighting, subtle film grain, 9:16 vertical, no text, no subtitles, no logos.",
-      "motion": "zoomIn",
       "align": "flex-start",
       "elements": [
         {
@@ -97,7 +196,22 @@
           ]
         }
       ],
-      "image": "2026-11-12-waktu-rasa-sekejap_img_8.png"
+      "scene3d": {
+        "set": "studio",
+        "camera": "close",
+        "props": [
+          "plant"
+        ],
+        "actors": [
+          {
+            "outfit": "office",
+            "skin": "#e9b994",
+            "action": "idle",
+            "expression": "happy",
+            "x": -0.2
+          }
+        ]
+      }
     }
   ]
 }

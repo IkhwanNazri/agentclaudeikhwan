@@ -67,6 +67,7 @@
     "pixelWidth": 150,
     "cropBottom": 60
   },
+  "looks": ["ps2", "puppet"],
   "captionStyle": "word",
   "motions": [
     "zoomIn",

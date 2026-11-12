@@ -1,5 +1,5 @@
-// Dunia 3D low-poly gaya PS2: watak manusia beranimasi + set (pejabat, tapak binaan, bilik tidur, studio).
-import { useMemo, type ReactNode } from 'react';
+// Dunia 3D: gaya PS2 low-poly (default) atau puppet felt cinematic (look: "puppet", video tertentu sahaja).
+import { createContext, useContext, useMemo, type ComponentProps, type ReactNode } from 'react';
 import { useThree } from '@react-three/fiber';
 import { ThreeCanvas } from '@remotion/three';
 import { interpolate, random, useCurrentFrame, useVideoConfig } from 'remotion';
@@ -14,6 +14,7 @@ export type Outfit = 'office' | 'worker' | 'casual';
 export type Expression = 'normal' | 'tired' | 'stressed' | 'happy';
 export type SetName = 'office' | 'site' | 'bedroom' | 'studio';
 export type CameraShot = 'wide' | 'medium' | 'close' | 'over_shoulder' | 'low';
+export type Prop = 'calendar' | 'clock' | 'posts' | 'shelf' | 'plant';
 
 export type Actor = {
   outfit?: Outfit;
@@ -35,6 +36,7 @@ export type Scene3d = {
   angle?: number; // darjah kamera pusing keliling watak (default: pejabat 35, bilik 25)
   time?: 'day' | 'night';
   pixelation?: number;
+  props?: Prop[]; // hiasan tambahan (hanya look puppet)
 };
 
 type Pose = {
@@ -45,6 +47,9 @@ type Pose = {
   lLeg: number; lKnee: number; rLeg: number; rKnee: number;
   holding: boolean; boxHeight: number;
 };
+
+// true hanya bila look === 'puppet'. Bila false, semua kod kekal seperti gaya PS2 asal.
+const PuppetCtx = createContext(false);
 
 const BASE: Pose = {
   rootY: 0, rootRotX: 0, rootRotZ: 0, hipY: null, spineX: 0, spineZ: 0, headX: 0, headY: 0,
@@ -133,20 +138,34 @@ const poseFor = (action: Action, t: number, seed: number, seated: boolean): Pose
 // ---------------------------------------------------------------- primitive helpers
 
 type V3 = [number, number, number];
+type MatProps = ComponentProps<'meshStandardMaterial'>;
 
-const Box = ({ size, pos = [0, 0, 0], color, emissive, rot }: { size: V3; pos?: V3; color: string; emissive?: string; rot?: V3 }) => (
-  <mesh position={pos} rotation={rot} castShadow receiveShadow>
-    <boxGeometry args={size} />
-    <meshStandardMaterial color={color} flatShading emissive={emissive ?? '#000'} emissiveIntensity={emissive ? 1.2 : 0} roughness={0.8} />
-  </mesh>
-);
+// PS2: flat shading (asal). Puppet: licin, matte seperti felt.
+const Mat = (props: MatProps) => {
+  const puppet = useContext(PuppetCtx);
+  return <meshStandardMaterial {...props} flatShading={!puppet} roughness={puppet ? 1 : props.roughness} />;
+};
 
-const Limb = ({ len, w, d, color }: { len: number; w: number; d: number; color: string }) => (
-  <mesh position={[0, -len / 2, 0]} castShadow>
-    <cylinderGeometry args={[w, d, len, 6]} />
-    <meshStandardMaterial color={color} flatShading roughness={0.85} />
-  </mesh>
-);
+const Box = ({ size, pos = [0, 0, 0], color, emissive, rot, round }: { size: V3; pos?: V3; color: string; emissive?: string; rot?: V3; round?: boolean }) => {
+  const puppet = useContext(PuppetCtx);
+  const soft = puppet && round; // puppet: bahagian badan jadi ellipsoid (lembut)
+  return (
+    <mesh position={pos} rotation={rot} castShadow receiveShadow scale={soft ? [size[0] / 2, size[1] / 2, size[2] / 2] : undefined}>
+      {soft ? <sphereGeometry args={[1, 24, 16]} /> : <boxGeometry args={size} />}
+      <Mat color={color} emissive={emissive ?? '#000'} emissiveIntensity={emissive ? 1.2 : 0} roughness={0.8} />
+    </mesh>
+  );
+};
+
+const Limb = ({ len, w, d, color }: { len: number; w: number; d: number; color: string }) => {
+  const puppet = useContext(PuppetCtx);
+  return (
+    <mesh position={[0, -len / 2, 0]} castShadow>
+      <cylinderGeometry args={[w, d, len, puppet ? 14 : 6]} />
+      <Mat color={color} roughness={0.85} />
+    </mesh>
+  );
+};
 
 // ---------------------------------------------------------------- outfit colours
 
@@ -156,14 +175,60 @@ const OUTFITS: Record<Outfit, { shirt: string; pants: string; shoes: string; acc
   casual: { shirt: '#5a6b4a', pants: '#2f3a52', shoes: '#ddd', accent: '#ffffff' },
 };
 
+// Palet felt pastel hangat (puppet sahaja)
+const PUPPET_OUTFITS: typeof OUTFITS = {
+  office: { shirt: '#a9d2ea', pants: '#3e4a66', shoes: '#2a2230', accent: '#2f6fa0' },
+  worker: { shirt: '#4f7fb0', pants: '#6b5a44', shoes: '#4a3020', accent: '#ffc83d' },
+  casual: { shirt: '#9bb58a', pants: '#4a5a7a', shoes: '#f0ece4', accent: '#ffffff' },
+};
+
 // ---------------------------------------------------------------- face
 
+const PuppetFace = ({ expression, lid, browTilt }: { expression: Expression; lid: number; browTilt: number }) => (
+  <group position={[0, 0, 0.12]}>
+    {[-1, 1].map((side) => (
+      <group key={side}>
+        {/* mata butang: putih licin + anak mata + kilat */}
+        <mesh position={[side * 0.042, 0.012, 0.01]} scale={[0.026, 0.03 * lid, 0.018]}>
+          <sphereGeometry args={[1, 16, 12]} />
+          <meshStandardMaterial color="#fbfbf7" roughness={0.25} />
+        </mesh>
+        <mesh position={[side * 0.042, 0.01, 0.025]} scale={0.013 * lid}>
+          <sphereGeometry args={[1, 12, 8]} />
+          <meshStandardMaterial color="#1a1412" roughness={0.3} />
+        </mesh>
+        <mesh position={[side * 0.042 + 0.004, 0.02, 0.035]} scale={0.004}>
+          <sphereGeometry args={[1, 8, 6]} />
+          <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.8} />
+        </mesh>
+        <Box size={[0.03, 0.009, 0.01]} pos={[side * 0.042, 0.052, 0.01]} rot={[0, 0, side * browTilt]} color="#2a1a10" />
+      </group>
+    ))}
+    {[-1, 1].map((side) => (
+      <mesh key={side} position={[side * 0.07, -0.025, 0]} scale={[0.02, 0.012, 0.008]}>
+        <sphereGeometry args={[1, 12, 8]} />
+        <meshStandardMaterial color="#f29a9a" roughness={1} />
+      </mesh>
+    ))}
+    {expression === 'happy' ? (
+      <mesh position={[0, -0.045, 0.01]} rotation={[0, 0, Math.PI]}>
+        <torusGeometry args={[0.024, 0.005, 6, 14, Math.PI]} />
+        <meshStandardMaterial color="#5a2a2a" roughness={0.6} />
+      </mesh>
+    ) : (
+      <Box size={[0.03, 0.008, 0.01]} pos={[0, -0.05, 0.01]} color="#5a2a2a" />
+    )}
+  </group>
+);
+
 const Face = ({ expression, t, seed }: { expression: Expression; t: number; seed: number }) => {
+  const puppet = useContext(PuppetCtx);
   const blink = (t * 1000 + seed * 977) % 3400 < 120;
   const lid = blink ? 0.15 : expression === 'tired' ? 0.4 : expression === 'stressed' ? 1.15 : 1;
   const browTilt = expression === 'stressed' ? 0.35 : expression === 'tired' ? -0.15 : 0;
   const mouthW = expression === 'happy' ? 0.06 : 0.045;
   const mouthY = expression === 'happy' ? -0.055 : -0.06;
+  if (puppet) return <PuppetFace expression={expression} lid={lid} browTilt={browTilt} />;
   return (
     <group position={[0, 0, 0.112]}>
       {[-1, 1].map((side) => (
@@ -194,14 +259,16 @@ const Battery = ({ level }: { level: number }) => {
 // ---------------------------------------------------------------- human
 
 const Human = ({ actor, index, seated }: { actor: Actor; index: number; seated: boolean }) => {
+  const puppet = useContext(PuppetCtx);
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
   const t = frame / fps;
   const seed = index * 1.7;
   const p = poseFor(actor.action ?? 'idle', t, seed, seated);
-  const outfit = OUTFITS[actor.outfit ?? 'office'];
-  const skin = actor.skin ?? ['#c68a5c', '#a86b45', '#e0b08a', '#8a5a3a'][index % 4];
+  const outfit = (puppet ? PUPPET_OUTFITS : OUTFITS)[actor.outfit ?? 'office'];
+  const skin = actor.skin ?? (puppet ? '#e9b994' : ['#c68a5c', '#a86b45', '#e0b08a', '#8a5a3a'][index % 4]);
   const expression = actor.expression ?? 'normal';
+  const k = puppet ? 1.15 : 1; // kepala puppet lebih besar
   const hipY = p.hipY ?? Math.min(legHeight(p.lLeg, p.lKnee), legHeight(p.rLeg, p.rKnee));
   const energy = actor.energy === undefined ? null
     : interpolate(frame, [0, durationInFrames], [actor.energy, actor.energyTo ?? actor.energy], { extrapolateRight: 'clamp' });
@@ -211,7 +278,7 @@ const Human = ({ actor, index, seated }: { actor: Actor; index: number; seated: 
       <Limb len={UPPER_ARM} w={0.055} d={0.048} color={outfit.shirt} />
       <group position={[0, -UPPER_ARM, 0]} rotation={[elbow, 0, 0]}>
         <Limb len={FOREARM} w={0.045} d={0.038} color={actor.outfit === 'worker' ? outfit.shirt : skin} />
-        <Box size={[0.07, 0.09, 0.04]} pos={[0, -FOREARM - 0.04, 0]} color={actor.outfit === 'worker' ? '#7a5a2a' : skin} />
+        <Box size={[0.07, 0.09, 0.04]} pos={[0, -FOREARM - 0.04, 0]} color={actor.outfit === 'worker' ? '#7a5a2a' : skin} round />
       </group>
     </group>
   );
@@ -221,7 +288,7 @@ const Human = ({ actor, index, seated }: { actor: Actor; index: number; seated: 
       <Limb len={THIGH} w={0.08} d={0.065} color={outfit.pants} />
       <group position={[0, -THIGH, 0]} rotation={[knee, 0, 0]}>
         <Limb len={SHIN} w={0.062} d={0.05} color={outfit.pants} />
-        <Box size={[0.1, FOOT_H, 0.24]} pos={[0, -SHIN - FOOT_H / 2, 0.05]} rot={[-knee - legX, 0, 0]} color={outfit.shoes} />
+        <Box size={[0.1, FOOT_H, 0.24]} pos={[0, -SHIN - FOOT_H / 2, 0.05]} rot={[-knee - legX, 0, 0]} color={outfit.shoes} round />
       </group>
     </group>
   );
@@ -230,15 +297,15 @@ const Human = ({ actor, index, seated }: { actor: Actor; index: number; seated: 
     <group position={[actor.x ?? 0, p.rootY, actor.z ?? 0]} rotation={[0, ((actor.facing ?? 0) * Math.PI) / 180, 0]}>
       <group rotation={[p.rootRotX, 0, p.rootRotZ]}>
         <group position={[0, hipY, 0]}>
-          <Box size={[0.34, 0.16, 0.2]} color={outfit.pants} />
+          <Box size={[0.34, 0.16, 0.2]} color={outfit.pants} round />
           {leg(1, p.lLeg, p.lKnee)}
           {leg(-1, p.rLeg, p.rKnee)}
           <group position={[0, 0.07, 0]} rotation={[p.spineX, 0, p.spineZ]}>
-            <Box size={[0.4, 0.52, 0.23]} pos={[0, 0.27, 0]} color={outfit.shirt} />
+            <Box size={[0.4, 0.52, 0.23]} pos={[0, 0.27, 0]} color={outfit.shirt} round />
             {actor.outfit === 'office' ? (
               <>
                 <Box size={[0.06, 0.32, 0.01]} pos={[0, 0.33, 0.12]} color={outfit.accent} />
-                <Box size={[0.42, 0.06, 0.24]} pos={[0, 0.03, 0]} color="#111" />
+                <Box size={[0.42, 0.06, 0.24]} pos={[0, 0.03, 0]} color="#111" round />
               </>
             ) : null}
             {actor.outfit === 'worker' ? (
@@ -255,29 +322,36 @@ const Human = ({ actor, index, seated }: { actor: Actor; index: number; seated: 
             ) : null}
             <group position={[0, 0.53, 0]}>
               <mesh position={[0, 0.05, 0]}>
-                <cylinderGeometry args={[0.05, 0.055, 0.1, 6]} />
-                <meshStandardMaterial color={skin} flatShading />
+                <cylinderGeometry args={[0.05, 0.055, 0.1, puppet ? 14 : 6]} />
+                <Mat color={skin} />
               </mesh>
+              {puppet ? (
+                // jahitan leher (puppet felt)
+                <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+                  <torusGeometry args={[0.058, 0.005, 6, 18]} />
+                  <Mat color="#3a2a22" />
+                </mesh>
+              ) : null}
               <group position={[0, 0.17, 0]} rotation={[p.headX, p.headY, 0]}>
-                <mesh scale={[0.1, 0.125, 0.11]} castShadow>
-                  <icosahedronGeometry args={[1, 1]} />
-                  <meshStandardMaterial color={skin} flatShading roughness={0.7} />
+                <mesh scale={[0.1 * k, 0.125 * k, 0.11 * k]} castShadow>
+                  {puppet ? <sphereGeometry args={[1, 32, 24]} /> : <icosahedronGeometry args={[1, 1]} />}
+                  <Mat color={skin} roughness={0.7} />
                 </mesh>
-                <mesh scale={[0.106, 0.08, 0.115]} position={[0, 0.05, -0.008]}>
-                  <icosahedronGeometry args={[1, 1]} />
-                  <meshStandardMaterial color="#1c120c" flatShading />
+                <mesh scale={puppet ? [0.13, 0.12, 0.135] : [0.106, 0.08, 0.115]} position={puppet ? [0, 0.04, -0.02] : [0, 0.05, -0.008]}>
+                  {puppet ? <sphereGeometry args={[1, 32, 24]} /> : <icosahedronGeometry args={[1, 1]} />}
+                  <Mat color="#1c120c" />
                 </mesh>
-                {[-1, 1].map((side) => <Box key={side} size={[0.02, 0.04, 0.03]} pos={[side * 0.1, 0, 0]} color={skin} />)}
+                {[-1, 1].map((side) => <Box key={side} size={[0.02, 0.04, 0.03]} pos={[side * 0.1 * k, 0, 0]} color={skin} round />)}
                 <Face expression={expression} t={t} seed={seed} />
                 {actor.outfit === 'worker' ? (
                   <group position={[0, 0.07, 0]}>
                     <mesh scale={[0.125, 0.09, 0.135]}>
                       <sphereGeometry args={[1, 8, 4, 0, Math.PI * 2, 0, Math.PI / 2]} />
-                      <meshStandardMaterial color={outfit.accent} flatShading />
+                      <Mat color={outfit.accent} />
                     </mesh>
                     <mesh position={[0, 0, 0.03]}>
                       <cylinderGeometry args={[0.15, 0.15, 0.012, 8]} />
-                      <meshStandardMaterial color={outfit.accent} flatShading />
+                      <Mat color={outfit.accent} />
                     </mesh>
                   </group>
                 ) : null}
@@ -316,7 +390,7 @@ const Desk = ({ x }: { x: number }) => {
       <Box size={[0.45, 0.02, 0.15]} pos={[0, 0.775, -0.12]} color="#2a2a2a" />
       <mesh position={[0.45, 0.82, -0.05]}>
         <cylinderGeometry args={[0.04, 0.035, 0.1, 7]} />
-        <meshStandardMaterial color="#e8e2d0" flatShading />
+        <Mat color="#e8e2d0" />
       </mesh>
       {[0, 1, 2, 3].map((i) => <Box key={i} size={[0.22, 0.012, 0.3]} pos={[-0.48, 0.775 + i * 0.014, 0.02]} rot={[0, i * 0.1, 0]} color="#f2f2f2" />)}
     </group>
@@ -357,14 +431,14 @@ const SiteSet = () => {
       {Array.from({ length: 30 }, (_, i) => (
         <mesh key={i} position={[(random(`rx${i}`) - 0.5) * 10, 0.03, (random(`rz${i}`) - 0.5) * 6]} scale={0.05 + random(`rs${i}`) * 0.08}>
           <dodecahedronGeometry args={[1, 0]} />
-          <meshStandardMaterial color="#7a6a55" flatShading />
+          <Mat color="#7a6a55" />
         </mesh>
       ))}
       {crates.map((c, i) => <Box key={i} size={[0.42, 0.38, 0.4]} pos={[c.x, c.y, c.z]} color={i % 2 ? '#b5884f' : '#a0763f'} />)}
       {[-1.8, -2.4].map((x) => (
         <mesh key={x} position={[x, 0.25, 0.6]}>
           <coneGeometry args={[0.13, 0.5, 6]} />
-          <meshStandardMaterial color="#ff6a00" flatShading />
+          <Mat color="#ff6a00" />
         </mesh>
       ))}
       <group position={[-1.2, 0, -2]}>
@@ -398,8 +472,98 @@ const StudioSet = () => (
   <>
     <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
       <circleGeometry args={[3.2, 10]} />
-      <meshStandardMaterial color="#2a2340" flatShading />
+      <Mat color="#2a2340" />
     </mesh>
+  </>
+);
+
+// ---------------------------------------------------------------- puppet props (hanya look puppet)
+
+const Calendar = () => (
+  <group position={[-1.9, 1.75, -2.12]}>
+    <Box size={[0.9, 1.1, 0.04]} color="#fffdf6" />
+    <Box size={[0.9, 0.22, 0.05]} pos={[0, 0.44, 0.02]} color="#d9534f" />
+    {[0, 1, 2].map((r) => [0, 1, 2, 3, 4].map((c) => (
+      <Box key={`${r}-${c}`} size={[0.12, 0.1, 0.01]} pos={[-0.34 + c * 0.17, 0.12 - r * 0.2 - 0.1, 0.03]} color="#e6e0d4" />
+    )))}
+  </group>
+);
+
+const WallClock = ({ set }: { set: SetName }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const pos: V3 = set === 'bedroom' ? [-1.8, 2.2, -1.5] : set === 'office' ? [1.8, 2.3, -2.12] : [0, 2.2, -2.5];
+  const minute = (frame / fps) * 1.6; // jam berputar laju
+  return (
+    <group position={pos}>
+      <mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <cylinderGeometry args={[0.36, 0.36, 0.06, 28]} />
+        <Mat color="#f6efe2" />
+      </mesh>
+      <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 0.035]}>
+        <torusGeometry args={[0.36, 0.035, 8, 28]} />
+        <Mat color="#7a4a2a" />
+      </mesh>
+      <group rotation={[0, 0, -minute]}>
+        <Box size={[0.03, 0.26, 0.02]} pos={[0, 0.12, 0.04]} color="#2a1a10" />
+      </group>
+    </group>
+  );
+};
+
+const RoadPosts = () => (
+  <>
+    <Box size={[1.4, 0.03, 12]} pos={[0, 0.015, -4.4]} color="#a88a63" />
+    {Array.from({ length: 10 }, (_, i) => (
+      <group key={i} position={[(i % 2 ? 1 : -1) * 0.95, 0, -0.6 - i * 0.9]}>
+        <Box size={[0.14, 0.7, 0.14]} pos={[0, 0.35, 0]} color="#f0ebe0" round />
+        <Box size={[0.18, 0.1, 0.18]} pos={[0, 0.72, 0]} color="#e0553f" round />
+      </group>
+    ))}
+  </>
+);
+
+const MemoryShelf = () => (
+  <group position={[0, 0, -2.3]}>
+    <Box size={[3, 3.2, 0.1]} pos={[0, 1.6, -0.1]} color="#5b4a3f" />
+    {[0, 1, 2, 3].map((r) => <Box key={r} size={[2.6, 0.06, 0.5]} pos={[0, 0.3 + r * 0.75, 0]} color="#7a6a58" />)}
+    {[0, 1, 2, 3].map((r) => [0, 1, 2, 3].map((c) => {
+      const lit = r === 1 && c === 2;
+      return (
+        <Box key={`${r}-${c}`} size={[0.5, 0.5, 0.4]} pos={[-0.9 + c * 0.6, 0.3 + r * 0.75 + 0.28, 0.05]}
+          color={lit ? '#ffc54a' : '#b9ab92'} emissive={lit ? '#ffb020' : undefined} />
+      );
+    }))}
+    <pointLight position={[0.3, 1.35, 0.5]} intensity={2} distance={2.5} color="#ffc070" />
+  </group>
+);
+
+const Plant = () => (
+  <group position={[0.8, 0, 0.2]}>
+    <mesh position={[0, 0.22, 0]} castShadow>
+      <cylinderGeometry args={[0.2, 0.15, 0.36, 16]} />
+      <Mat color="#c86b45" />
+    </mesh>
+    <mesh position={[0, 0.42, 0]}>
+      <cylinderGeometry args={[0.02, 0.02, 0.4, 6]} />
+      <Mat color="#5b8a3a" />
+    </mesh>
+    {[{ x: -0.08, y: 0.5, rz: 0.6 }, { x: 0.08, y: 0.58, rz: -0.6 }, { x: 0, y: 0.68, rz: 0 }].map((leaf) => (
+      <mesh key={leaf.y} position={[leaf.x, leaf.y, 0]} rotation={[0, 0, leaf.rz]} scale={[0.1, 0.04, 0.07]}>
+        <sphereGeometry args={[1, 16, 10]} />
+        <Mat color="#6fae4a" />
+      </mesh>
+    ))}
+  </group>
+);
+
+const Props = ({ names, set }: { names: Prop[]; set: SetName }) => (
+  <>
+    {names.includes('calendar') ? <Calendar /> : null}
+    {names.includes('clock') ? <WallClock set={set} /> : null}
+    {names.includes('posts') ? <RoadPosts /> : null}
+    {names.includes('shelf') ? <MemoryShelf /> : null}
+    {names.includes('plant') ? <Plant /> : null}
   </>
 );
 
@@ -426,6 +590,7 @@ const headroom = (set: SetName, action: Action, shot: CameraShot) => {
 
 const Rig = ({ shot, focusX, angle, lookY }: { shot: CameraShot; focusX: number; angle: number; lookY: number }) => {
   const camera = useThree((s) => s.camera);
+  const puppet = useContext(PuppetCtx);
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
   const { pos, look } = SHOTS[shot];
@@ -434,7 +599,8 @@ const Rig = ({ shot, focusX, angle, lookY }: { shot: CameraShot; focusX: number;
   const a = (angle * Math.PI) / 180;
   const ly = look[1] + lookY;
   const px = pos[0] * push, pz = pos[2] * push;
-  camera.position.set(focusX + px * Math.cos(a) + pz * Math.sin(a), ly + (pos[1] - look[1]) * push, -px * Math.sin(a) + pz * Math.cos(a));
+  const sway = puppet ? Math.sin(frame / 60) * 0.1 : 0; // gerak kamera perlahan (puppet sahaja)
+  camera.position.set(focusX + px * Math.cos(a) + pz * Math.sin(a) + sway, ly + (pos[1] - look[1]) * push, -px * Math.sin(a) + pz * Math.cos(a));
   camera.lookAt(focusX + look[0], ly, look[2]);
   camera.updateMatrixWorld();
   return null;
@@ -442,12 +608,23 @@ const Rig = ({ shot, focusX, angle, lookY }: { shot: CameraShot; focusX: number;
 
 // ---------------------------------------------------------------- world
 
-export const World3D = ({ scene, accent }: { scene: Scene3d; accent: string }) => {
+const skyFor = (set: SetName, night: boolean, puppet: boolean) => {
+  if (puppet) {
+    if (set === 'site') return '#f2b27a';
+    if (set === 'studio') return '#3b2f4d';
+    return night ? '#2a2c4a' : '#f2d2b6';
+  }
+  if (set === 'site') return '#f2b27a';
+  if (set === 'studio') return '#141022';
+  return night ? '#0b0f1e' : '#9fc4e8';
+};
+
+export const World3D = ({ scene, accent, puppet = false }: { scene: Scene3d; accent: string; puppet?: boolean }) => {
   const { width, height } = useVideoConfig();
   const set = scene.set ?? 'studio';
   const night = (scene.time ?? (set === 'office' || set === 'bedroom' ? 'night' : 'day')) === 'night';
   const actors = scene.actors ?? [{}];
-  const sky = set === 'site' ? '#f2b27a' : set === 'studio' ? '#141022' : night ? '#0b0f1e' : '#9fc4e8';
+  const sky = skyFor(set, night, puppet);
   const deskXs = set === 'office'
     ? actors.filter((a) => ['typing', 'tired_desk', 'head_on_desk', 'stressed'].includes(a.action ?? '')).map((a) => a.x ?? 0)
     : [];
@@ -458,32 +635,46 @@ export const World3D = ({ scene, accent }: { scene: Scene3d; accent: string }) =
   if (set === 'bedroom') content = <BedroomSet />;
 
   return (
-    <ThreeCanvas
-      width={width}
-      height={height}
-      dpr={scene.pixelation ?? 0.38}
-      gl={{ antialias: false }}
-      shadows
-      style={{ position: 'absolute', inset: 0, imageRendering: 'pixelated' }}
-      camera={{ fov: 50, near: 0.05, far: 60 }}
-    >
-      <Rig shot={scene.camera ?? 'medium'} focusX={scene.focusX ?? 0}
-        angle={scene.angle ?? (set === 'office' ? 35 : set === 'bedroom' ? 20 : 0)}
-        lookY={headroom(set, actors[0]?.action ?? 'idle', scene.camera ?? 'medium')} />
-      <color attach="background" args={[sky]} />
-      <fog attach="fog" args={[sky, 5, set === 'site' ? 22 : 12]} />
-      <hemisphereLight args={[night ? '#7080c0' : '#fff4e0', '#3a2a20', night ? 0.7 : 0.8]} />
-      <directionalLight
-        position={set === 'site' ? [4, 7, 4] : [2, 4, 3]}
-        intensity={set === 'site' ? 2.6 : night ? 0.9 : 1.3}
-        color={set === 'site' ? '#ffe2b0' : '#ffffff'}
-        castShadow
-        shadow-mapSize-width={512}
-        shadow-mapSize-height={512}
-      />
-      {set === 'studio' ? <spotLight position={[0, 5, 2]} angle={0.6} intensity={30} color={accent} castShadow /> : null}
-      {content}
-      {actors.map((a, i) => <Human key={i} actor={a} index={i} seated={set === 'office'} />)}
-    </ThreeCanvas>
+    <>
+      <ThreeCanvas
+        width={width}
+        height={height}
+        dpr={puppet ? 1 : (scene.pixelation ?? 0.38)}
+        gl={{ antialias: false }}
+        shadows
+        style={{ position: 'absolute', inset: 0, imageRendering: puppet ? 'auto' : 'pixelated' }}
+        camera={{ fov: 50, near: 0.05, far: 60 }}
+      >
+        <PuppetCtx.Provider value={puppet}>
+          <Rig shot={scene.camera ?? 'medium'} focusX={scene.focusX ?? 0}
+            angle={scene.angle ?? (set === 'office' ? 35 : set === 'bedroom' ? 20 : 0)}
+            lookY={headroom(set, actors[0]?.action ?? 'idle', scene.camera ?? 'medium')} />
+          <color attach="background" args={[sky]} />
+          <fog attach="fog" args={[sky, 5, set === 'site' ? 22 : 12]} />
+          <hemisphereLight
+            args={[puppet ? '#ffe9d6' : night ? '#7080c0' : '#fff4e0', puppet ? '#4a3648' : '#3a2a20', puppet ? 0.9 : night ? 0.7 : 0.8]}
+          />
+          <directionalLight
+            position={set === 'site' ? [4, 7, 4] : [2, 4, 3]}
+            intensity={set === 'site' ? 2.6 : puppet ? 1.6 : night ? 0.9 : 1.3}
+            color={set === 'site' ? '#ffe2b0' : puppet ? '#ffd9b0' : '#ffffff'}
+            castShadow
+            shadow-mapSize-width={512}
+            shadow-mapSize-height={512}
+          />
+          {puppet ? <directionalLight position={[-3, 3, -3]} intensity={1.2} color="#9fd8ff" /> : null}
+          {set === 'studio' ? (
+            <spotLight position={[0, 5, 2]} angle={0.6} intensity={puppet ? 24 : 30} color={puppet ? '#ffd9b0' : accent} castShadow />
+          ) : null}
+          {content}
+          {puppet ? <Props names={scene.props ?? []} set={set} /> : null}
+          {actors.map((a, i) => <Human key={i} actor={a} index={i} seated={set === 'office'} />)}
+        </PuppetCtx.Provider>
+      </ThreeCanvas>
+      {puppet ? (
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: 'radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(20,8,4,0.55) 100%)' }} />
+      ) : null}
+    </>
   );
 };
