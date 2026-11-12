@@ -1,0 +1,235 @@
+{
+  "title": "Kenapa Penat Tapi Tak Nak Tidur? (Balas Dendam Tidur Lewat)",
+  "voiceStyle": "Cakap dalam BM Malaysia, nada relatable macam kawan bercerita, sikit kelakar dan santai. Hook laju dan terus. Bahagian penjelasan tenang dan jelas, perlahankan sikit pada istilah 'revenge bedtime procrastination'. CTA ceria.",
+  "bg3d": {
+    "shape": "icosahedron",
+    "pixelation": 0.3
+  },
+  "scenes": [
+    {
+      "duration": 3,
+      "say": "Penat gila, tapi kenapa tak nak tidur?",
+      "scene3d": {
+        "set": "bedroom",
+        "camera": "medium",
+        "time": "night",
+        "focusX": 0,
+        "angle": 20,
+        "actors": [
+          {
+            "outfit": "office",
+            "action": "lying_awake",
+            "expression": "tired",
+            "x": 0.15,
+            "z": -0.5,
+            "facing": 0
+          }
+        ]
+      },
+      "elements": [
+        {
+          "text": "Penat gila, kenapa tak nak tidur?",
+          "style": "hook",
+          "animation": "pop",
+          "delay": 0.2,
+          "highlightWords": [
+            "tak",
+            "tidur"
+          ]
+        }
+      ],
+      "align": "flex-start"
+    },
+    {
+      "duration": 6,
+      "say": "Aina habis kerja lewat malam. Balik rumah, mandi, makan, dan dah pukul sebelas.",
+      "scene3d": {
+        "set": "bedroom",
+        "camera": "wide",
+        "time": "night",
+        "actors": [
+          {
+            "outfit": "office",
+            "action": "carrying",
+            "expression": "tired",
+            "x": -0.2,
+            "z": 0,
+            "facing": 0,
+            "energy": 0.4
+          }
+        ]
+      },
+      "align": "flex-start"
+    },
+    {
+      "duration": 7,
+      "say": "Badan dah penat. Tapi tangan tetap scroll. Satu video lagi, kata dia.",
+      "scene3d": {
+        "set": "bedroom",
+        "camera": "medium",
+        "time": "night",
+        "focusX": 0.15,
+        "angle": 20,
+        "actors": [
+          {
+            "outfit": "casual",
+            "action": "lying_awake",
+            "expression": "tired",
+            "x": 0.15,
+            "z": -0.5,
+            "facing": 0
+          }
+        ]
+      },
+      "align": "flex-start"
+    },
+    {
+      "duration": 5,
+      "say": "Tiba-tiba dah pukul dua pagi. Esok kena bangun awal pula.",
+      "scene3d": {
+        "set": "bedroom",
+        "camera": "medium",
+        "time": "night",
+        "focusX": 0.15,
+        "angle": 20,
+        "actors": [
+          {
+            "outfit": "casual",
+            "action": "lying_awake",
+            "expression": "stressed",
+            "x": 0.15,
+            "z": -0.5,
+            "facing": 0
+          }
+        ]
+      },
+      "align": "flex-start"
+    },
+    {
+      "duration": 8,
+      "say": "Tabiat ni ada nama. Revenge bedtime procrastination. Penyelidik takrif sebagai tidur lewat dari yang dirancang, walaupun tiada sebab lain yang paksa.",
+      "scene3d": {
+        "set": "bedroom",
+        "camera": "wide",
+        "time": "night",
+        "angle": 25,
+        "actors": [
+          {
+            "outfit": "casual",
+            "action": "thinking",
+            "expression": "normal",
+            "x": 0,
+            "z": 0,
+            "facing": 0
+          }
+        ]
+      },
+      "elements": [
+        {
+          "text": "🌙",
+          "style": "emoji",
+          "animation": "zoom"
+        }
+      ],
+      "align": "flex-start"
+    },
+    {
+      "duration": 9,
+      "say": "Satu kajian 2018, menurut ringkasan yang dilapor, jumpa orang yang banyak menahan diri sepanjang hari lebih cenderung tangguh tidur. Tenaga mental dah habis.",
+      "scene3d": {
+        "set": "office",
+        "camera": "medium",
+        "time": "day",
+        "angle": 35,
+        "actors": [
+          {
+            "outfit": "office",
+            "action": "stressed",
+            "expression": "stressed",
+            "x": 0,
+            "z": 0,
+            "facing": 0,
+            "energy": 0.8,
+            "energyTo": 0.2
+          }
+        ]
+      },
+      "align": "flex-start"
+    },
+    {
+      "duration": 8,
+      "say": "Di Malaysia, 45 peratus pekerja Gen Z dilapor alami burnout. Jadi malam rasa macam satu-satunya masa yang betul-betul masa kita.",
+      "scene3d": {
+        "set": "bedroom",
+        "camera": "medium",
+        "time": "night",
+        "focusX": 0,
+        "angle": 15,
+        "actors": [
+          {
+            "outfit": "casual",
+            "action": "idle",
+            "expression": "normal",
+            "x": 0,
+            "z": 0,
+            "facing": 0
+          }
+        ]
+      },
+      "align": "flex-start"
+    },
+    {
+      "duration": 6,
+      "say": "Istilah ni baru, kajian pun masih berkembang. Mungkin boleh cuba ambil lima belas minit masa sendiri awal malam, bukan pukul dua pagi.",
+      "scene3d": {
+        "set": "office",
+        "camera": "medium",
+        "time": "night",
+        "angle": 30,
+        "actors": [
+          {
+            "outfit": "casual",
+            "action": "typing",
+            "expression": "normal",
+            "x": 0,
+            "z": 0,
+            "facing": 0
+          }
+        ]
+      },
+      "align": "flex-start"
+    },
+    {
+      "duration": 6,
+      "say": "Follow untuk fakta kerja dan otak yang korang tak tahu.",
+      "scene3d": {
+        "set": "bedroom",
+        "camera": "wide",
+        "time": "night",
+        "angle": 20,
+        "actors": [
+          {
+            "outfit": "casual",
+            "action": "idle",
+            "expression": "happy",
+            "x": 0,
+            "z": 0,
+            "facing": 0
+          }
+        ]
+      },
+      "elements": [
+        {
+          "text": "Follow untuk fakta kerja & otak",
+          "style": "body",
+          "animation": "slideUp",
+          "delay": 0.2,
+          "highlightWords": [
+            "Follow"
+          ]
+        }
+      ],
+      "align": "flex-start"
+    }
+  ]
+}
