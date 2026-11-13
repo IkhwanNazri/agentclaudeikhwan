@@ -9,6 +9,10 @@ cd "$(dirname "$0")/.."
 [ -f .env ] && set -a && . ./.env && set +a
 : "${TELEGRAM_BOT_TOKEN:?Set TELEGRAM_BOT_TOKEN dalam .env}"
 API="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}"
+# Chat ID mesti nombor; kalau env salah/kosong, guna config/telegram_chat_id
+if ! [[ "${TELEGRAM_CHAT_ID:-}" =~ ^-?[0-9]+$ ]] && [ -f config/telegram_chat_id ]; then
+  TELEGRAM_CHAT_ID="$(tr -d '[:space:]' < config/telegram_chat_id)"
+fi
 
 cmd="${1:-}"
 case "$cmd" in
