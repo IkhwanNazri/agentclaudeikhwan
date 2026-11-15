@@ -70,9 +70,7 @@
     },
     {
       "set": "cta",
-      "say": "Follow untuk fakta kerja dan otak yang korang tak tahu.",
-      "duration": 3.9,
-      "text": "Follow untuk fakta kerja & otak"
+      "duration": 2.6
     }
   ],
   "voiceSpeed": 1.15

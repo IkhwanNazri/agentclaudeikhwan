@@ -66,10 +66,7 @@
     },
     {
       "set": "cta",
-      "say": "Follow untuk fakta otak yang korang tak tahu!",
-      "duration": 3.6,
-      "text": "Follow untuk fakta kerja & otak",
-      "voice": "2026-11-12-waktu-rasa-sekejap_9.wav"
+      "duration": 2.6
     }
   ]
 }

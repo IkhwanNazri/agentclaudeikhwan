@@ -323,6 +323,91 @@ export const Hand = () => {
   );
 };
 
+
+// ---------------------------------------------------------------- tangan dalang gaya kertas (bentuk jari jelas)
+
+const SKIN = '#e8b08a';
+const SKIN_SHADE = '#b06f50';
+
+// Jari dari sendi buku lali (x=0) ke hujung (x=len), hujung bulat
+const fingerShape = (len: number, h: number) =>
+  custom(`finger:${len}:${h}`, () => {
+    const s = new THREE.Shape();
+    const r = h / 2;
+    s.moveTo(0, -r);
+    s.lineTo(len - r, -r * 0.92);
+    s.quadraticCurveTo(len + r * 0.15, -r * 0.9, len + r * 0.15, 0);
+    s.quadraticCurveTo(len + r * 0.15, r * 0.95, len - r, r);
+    s.lineTo(0, r);
+    // buku lali bulat di hujung kiri
+    s.quadraticCurveTo(-r * 1.1, r, -r * 1.1, 0);
+    s.quadraticCurveTo(-r * 1.1, -r, 0, -r);
+    return s;
+  });
+
+const THUMB = custom('thumb', () => {
+  const s = new THREE.Shape();
+  s.moveTo(0, -0.075);
+  s.quadraticCurveTo(0.2, -0.085, 0.36, -0.06);
+  s.quadraticCurveTo(0.45, -0.045, 0.45, 0.0);
+  s.quadraticCurveTo(0.45, 0.06, 0.36, 0.065);
+  s.quadraticCurveTo(0.2, 0.075, 0, 0.085);
+  s.quadraticCurveTo(-0.09, 0.08, -0.09, 0);
+  s.quadraticCurveTo(-0.09, -0.075, 0, -0.075);
+  return s;
+});
+
+const BACK_OF_HAND = custom('backHand', () => {
+  const s = new THREE.Shape();
+  s.moveTo(-0.08, -0.3);
+  s.quadraticCurveTo(-0.2, -0.05, -0.12, 0.26);
+  s.quadraticCurveTo(-0.06, 0.34, 0.06, 0.3);
+  s.lineTo(0.1, -0.3);
+  s.closePath();
+  return s;
+});
+
+const FOREARM = poly([[-0.17, -0.18], [0.12, -0.24], [0.1, -2.5], [-0.3, -2.5]]);
+
+// Genggaman pada batang menegak di (0,0). Kamera nampak jari melingkar ke depan.
+export const PaperHand = () => {
+  const fingers = [
+    { y: 0.165, len: 0.36, h: 0.122 },
+    { y: 0.045, len: 0.39, h: 0.128 },
+    { y: -0.077, len: 0.37, h: 0.122 },
+    { y: -0.188, len: 0.3, h: 0.104 },
+  ];
+  return (
+    <group>
+      {/* lengan + lengan baju */}
+      <Paper shape={FOREARM} color={SKIN} depth={0.03} position={[-0.08, 0, -0.06]} />
+      <Paper shape={rect(0.56, 1.3, 0.06)} color="#2b2b34" depth={0.05} position={[-0.17, -2.45, -0.03]} />
+      <Paper shape={rect(0.62, 0.14, 0.04)} color="#3a3a46" depth={0.05} position={[-0.16, -1.82, 0.0]} />
+      {/* belakang tangan (di belakang batang) */}
+      <Paper shape={BACK_OF_HAND} color={SKIN} depth={0.04} position={[-0.12, -0.01, -0.03]} />
+      {/* jari: lapisan bayang di belakang + jari + garis sendi */}
+      {fingers.map(({ y, len, h }, i) => (
+        <group key={i} position={[-0.2, y, 0.06 - i * 0.006]} rotation={[0, 0, -0.06]}>
+          <Paper shape={fingerShape(len + 0.01, h + 0.022)} color={SKIN_SHADE} depth={0.02} position={[0.004, -0.012, -0.012]} />
+          <Paper shape={fingerShape(len, h)} color={SKIN} depth={0.03} />
+          {/* lipatan sendi tengah & hujung */}
+          <Paper shape={rect(0.012, h * 0.62, 0.005)} color={SKIN_SHADE} depth={0.008} position={[len * 0.5, 0, 0.02]} />
+          <Paper shape={rect(0.01, h * 0.5, 0.005)} color={SKIN_SHADE} depth={0.008} position={[len * 0.8, 0, 0.02]} />
+        </group>
+      ))}
+      {/* ibu jari melintang atas jari telunjuk */}
+      <group position={[-0.22, 0.08, 0.13]} rotation={[0, 0, -0.22]}>
+        <Paper shape={THUMB} color={SKIN_SHADE} depth={0.02} position={[0.005, -0.01, -0.012]} />
+        <Paper shape={THUMB} color={SKIN} depth={0.03} />
+        <Paper shape={rect(0.012, 0.09, 0.005)} color={SKIN_SHADE} depth={0.008} position={[0.24, 0, 0.02]} />
+        {/* kuku */}
+        <Paper shape={rect(0.11, 0.085, 0.035)} color="#f6d3c4" depth={0.008} position={[0.37, 0.005, 0.02]} />
+        <Paper shape={rect(0.03, 0.07, 0.012)} color="#fbe6dc" depth={0.006} position={[0.405, 0.005, 0.026]} />
+      </group>
+    </group>
+  );
+};
+
 export const Rod = ({ length }: { length: number }) => (
   <mesh position={[0, -length / 2, 0]} castShadow>
     <cylinderGeometry args={[0.03, 0.03, length, 10]} />
@@ -341,7 +426,7 @@ export const Puppeteer = ({ children, rod, x = 0, y = 0, z = 0, tilt = 0, scale 
     </group>
     {hand ? (
       <group position={[0, -rod, -0.1]} scale={1.3}>
-        <Hand />
+        <PaperHand />
       </group>
     ) : null}
   </group>
