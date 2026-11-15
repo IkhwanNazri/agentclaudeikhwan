@@ -5,7 +5,7 @@ Suara: satu narrator lelaki (Gemini "Charon", laju 1.3x). Tema `placthinc`.
 | # | Masa | Set | Visual | SFX |
 |---|---|---|---|---|
 | 1 | 0–15s | intro ×3 | Tirai hitam tertutup, logo tengah, 2 lampu gantung, co-host kiri + host kanan di meja podcast; kad tajuk "Bilik 378" | ambience perlahan |
-| 2 | 15–30s | intro ×2 | Sama; co-host ajak subscribe, host mula cerita | — |
+| 2 | 15–30s | intro ×2 | Sama; co-host ajak subscribe (tanpa sebut nama channel), host mula cerita | — |
 | 3 | 30–53s | curtain + tiga | Tirai buka, hotel lama malam; 3 sahabat (Aina, Friend, wanita ungu) tiba bawa beg; 2 kunci = 2 bilik; sahabat ketiga berpisah | suspense + ambience mula, whoosh |
 | 4 | 53–73s | bilik | Bilik 1 · 2 katil (2 sahabat letak beg, duduk) → koridor pintu 378 dibuka, sahabat ketiga masuk → Bilik 378 · 1 katil | creak |
 | 5 | 73–91s | malam | Pentas terbelah: 2 sahabat tidur (2 katil) vs sahabat ketiga seorang (1 katil); jam berputar; "Malam kedua"; kamera ke pintu bilik air | jam, impak rendah |
