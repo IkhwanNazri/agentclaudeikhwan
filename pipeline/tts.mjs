@@ -7,9 +7,10 @@ import { dirname, join, resolve, basename } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const ROOT = resolve(dirname(new URL(import.meta.url).pathname), '..');
-const scenesPath = process.argv[2];
+const cleanOnly = process.argv.includes('--clean-only');
+const scenesPath = process.argv.slice(2).find((a) => !a.startsWith('--'));
 if (!scenesPath) {
-  console.error('Usage: node pipeline/tts.mjs content/<slug>/scenes.json');
+  console.error('Usage: node pipeline/tts.mjs content/<slug>/scenes.json [--clean-only]');
   process.exit(1);
 }
 loadDotEnv();
@@ -28,12 +29,20 @@ const apiKey = process.env.GEMINI_API_KEY || 'proxy-injected';
 const endpoint = (model) => `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 let modelIndex = 0;
 
+if (cleanOnly) {
+  // Bersihkan suara sedia ada tanpa panggil API
+  for (const scene of doc.scenes) if (scene.voice) cleanTail(join(publicDir, scene.voice));
+  console.log('Hujung suara dibersihkan.');
+  process.exit(0);
+}
+
 for (const [i, scene] of doc.scenes.entries()) {
   if (!scene.say) continue;
   const file = `${slug}_${i}.wav`;
   const pcm = join(outDir, `.voice_${i}.pcm`);
   synthesize(directorPrompt(style, scene.say), pcm);
   run('ffmpeg', ['-v', 'error', '-y', '-f', 's16le', '-ar', '24000', '-ac', '1', '-i', pcm, join(publicDir, file)]);
+  cleanTail(join(publicDir, file));
   const seconds = audioSeconds(join(publicDir, file));
   scene.voice = file;
   scene.duration = Math.max(scene.duration, Math.ceil((seconds + 0.4) * 10) / 10);
@@ -95,6 +104,28 @@ function synthesize(text, pcmPath) {
     console.error(`Gemini TTS gagal (HTTP ${code}): ${json.slice(0, 500)}`);
     process.exit(3);
   }
+}
+
+// Gemini TTS kadang-kadang tinggalkan bunyi 'walkie-talkie' (letupan pendek selepas senyap)
+// di hujung klip. Cari senyap terakhir dalam 1.5s hujung; kalau bunyi selepasnya pendek (<0.7s),
+// potong di situ. Tambah fade-in/out pendek supaya tiada klik.
+function cleanTail(file) {
+  const dur = audioSeconds(file);
+  const r = spawnSync('ffmpeg', ['-v', 'info', '-i', file, '-af', 'silencedetect=noise=-40dB:d=0.08', '-f', 'null', '-'], { encoding: 'utf8' });
+  const starts = [...(r.stderr || '').matchAll(/silence_start: ([\d.]+)/g)].map((m) => parseFloat(m[1]));
+  const ends = [...(r.stderr || '').matchAll(/silence_end: ([\d.]+)/g)].map((m) => parseFloat(m[1]));
+  let cut = dur;
+  for (let k = starts.length - 1; k >= 0; k--) {
+    const s = starts[k];
+    const e = ends[k] ?? dur;
+    if (s < dur - 1.5) break;
+    if (e < dur && dur - e < 0.7) { cut = s + 0.05; break; }
+  }
+  const fadeOut = Math.max(0, cut - 0.06);
+  const tmp = file.replace(/\.wav$/, '.tmp.wav');
+  run('ffmpeg', ['-v', 'error', '-y', '-i', file, '-af', `atrim=0:${cut},afade=t=in:d=0.02,afade=t=out:st=${fadeOut}:d=0.06`, tmp]);
+  run('mv', [tmp, file]);
+  if (cut < dur) console.log(`  potong bunyi hujung: ${dur.toFixed(2)}s → ${cut.toFixed(2)}s`);
 }
 
 function audioSeconds(file) {

@@ -1,11 +1,14 @@
 import { Composition } from 'remotion';
 import spec from '../../config/spec.json';
 import { TikTokVideo, type VideoProps } from './TikTokVideo';
+import { PaperCut } from './PaperCut';
 import demo from '../../content/contoh-demo/scenes.json';
 
 const totalSeconds = (props: VideoProps) => props.scenes.reduce((sum, s) => sum + s.duration, 0);
 
 export const RemotionRoot = () => (
+  <>
+  <Composition id="PaperPreview" component={PaperCut} width={spec.width} height={spec.height} fps={spec.fps} durationInFrames={spec.fps * 6} />
   <Composition
     id="TikTok"
     component={TikTokVideo}
@@ -18,4 +21,5 @@ export const RemotionRoot = () => (
       durationInFrames: Math.round(totalSeconds(props) * spec.fps),
     })}
   />
+  </>
 );
