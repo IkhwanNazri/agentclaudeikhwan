@@ -1,0 +1,288 @@
+{
+  "composition": "PuppetShow",
+  "theme": "placthinc",
+  "maxDurationSec": 180,
+  "title": "Bilik 378",
+  "voiceStyle": "Narrator lelaki, tenang dan misteri, perlahan macam podcast cerita seram. Jeda sedikit antara ayat.",
+  "voiceSpeed": 1.3,
+  "scenes": [
+    {
+      "set": "intro",
+      "speaker": "host2",
+      "voiceName": "Charon",
+      "voiceStyle": "Narrator lelaki misteri, nada bertanya perlahan dan menarik minat.",
+      "say": "Kau pernah tak dengar kisah sebuah bilik hotel yang sepatutnya tidak dihuni?",
+      "duration": 4.3,
+      "voice": "2026-11-15-bilik-378_0.wav",
+      "voiceSec": 3.93,
+      "sfx": [
+        {
+          "src": "ambience",
+          "at": 0,
+          "dur": 30,
+          "volume": 0.12,
+          "loop": true,
+          "fade": 1.5
+        }
+      ]
+    },
+    {
+      "set": "intro",
+      "speaker": "host1",
+      "voiceName": "Charon",
+      "voiceStyle": "Narrator lelaki, nada ingin tahu dan sedikit risau, lebih ringan.",
+      "say": "Kenapa? Apa yang berlaku dalam bilik tu?",
+      "duration": 3.2,
+      "mood": "scared",
+      "voice": "2026-11-15-bilik-378_1.wav",
+      "voiceSec": 2.73
+    },
+    {
+      "set": "intro",
+      "speaker": "host2",
+      "voiceName": "Charon",
+      "voiceStyle": "Narrator lelaki misteri, perlahan dan berat.",
+      "say": "Malam ini aku nak ceritakan kisah Bilik 378.",
+      "duration": 7.5,
+      "title": true,
+      "voice": "2026-11-15-bilik-378_2.wav",
+      "voiceSec": 7.11
+    },
+    {
+      "set": "intro",
+      "speaker": "host1",
+      "voiceName": "Charon",
+      "voiceStyle": "Narrator lelaki, nada mesra dan ceria sedikit.",
+      "say": "Sebelum kita mulakan cerita, jangan lupa subscribe PLACTHINC.",
+      "duration": 5.5,
+      "mood": "happy",
+      "voice": "2026-11-15-bilik-378_3.wav",
+      "voiceSec": 3.04
+    },
+    {
+      "set": "intro",
+      "speaker": "host2",
+      "voiceName": "Charon",
+      "voiceStyle": "Narrator lelaki, tenang lalu bertukar misteri.",
+      "say": "Baik. Sekarang, kita mulakan kisahnya.",
+      "duration": 9.5,
+      "voice": "2026-11-15-bilik-378_4.wav",
+      "voiceSec": 2.72
+    },
+    {
+      "set": "curtain",
+      "duration": 2.0,
+      "sfx": [
+        {
+          "src": "suspense",
+          "at": 0,
+          "dur": 150,
+          "volume": 0.16,
+          "loop": true,
+          "fade": 2.5
+        },
+        {
+          "src": "ambience",
+          "at": 0,
+          "dur": 150,
+          "volume": 0.14,
+          "loop": true,
+          "fade": 2.5
+        },
+        {
+          "src": "whoosh",
+          "at": 0.2,
+          "dur": 1.2,
+          "volume": 0.45
+        }
+      ]
+    },
+    {
+      "set": "tiga",
+      "voiceName": "Charon",
+      "say": "Tiga orang sahabat datang ke sebuah hotel lama untuk menghadiri kursus selama tiga hari. Mereka membuat keputusan untuk menyewa dua bilik. Dua orang berkongsi satu bilik yang mempunyai dua katil. Seorang lagi memilih bilik berasingan.",
+      "duration": 21.2,
+      "banner": "Hotel lama",
+      "voice": "2026-11-15-bilik-378_6.wav",
+      "voiceSec": 20.64
+    },
+    {
+      "set": "bilik",
+      "voiceName": "Charon",
+      "say": "Dua orang sahabat berehat di bilik pertama. Mereka mempunyai dua katil dan ruang yang cukup untuk berehat. Tetapi sahabat ketiga mendapat Bilik 378. Bilik itu hanya mempunyai satu katil. Pada mulanya, dia tidak menganggapnya pelik.",
+      "duration": 20.0,
+      "voice": "2026-11-15-bilik-378_7.wav",
+      "voiceSec": 18.47,
+      "sfx": [
+        {
+          "src": "creak",
+          "at": 10.2,
+          "dur": 2,
+          "volume": 0.5
+        }
+      ]
+    },
+    {
+      "set": "malam",
+      "voiceName": "Charon",
+      "say": "Malam pertama berlalu seperti biasa. Tiada perkara pelik berlaku. Mereka semua menyangka hotel itu hanyalah sebuah hotel lama yang agak sunyi. Namun, keadaan berubah pada malam kedua.",
+      "duration": 18.0,
+      "banner": "Malam pertama",
+      "voice": "2026-11-15-bilik-378_8.wav",
+      "voiceSec": 15.77,
+      "sfx": [
+        {
+          "src": "clock",
+          "at": 0,
+          "dur": 18,
+          "volume": 0.3,
+          "loop": true,
+          "fade": 1
+        },
+        {
+          "src": "impact",
+          "at": 12.3,
+          "dur": 3,
+          "volume": 0.5
+        }
+      ]
+    },
+    {
+      "set": "ketuk",
+      "voiceName": "Charon",
+      "voiceStyle": "Narrator lelaki, berbisik perlahan dan tegang.",
+      "say": "Ketika hampir pukul satu pagi, dia terdengar sesuatu dari bilik air. Tiga ketukan yang perlahan.",
+      "duration": 11.0,
+      "voice": "2026-11-15-bilik-378_9.wav",
+      "voiceSec": 6.47,
+      "sfx": [
+        {
+          "src": "clock",
+          "at": 0,
+          "dur": 11,
+          "volume": 0.28,
+          "loop": true,
+          "fade": 0.5
+        },
+        {
+          "src": "knock",
+          "at": 7.0,
+          "dur": 0.5,
+          "volume": 0.95
+        },
+        {
+          "src": "knock",
+          "at": 8.0,
+          "dur": 0.5,
+          "volume": 0.95
+        },
+        {
+          "src": "knock",
+          "at": 9.0,
+          "dur": 0.5,
+          "volume": 0.95
+        }
+      ]
+    },
+    {
+      "set": "bayang",
+      "voiceName": "Charon",
+      "voiceStyle": "Narrator lelaki, tegang dan makin laju di hujung ayat.",
+      "say": "Dia cuba memeriksa keadaan. Tetapi bilik air itu kosong. Ketika dia berpaling, satu bayang hitam melintas dengan pantas di belakang pintu.",
+      "duration": 10.0,
+      "voice": "2026-11-15-bilik-378_10.wav",
+      "voiceSec": 6.98,
+      "sfx": [
+        {
+          "src": "creak",
+          "at": 2.0,
+          "dur": 2,
+          "volume": 0.55
+        },
+        {
+          "src": "whoosh",
+          "at": 6.1,
+          "dur": 1.2,
+          "volume": 0.8
+        },
+        {
+          "src": "impact",
+          "at": 6.6,
+          "dur": 3,
+          "volume": 0.9
+        }
+      ]
+    },
+    {
+      "set": "kaunter",
+      "voiceName": "Charon",
+      "say": "Ketakutan, dia terus berlari ke kaunter hotel. Dia menceritakan kejadian tersebut kepada receptionist. Lelaki itu terus terdiam apabila mendengar nombor Bilik 378. Kemudian, receptionist memberitahu bahawa bilik tersebut sebenarnya sudah ditutup selama tiga bulan selepas berlaku satu kematian. Receptionist menunjukkan sekeping gambar penghuni lama bilik tersebut.",
+      "duration": 30.0,
+      "voiceSec": 29.0,
+      "sfx": [
+        {
+          "src": "impact",
+          "at": 8.1,
+          "dur": 3,
+          "volume": 0.55
+        },
+        {
+          "src": "whoosh",
+          "at": 24.3,
+          "dur": 1.2,
+          "volume": 0.4
+        }
+      ]
+    },
+    {
+      "set": "wajah",
+      "voiceName": "Charon",
+      "say": "Apabila melihat gambar itu, dia terus mengenali wajah tersebut. Itulah wajah yang dilihatnya di dalam bilik air. Dia segera kembali kepada dua orang sahabatnya dan menceritakan semuanya. Malam itu, mereka tidak mahu tidur berasingan lagi.",
+      "duration": 20.0,
+      "voiceSec": 19.0,
+      "sfx": [
+        {
+          "src": "whoosh",
+          "at": 5.9,
+          "dur": 1.2,
+          "volume": 0.6
+        },
+        {
+          "src": "impact",
+          "at": 6.1,
+          "dur": 3,
+          "volume": 0.9
+        }
+      ]
+    },
+    {
+      "set": "pagi",
+      "voiceName": "Charon",
+      "voiceStyle": "Narrator lelaki, perlahan, soalan akhir berbisik dan menyeramkan.",
+      "say": "Keesokan paginya, mereka terus meninggalkan hotel itu. Tetapi satu persoalan masih belum terjawab. Jika Bilik 378 sudah ditutup selama tiga bulan, siapa sebenarnya yang berada di dalamnya malam itu?",
+      "duration": 17.8,
+      "voiceSec": 14.5,
+      "sfx": [
+        {
+          "src": "creak",
+          "at": 6.5,
+          "dur": 2,
+          "volume": 0.5
+        },
+        {
+          "src": "door_close",
+          "at": 12.0,
+          "dur": 1,
+          "volume": 0.9
+        },
+        {
+          "src": "impact",
+          "at": 15.9,
+          "dur": 2.4,
+          "volume": 0.8
+        }
+      ]
+    }
+  ],
+  "wordsPerSec": 1.15
+}

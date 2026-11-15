@@ -60,7 +60,9 @@ function validateDuration(d) {
   const errs = [];
   if (!Array.isArray(d.scenes) || d.scenes.length === 0) errs.push('scenes kosong');
   const total = (d.scenes || []).reduce((a, s) => a + (s.duration || 0), 0);
-  if (total < spec.minDurationSec || total > spec.maxDurationSec) errs.push(`jumlah durasi ${total}s luar julat`);
+  // maxDurationSec dalam scenes.json = had khas video panjang (cth episod seram 180s)
+  const max = d.maxDurationSec || spec.maxDurationSec;
+  if (total < spec.minDurationSec || total > max) errs.push(`jumlah durasi ${total}s luar julat`);
   return errs;
 }
 

@@ -46,10 +46,11 @@ for (const [i, scene] of doc.scenes.entries()) {
   const pcm = join(outDir, `.voice_${i}.pcm`);
   // TTS kadang-kadang ulang ayat dua kali: kalau terlalu panjang berbanding bilangan perkataan, cuba lagi
   const words = scene.say.split(/\s+/).filter(Boolean).length;
-  const maxSec = words / 2.2 + 1.5;
+  // wordsPerSec dalam scenes.json untuk suara perlahan (cth narrator seram) supaya tak cuba semula sia-sia
+  const maxSec = words / (doc.wordsPerSec || 2.2) + 1.5;
   let seconds = 0;
   for (let attempt = 1; attempt <= 3; attempt++) {
-    synthesize(directorPrompt(style, scene.say), pcm, scene.voiceName || voice.voiceName);
+    synthesize(directorPrompt(scene.voiceStyle || style, scene.say), pcm, scene.voiceName || voice.voiceName);
     run('ffmpeg', ['-v', 'error', '-y', '-f', 's16le', '-ar', '24000', '-ac', '1', '-i', pcm, join(publicDir, file)]);
     cleanTail(join(publicDir, file));
     seconds = audioSeconds(join(publicDir, file));
@@ -59,6 +60,7 @@ for (const [i, scene] of doc.scenes.entries()) {
   if (doc.voiceSpeed && doc.voiceSpeed !== 1) speedUp(join(publicDir, file), doc.voiceSpeed);
   seconds = audioSeconds(join(publicDir, file));
   scene.voice = file;
+  scene.voiceSec = Math.round(seconds * 100) / 100;
   scene.duration = Math.ceil((seconds + 0.4) * 10) / 10;
   console.log(`scene ${i}: ${seconds.toFixed(1)}s suara → durasi ${scene.duration}s`);
 }

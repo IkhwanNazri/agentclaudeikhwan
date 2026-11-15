@@ -453,7 +453,7 @@ export type Pose = {
   head?: number;
   mouth?: number; // 0 tutup .. 1 buka
   eyes?: 'open' | 'wide' | 'closed';
-  hold?: 'coffee' | 'phone' | 'clock' | 'pot' | 'book' | 'mic' | 'box' | 'teh' | null;
+  hold?: 'coffee' | 'phone' | 'clock' | 'pot' | 'book' | 'mic' | 'box' | 'teh' | 'bag' | null;
   phoneGlow?: number;
 };
 
@@ -488,6 +488,14 @@ const HoldItem = ({ item, glow = 1 }: { item: NonNullable<Pose['hold']>; glow?: 
         <Paper shape={poly([[-0.17, 0], [0.17, 0], [0.13, -0.26], [-0.13, -0.26]])} color="#c0643a" />
         <Paper shape={ellipse(0.09, 0.22)} color={C.green} position={[-0.05, 0.2, -0.01]} rotation={[0, 0, 0.3]} />
         <Paper shape={ellipse(0.08, 0.2)} color="#6b9a5a" position={[0.07, 0.18, -0.02]} rotation={[0, 0, -0.35]} />
+      </group>
+    );
+  if (item === 'bag')
+    return (
+      <group position={[-0.05, -1.1, 0.07]}>
+        <Paper shape={rect(0.7, 0.5, 0.08)} color="#5a3b2a" />
+        <Paper shape={rect(0.7, 0.07, 0)} color="#3d2618" position={[0, 0.05, 0.02]} />
+        <Paper shape={rect(0.3, 0.16, 0.06)} color="#2a1a10" position={[0, 0.3, -0.01]} />
       </group>
     );
   if (item === 'box')

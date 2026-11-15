@@ -78,7 +78,7 @@ const GESTURE: Record<Mood, string> = { idle: 'hand0', talk: 'hand0', happy: 'ha
 const BODY_W = 1.45;
 
 // Boneka pengacara: badan + kepala ekspresi (tukar ikut mulut/mood) + tangan bergagang
-export const Host = ({ who, lf, talking, mood = 'idle', gesture }: { who: Who; lf: number; talking: boolean; mood?: Mood; gesture?: string }) => {
+export const Host = ({ who, lf, talking, mood = 'idle', gesture, side: sideIn }: { who: Who; lf: number; talking: boolean; mood?: Mood; gesture?: string; side?: 1 | -1 }) => {
   const f = FACES[who];
   const mouthOpen = talking && Math.sin(lf * 1.25) > -0.2;
   const face = talking
@@ -88,7 +88,7 @@ export const Host = ({ who, lf, talking, mood = 'idle', gesture }: { who: Who; l
   const nod = talking ? Math.sin(lf * 0.6) * 0.06 : Math.sin(lf * 0.15) * 0.025;
   const handSwing = talking ? Math.sin(lf * 0.35) * 0.35 : mood === 'shock' ? Math.sin(lf * 0.9) * 0.25 : 0.05;
   const handLift = talking || mood === 'shock' || mood === 'scared' ? 0 : -0.35;
-  const side = who === 'host' ? 1 : -1; // tangan di sebelah dalam (ke tengah pentas)
+  const side = sideIn ?? (who === 'host' ? 1 : -1); // tangan di sebelah dalam (ke tengah pentas)
   const bodyH = BODY_W * (who === 'host' ? 621 / 333 : 636 / 321);
   return (
     <group position={[shake, 0, 0]}>
@@ -109,8 +109,8 @@ export const HostOnRod = ({ who, x, y, z = 0.9, scale = 1, lf, talking, mood, ge
 }) => {
   const bounce = talking ? Math.abs(Math.sin(lf * 0.3)) * 0.1 : 0;
   return (
-    <Puppeteer rod={1.9 * scale} x={x} y={y + bounce} z={z} scale={scale} tilt={(who === 'host' ? 1 : -1) * bounce * 0.3}>
-      <Host who={who} lf={lf} talking={talking} mood={mood} gesture={gesture} />
+    <Puppeteer rod={1.9 * scale} x={x} y={y + bounce} z={z} scale={scale} tilt={(x < 0 ? 1 : -1) * bounce * 0.3}>
+      <Host who={who} lf={lf} talking={talking} mood={mood} gesture={gesture} side={x < 0 ? 1 : -1} />
     </Puppeteer>
   );
 };

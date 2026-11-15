@@ -11,6 +11,7 @@ content/**/.render-props.json
 video/out/
 video/public/*
 !video/public/placthinc/
+!video/public/sfx/
 # skill komuniti dipasang oleh scripts/install-skills.sh
 .claude/skills/last30days/
 .claude/skills/social/

@@ -3,7 +3,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { useThree } from '@react-three/fiber';
 import { ThreeCanvas } from '@remotion/three';
 import {
-  AbsoluteFill, Audio, Sequence, continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig,
+  AbsoluteFill, Audio, Img, Sequence, continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig,
 } from 'remotion';
 import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/800.css';
@@ -15,7 +15,10 @@ import { HangLamp, HauntedBackdrop, HostOnRod, PodcastDesk, Sprite, flickerAt, l
 export type ShowSet = 'intro' | 'curtain' | 'routine' | 'study' | 'road' | 'janet' | 'memory' | 'scroll' | 'balcony' | 'cta'
   | 'school' | 'move' | 'hours' | 'three' | 'chat' | 'meetup'
   | 'versus' | 'brain' | 'fatigue' | 'bike' | 'sleep' | 'rest'
-  | 'podcast' | 'seram';
+  | 'podcast' | 'seram'
+  | 'tiga' | 'bilik' | 'malam' | 'ketuk' | 'bayang' | 'kaunter' | 'wajah' | 'pagi';
+// SFX: at = saat dari mula babak; dur = panjang main (boleh lepas babak); fade = saat fade masuk/keluar
+export type Sfx = { src: string; at: number; dur?: number; volume?: number; loop?: boolean; fade?: number };
 export type SeramProp = 'house' | 'mirror' | 'key' | 'photos' | 'bell' | 'skull' | 'lantern' | 'books';
 export type ShowScene = {
   set: ShowSet;
@@ -29,8 +32,12 @@ export type ShowScene = {
   text?: string;
   prop?: SeramProp; // set seram: prop utama di tengah
   mood?: Mood; // reaksi pengacara (talk/shock/scared/sad/happy/angry)
+  voiceSec?: number; // panjang suara sebenar (diisi tts.mjs)
+  voiceStyle?: string;
+  caption?: string; // teks sari kata kalau lain dari say
+  sfx?: Sfx[];
 };
-export type ShowProps = { title?: string; theme?: 'placthinc'; scenes: ShowScene[] };
+export type ShowProps = { title?: string; theme?: 'placthinc'; maxDurationSec?: number; scenes: ShowScene[] };
 
 const STEP = 2; // 15fps rasa stop-motion
 const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
@@ -40,7 +47,7 @@ const HOST2: Look = { hair: 'short', hairColor: '#1f1a18', shirt: '#e07a3f', pan
 
 // ---------------------------------------------------------------- utiliti
 
-type Ctx = { lf: number; dur: number; fps: number; scene: ShowScene; prev?: ShowSet; theme?: 'placthinc' };
+type Ctx = { lf: number; dur: number; fps: number; scene: ShowScene; prev?: ShowSet; theme?: 'placthinc'; vf?: number };
 
 const rise = (lf: number, fps: number, delay = 3) => interpolate(spring({ frame: lf - delay, fps, config: { damping: 13 } }), [0, 1], [-6.5, 0]);
 const talk = (lf: number, voiceFrames: number) => (lf < voiceFrames ? (Math.sin(lf * 1.25) > -0.2 ? 0.9 : 0.25) : 0);
@@ -1103,34 +1110,485 @@ const PlacthincCta = ({ lf, fps }: Ctx) => {
   );
 };
 
-// Pembukaan: dua pengacara depan tirai hitam, logo + kad tajuk turun
+// Pembukaan (ikut rujukan owner): tirai hitam tertutup, logo besar di tengah, 2 lampu gantung,
+// co-host kiri + host kanan di meja podcast (mikrofon, tanglung, buku, tengkorak). Semua turun bila intro tamat.
 const PlacthincHosts = ({ frame, fps, intro, title }: { frame: number; fps: number; intro: Timed[]; title: string }) => {
   const cur = intro.find((s) => frame >= s.start && frame < s.start + s.dur);
   const last = intro[intro.length - 1];
   const introEnd = last.start + last.dur;
   const titleScene = intro.find((s) => s.scene.title);
-  const exit = interpolate(frame, [introEnd, introEnd + fps * 0.6], [0, 1], clamp);
+  const exit = interpolate(frame, [introEnd, introEnd + fps * 0.9], [0, 1], { ...clamp, easing: (t) => t * t });
   if (exit >= 1) return null;
   const enter = interpolate(spring({ frame, fps, config: { damping: 12 } }), [0, 1], [-2.5, 0]);
-  const y = -0.35 + enter - exit * 7;
+  const y = -0.55 + enter;
   const talking = (w: Who) => !!cur && speakerOf(cur.scene) === w && frame - cur.start < cur.voiceFrames;
   const lf = cur ? frame - cur.start : frame;
+  const moodOf = (w: Who): Mood => (cur && speakerOf(cur.scene) === w ? cur.scene.mood ?? 'talk' : 'idle');
   const titleIn = titleScene ? spring({ frame: frame - titleScene.start - 4, fps, config: { damping: 10 } }) : 0;
-  const titleY = interpolate(titleIn, [0, 1], [7, 1.7]) + exit * 7;
+  const titleOut = titleScene ? interpolate(frame, [titleScene.start + titleScene.dur, titleScene.start + titleScene.dur + 8], [0, 1], clamp) : 0;
   return (
-    <>
-      <group position={[0, exit * 7 + titleIn * 0.35, 0]}>
-        <HangingLogo lf={frame} fps={fps} y={2.95} w={3.0} delay={2} z={1.05} />
-      </group>
-      {titleScene ? (
-        <group position={[0, titleY, 1.15]} rotation={[0, 0, Math.sin(frame * 0.12) * 0.03]} scale={0.62}>
+    <group position={[0, -exit * 8, 0]}>
+      <HangLamp x={-1.75} y={3.3} flicker={flickerAt(frame)} />
+      <HangLamp x={1.75} y={3.3} flicker={flickerAt(frame + 9)} />
+      <HangingLogo lf={frame} fps={fps} y={2.25} w={3.3} delay={2} z={1.0} />
+      {titleScene && titleIn > 0.01 && titleOut < 1 ? (
+        <group position={[0, interpolate(titleIn, [0, 1], [6, 0.75]) + titleOut * 6, 1.7]} rotation={[0, 0, Math.sin(frame * 0.12) * 0.03]} scale={0.5}>
           <TitleCard title={title} skull />
         </group>
       ) : null}
-      <HostOnRod who="host" x={-1.35} y={y} z={1.0} scale={0.9} lf={lf} talking={talking('host')} mood={cur?.scene.mood ?? 'talk'} />
-      <HostOnRod who="cohost" x={1.35} y={y} z={1.0} scale={0.9} lf={lf} talking={talking('cohost')} mood={cur?.scene.mood ?? 'talk'} />
+      <HostOnRod who="cohost" x={-1.4} y={y} z={1.0} scale={0.86} lf={lf} talking={talking('cohost')} mood={moodOf('cohost')} />
+      <HostOnRod who="host" x={1.4} y={y} z={1.0} scale={0.86} lf={lf} talking={talking('host')} mood={moodOf('host')} />
+      <PodcastDesk lf={frame} y={-1.6} z={1.45} />
+    </group>
+  );
+};
+
+// ---------------------------------------------------------------- PLACTHINC EP01: Bilik 378 (hotel lama)
+// Watak cerita guna boneka sedia ada: Aina, Friend (tudung biru), wanita CROWD; receptionist & penghuni lama dari CROWD.
+
+const SAHABAT: Look[] = [AINA, FRIEND, CROWD[1].look];
+const RECEP: Look = CROWD[0].look;
+const ARWAH: Look = CROWD[3].look;
+const BAYANG: Look = { ...ARWAH, skin: '#060507', shirt: '#060507', pants: '#060507', hairColor: '#060507' };
+
+const seg = (t: number, a: number, b: number) => interpolate(t, [a, b], [0, 1], clamp);
+const sfxAt = (scene: ShowScene, src: string) => (scene.sfx ?? []).filter((x) => x.src === src).map((x) => x.at);
+// berjalan: kaki & tangan berayun bila bergerak
+const stride = (lf: number, moving: number, speed = 0.6) => ({
+  leg: Math.sin(lf * speed) * 0.4 * moving,
+  armF: 0.15 + Math.sin(lf * speed) * 0.45 * moving,
+  armB: Math.sin(lf * speed + Math.PI) * 0.35 * moving,
+  bob: Math.abs(Math.sin(lf * speed)) * 0.08 * moving,
+});
+
+const Walker = ({ look, x, y, z = -0.4, scale = 0.72, lf, moving = 0, flip = false, pose = {}, rod = 1.6, shake = 0, speed }: {
+  look: Look; x: number; y: number; z?: number; scale?: number; lf: number; moving?: number; flip?: boolean; pose?: Parameters<typeof Puppet>[0]['pose']; rod?: number; shake?: number; speed?: number;
+}) => {
+  const s = stride(lf, moving, speed);
+  const jitter = shake ? Math.sin(lf * 2.7) * 0.04 * shake : 0;
+  return (
+    <Puppeteer rod={rod} x={x + jitter} y={y + s.bob} z={z} scale={scale} tilt={moving ? Math.sin(lf * (speed ?? 0.6)) * 0.04 : 0}>
+      <group scale={[flip ? -1 : 1, 1, 1]}>
+        <Puppet look={look} pose={{ leg: s.leg, armF: s.armF, armB: s.armB, ...pose }} />
+      </group>
+    </Puppeteer>
+  );
+};
+
+const RoomWall = ({ color = '#4a3428', trim = '#2c1d16', night = false }: { color?: string; trim?: string; night?: boolean }) => (
+  <group>
+    <Paper shape={rect(6.4, 7.6, 0)} color={color} depth={0.05} position={[0, 1.4, -2.2]} cast={false} />
+    {Array.from({ length: 9 }, (_, i) => (
+      <Paper key={i} shape={rect(0.06, 4.6, 0)} color={trim} depth={0.01} position={[-2.8 + i * 0.7, 2.6, -2.14]} cast={false} />
+    ))}
+    <Paper shape={rect(6.4, 1.3, 0)} color={trim} depth={0.06} position={[0, -0.75, -2.12]} cast={false} />
+    <group position={[0, 0, 0]}>{night ? null : null}</group>
+  </group>
+);
+
+const Window = ({ x, y, moon = true }: { x: number; y: number; moon?: boolean }) => (
+  <group position={[x, y, -2.05]}>
+    <Paper shape={rect(1.3, 1.5, 0.04)} color="#2a1a12" depth={0.05} />
+    <Paper shape={rect(1.1, 1.3, 0.02)} color={moon ? '#141a33' : '#f3c98f'} depth={0.02} position={[0, 0, 0.04]} />
+    {moon ? <Paper shape={circle(0.2)} color="#f3eccc" glow="#c9c29a" position={[0.25, 0.3, 0.07]} /> : null}
+    <Paper shape={rect(0.05, 1.3, 0)} color="#2a1a12" depth={0.02} position={[0, 0, 0.08]} />
+    <Paper shape={rect(1.1, 0.05, 0)} color="#2a1a12" depth={0.02} position={[0, 0, 0.08]} />
+  </group>
+);
+
+// Pintu berengsel di kiri; open 0..1; nombor pada plat
+const Door = ({ x, y = -0.15, z = -1.9, open = 0, label, w = 1.25, h = 2.7, color = '#5b3a24', shake = 0 }: {
+  x: number; y?: number; z?: number; open?: number; label?: string; w?: number; h?: number; color?: string; shake?: number;
+}) => (
+  <group position={[x, y, z]}>
+    <Paper shape={rect(w + 0.24, h + 0.14, 0.02)} color="#22150e" depth={0.05} position={[0, 0.05, -0.04]} />
+    <Paper shape={rect(w, h, 0.02)} color="#07060a" depth={0.02} position={[0, 0, -0.01]} />
+    <group position={[-w / 2, 0, 0.03]} rotation={[0, -open * 1.25, shake]}>
+      <group position={[w / 2, 0, 0]}>
+        <Paper shape={rect(w, h, 0.03)} color={color} depth={0.05} />
+        <Paper shape={rect(w * 0.7, h * 0.32, 0.03)} color="#4a2e1c" depth={0.02} position={[0, h * 0.2, 0.04]} />
+        <Paper shape={rect(w * 0.7, h * 0.32, 0.03)} color="#4a2e1c" depth={0.02} position={[0, -h * 0.2, 0.04]} />
+        <mesh position={[w * 0.36, -0.05, 0.1]}><sphereGeometry args={[0.06, 12, 10]} /><meshStandardMaterial color="#d6a740" metalness={0.6} roughness={0.3} /></mesh>
+        {label ? (
+          <group position={[0, h * 0.42, 0.08]}>
+            <Paper shape={rect(0.62, 0.28, 0.04)} color="#d6a740" depth={0.02} />
+            <TextPlane lines={[{ text: label, color: '#1a0d0f', size: 200 }]} w={0.58} h={0.26} position={[0, 0, 0.025]} pxW={520} pxH={240} />
+          </group>
+        ) : null}
+      </group>
+    </group>
+  </group>
+);
+
+const Lamp = ({ x, y, on = 1 }: { x: number; y: number; on?: number }) => (
+  <group position={[x, y, -2.0]}>
+    <Paper shape={poly([[-0.22, 0], [0.22, 0], [0.14, 0.32], [-0.14, 0.32]])} color="#e9c98a" glow={on > 0.5 ? '#ffcf7a' : undefined} depth={0.04} />
+    <pointLight position={[0, 0.1, 0.6]} intensity={4 * on} distance={3.5} color="#ffbf70" />
+  </group>
+);
+
+// Gambar lama penghuni bilik (boneka sebenar + lapisan sepia di depan)
+const OldPhoto = ({ scale = 1 }: { scale?: number }) => (
+  <group scale={scale}>
+    <Paper shape={rect(1.5, 1.9, 0.04)} color="#efe2c6" depth={0.04} />
+    <Paper shape={rect(1.28, 1.5, 0.02)} color="#6e5844" depth={0.02} position={[0, 0.1, 0.03]} />
+    <group position={[0, 0.02, 0.06]} scale={0.46}>
+      <Puppet look={ARWAH} pose={{ armF: 0.1, mouth: 0 }} />
+    </group>
+    <mesh position={[0, 0.1, 0.45]}>
+      <planeGeometry args={[1.28, 1.5]} />
+      <meshBasicMaterial color="#b08a5a" transparent opacity={0.38} />
+    </mesh>
+    <Paper shape={rect(1.5, 0.24, 0.0)} color="#efe2c6" depth={0.02} position={[0, -0.83, 0.47]} />
+  </group>
+);
+
+const TokText = ({ lf, at, fps, i }: { lf: number; at: number; fps: number; i: number }) => {
+  const k = lf - at * fps;
+  if (k < 0 || k > fps * 1.2) return null;
+  const s = spring({ frame: k, fps, config: { damping: 8 } });
+  return (
+    <group position={[1.0 + i * 0.35, 1.7 - i * 0.45, 0.2]} scale={s} rotation={[0, 0, -0.15 + i * 0.12]}>
+      <TextPlane lines={[{ text: 'TOK!', color: '#ffd64a', size: 260 }]} w={1.1} h={0.5} pxW={700} pxH={320} />
+    </group>
+  );
+};
+
+const Room378 = ({ lf, bathOpen = 0, bathShake = 0, entryOpen = 0.35, clockSpin = Math.PI * 2, flick = 1 }: { lf: number; bathOpen?: number; bathShake?: number; entryOpen?: number; clockSpin?: number; flick?: number }) => (
+  <>
+    <RoomWall color="#2c2a3a" trim="#1a1824" />
+    <Window x={-0.7} y={2.3} />
+    <group position={[0.8, 2.9, -2.05]}><Clock spin={clockSpin} r={0.42} /></group>
+    <Door x={-2.15} open={entryOpen} label="378" />
+    <Door x={1.95} open={bathOpen} shake={bathShake} color="#6a6a72" w={1.1} />
+    <Lamp x={0.2} y={0.15} on={0.35 * flick} />
+  </>
+);
+
+// --- babak 3: tiga sahabat tiba di hotel lama
+const Tiga = ({ lf, dur, fps, scene, vf }: Ctx) => {
+  const v = lf / Math.max(1, vf ?? dur);
+  const arrive = (k: number) => seg(v, 0.1 + k * 0.05, 0.38 + k * 0.05);
+  const xs = [-1.55, -0.55, 0.45];
+  const sep = seg(v, 0.68, 0.82);
+  const keyDrop = (a: number) => interpolate(spring({ frame: lf - a * (vf ?? dur), fps, config: { damping: 10 } }), [0, 1], [5, 0]);
+  return (
+    <>
+      <Fly lf={lf} fps={fps}><HauntedBackdrop /></Fly>
+      {scene.banner ? <HangBanner text={scene.banner} lf={lf} fps={fps} y={3.5} z={-0.6} /> : null}
+      {SAHABAT.map((look, k) => {
+        const a = arrive(k);
+        const x = interpolate(a, [0, 1], [-4.6, xs[k]]) + (k === 2 ? sep * 1.25 : 0);
+        const moving = (a > 0 && a < 1) || (k === 2 && sep > 0 && sep < 1) ? 1 : 0;
+        const lookUp = a >= 1 && v < 0.6 ? Math.sin(lf * 0.1 + k) * 0.08 + 0.12 : 0;
+        return (
+          <Walker key={k} look={look} x={x} y={-0.55} z={-0.3 + k * 0.05} lf={lf + k * 5} moving={moving}
+            flip={k === 2 && sep >= 1} pose={{ hold: 'bag', head: lookUp, mouth: v > 0.4 && v < 0.6 && k === 0 ? (Math.sin(lf) > 0 ? 0.6 : 0.2) : 0 }} />
+        );
+      })}
+      {v > 0.5 ? (
+        <group position={[-1.05, 2.0 + keyDrop(0.5), 0.1]} rotation={[0, 0, Math.sin(lf * 0.15) * 0.1]}>
+          <Sprite name="key" w={0.7} />
+        </group>
+      ) : null}
+      {v > 0.74 ? (
+        <group position={[1.7, 2.0 + keyDrop(0.74), 0.1]} rotation={[0, 0, Math.sin(lf * 0.15 + 1) * 0.1]}>
+          <Sprite name="key" w={0.7} />
+        </group>
+      ) : null}
     </>
   );
+};
+
+// --- babak 4: bilik pertama (2 katil) → pintu Bilik 378 → bilik 378 (1 katil)
+const BilikBag = ({ x, y }: { x: number; y: number }) => (
+  <group position={[x, y, -0.05]}>
+    <Paper shape={rect(0.7, 0.5, 0.08)} color="#5a3b2a" />
+    <Paper shape={rect(0.3, 0.16, 0.06)} color="#2a1a10" position={[0, 0.3, -0.01]} />
+  </group>
+);
+
+const Bilik = ({ lf, dur, fps, vf }: Ctx) => {
+  const v = lf / Math.max(1, vf ?? dur);
+  if (v < 0.42) {
+    // bilik pertama: dua katil, dua sahabat letak beg & duduk
+    const walk = (k: number) => seg(v, 0.04 + k * 0.03, 0.16 + k * 0.03);
+    const placed = v > 0.22;
+    const sit = seg(v, 0.26, 0.32);
+    return (
+      <>
+        <Fly lf={lf} fps={fps}>
+          <RoomWall color="#5a4030" trim="#3a281c" />
+          <Window x={0} y={2.4} moon={false} />
+          <Lamp x={-1.45} y={0.4} on={1} />
+          <Lamp x={1.45} y={0.4} on={1} />
+        </Fly>
+        <HangBanner text="Bilik 1 · 2 katil" lf={lf} fps={fps} y={3.55} z={-0.5} />
+        {[0, 1].map((k) => {
+          const a = walk(k);
+          const bx = k === 0 ? -1.45 : 1.45;
+          const x = interpolate(a, [0, 1], [k === 0 ? -4.4 : 4.4, bx]);
+          return (
+            <Walker key={k} look={SAHABAT[k]} x={x} y={-0.45 - sit * 0.45} z={-0.45} lf={lf + k * 4} moving={a > 0 && a < 1 ? 1 : 0}
+              flip={k === 1} scale={0.7} pose={{ hold: placed ? null : 'bag', armF: placed ? 0.4 + Math.sin(lf * 0.2 + k) * 0.15 : undefined, mouth: placed && Math.floor(lf / 8 + k) % 2 === 0 ? 0.5 : 0 }} />
+          );
+        })}
+        <Bed x={-1.45} />
+        <Bed x={1.45} />
+        {placed ? <><BilikBag x={-0.65} y={-0.7} /><BilikBag x={2.25} y={-0.7} /></> : null}
+      </>
+    );
+  }
+  if (v < 0.72) {
+    // koridor: pintu Bilik 378, sahabat ketiga masuk seorang diri
+    const lv = seg(v, 0.42, 0.72);
+    const walk = seg(lv, 0.05, 0.4);
+    const open = seg(lv, 0.45, 0.62);
+    const enter = seg(lv, 0.66, 0.95);
+    const x = interpolate(walk, [0, 1], [-4.2, -0.75]) + enter * 0.75;
+    return (
+      <>
+        <RoomWall color="#3a3428" trim="#24201a" />
+        <Lamp x={-1.9} y={1.6} on={0.8} />
+        <Lamp x={1.9} y={1.6} on={0.5} />
+        <Door x={0} open={open} label="378" />
+        <Walker look={SAHABAT[2]} x={x} y={-0.45 + enter * 0.25} z={-0.4 - enter * 1.35} scale={0.72 - enter * 0.12} lf={lf} moving={walk > 0 && walk < 1 || (enter > 0 && enter < 1) ? 1 : 0}
+          pose={{ hold: 'bag', armF: walk >= 1 && enter === 0 ? 1.3 : undefined, head: walk >= 1 && open < 1 ? 0.1 : 0 }} />
+      </>
+    );
+  }
+  // dalam Bilik 378: satu katil sahaja
+  const lv = seg(v, 0.72, 1);
+  const sit = seg(lv, 0.2, 0.35);
+  return (
+    <>
+      <RoomWall color="#3a3546" trim="#24202e" />
+      <Window x={-0.6} y={2.4} moon={false} />
+      <Door x={1.95} open={0} color="#6a6a72" w={1.1} />
+      <HangBanner text="Bilik 378 · 1 katil" lf={lf - (vf ?? dur) * 0.72} fps={fps} y={3.55} z={-0.5} />
+      <Lamp x={-1.9} y={0.4} on={0.8} />
+      <Walker look={SAHABAT[2]} x={-0.6} y={-0.45 - sit * 0.45} z={-0.45} scale={0.7} lf={lf} moving={0}
+        pose={{ hold: sit > 0 ? null : 'bag', armF: 0.3, head: Math.sin(lf * 0.08) * 0.1 }} />
+      <Bed x={-0.6} />
+      {sit > 0 ? <BilikBag x={0.2} y={-0.7} /> : null}
+    </>
+  );
+};
+
+// --- babak 5: malam pertama (pentas terbelah), kamera ke pintu bilik air
+const MiniBed = ({ x, s = 0.62 }: { x: number; s?: number }) => (
+  <group position={[x, 0, 0]} scale={[s, s, 1]}>
+    <Bed x={0} />
+  </group>
+);
+const Malam = ({ lf, dur, fps, scene, vf }: Ctx) => {
+  const v = lf / Math.max(1, vf ?? dur);
+  const night2 = v > 0.78;
+  const fl = night2 ? flickerAt(lf) : 1;
+  return (
+    <>
+      <Fly lf={lf} fps={fps}>
+        <Paper shape={rect(3.2, 7.6, 0)} color="#3a2e2a" depth={0.05} position={[-1.6, 1.4, -2.2]} cast={false} />
+        <Paper shape={rect(3.2, 7.6, 0)} color="#262434" depth={0.05} position={[1.6, 1.4, -2.2]} cast={false} />
+        <Paper shape={rect(0.1, 7.6, 0)} color={C.ink} position={[0, 1.4, -2.1]} />
+        <Window x={-1.6} y={2.5} />
+        <group position={[1.0, 2.7, -2.05]}><Clock spin={lf * 0.12 + 4} r={0.38} /></group>
+        <Door x={2.25} open={0} color="#6a6a72" w={0.9} h={2.4} />
+      </Fly>
+      <HangBanner text={night2 ? 'Malam kedua' : (scene.banner ?? 'Malam pertama')} lf={night2 ? lf - (vf ?? dur) * 0.78 : lf} fps={fps} y={3.55} z={-0.5} />
+      {/* bilik 1: dua sahabat berbaring di dua katil */}
+      {[0, 1].map((k) => (
+        <group key={k} position={[k === 0 ? -2.25 : -0.85, -0.78, -0.35]} rotation={[0, 0, Math.PI / 2]} scale={0.42}>
+          <Puppet look={SAHABAT[k]} pose={{ eyes: 'closed', armF: 0.3 + Math.sin(lf * 0.05 + k) * 0.05 }} />
+        </group>
+      ))}
+      <MiniBed x={-2.25} />
+      <MiniBed x={-0.85} />
+      {/* bilik 378: satu katil, sahabat ketiga duduk seorang */}
+      <Walker look={SAHABAT[2]} x={1.0} y={-0.85} z={-0.45} scale={0.6} lf={lf} moving={0} rod={1.4}
+        pose={{ armF: 1.2, hold: 'phone', eyes: night2 ? 'wide' : 'open', head: night2 ? -0.18 : Math.sin(lf * 0.1) * 0.05 }} />
+      <MiniBed x={1.0} s={0.75} />
+      <Lamp x={1.6} y={0.2} on={0.5 * fl} />
+      <Lamp x={-1.55} y={0.2} on={0.25} />
+    </>
+  );
+};
+
+// --- babak 6a: tiga ketukan dari bilik air (1 pagi)
+const Ketuk = ({ lf, fps, scene }: Ctx) => {
+  const knocks = sfxAt(scene, 'knock');
+  const hit = knocks.map((a) => lf - a * fps).filter((k) => k >= 0 && k < 6);
+  const shake = hit.length ? Math.sin(hit[0] * 2.4) * 0.025 * (1 - hit[0] / 6) : 0;
+  const startled = knocks.length && lf > knocks[0] * fps;
+  const jump = knocks.length ? Math.max(0, 1 - Math.abs(lf - knocks[0] * fps - 3) / 3) * 0.25 : 0;
+  return (
+    <>
+      <Room378 lf={lf} bathShake={shake} flick={flickerAt(lf)} />
+      <Walker look={SAHABAT[2]} x={-0.6} y={-0.9 + jump} z={-0.45} scale={0.7} lf={lf} moving={0}
+        pose={{ armF: startled ? 2.3 : 1.2, hold: startled ? null : 'phone', eyes: startled ? 'wide' : 'open', mouth: startled ? 0.7 : 0, head: startled ? -0.2 : 0 }}
+        shake={startled ? 1 : 0} flip={!!startled} />
+      <Bed x={-0.6} />
+      {knocks.map((a, i) => <TokText key={i} lf={lf} at={a} fps={fps} i={i} />)}
+    </>
+  );
+};
+
+// --- babak 6b: periksa bilik air → kosong → bayang hitam melintas
+const Bayang = ({ lf, dur, fps, scene, vf }: Ctx) => {
+  const v = lf / Math.max(1, vf ?? dur);
+  const creak = sfxAt(scene, 'creak')[0] ?? 2;
+  const whoosh = sfxAt(scene, 'whoosh')[0] ?? 7;
+  const walk = seg(v, 0.02, 0.22);
+  const open = seg(lf, creak * fps, creak * fps + fps * 1.2);
+  const turned = lf > (whoosh - 0.8) * fps;
+  const pass = seg(lf, whoosh * fps, whoosh * fps + fps * 0.5);
+  const scared = lf > (whoosh + 0.3) * fps;
+  const x = interpolate(walk, [0, 1], [-0.6, 0.85]);
+  return (
+    <>
+      <Room378 lf={lf} bathOpen={open} entryOpen={0.55} flick={turned ? flickerAt(lf) : 0.8} />
+      <Bed x={-0.6} />
+      {pass > 0 && pass < 1 ? (
+        <group position={[interpolate(pass, [0, 1], [-3.4, -1.4]), -0.35, -1.75]} scale={0.8}>
+          <Puppet look={BAYANG} pose={{ armF: 0.4, leg: 0.3 }} />
+        </group>
+      ) : null}
+      <Walker look={SAHABAT[2]} x={x} y={-0.45} z={-0.4} scale={0.72} lf={lf} moving={walk > 0 && walk < 1 ? 1 : 0}
+        flip={turned} shake={scared ? 1.2 : 0}
+        pose={{ armF: open > 0 && !turned ? 1.4 : scared ? 2.4 : undefined, eyes: scared ? 'wide' : 'open', mouth: scared ? 0.8 : 0, head: open >= 1 && !turned ? 0.15 : 0 }} />
+    </>
+  );
+};
+
+// --- babak 7: kaunter hotel, receptionist terdiam, gambar lama
+const Kaunter = ({ lf, dur, fps, vf }: Ctx) => {
+  const v = lf / Math.max(1, vf ?? dur);
+  const run = seg(v, 0.0, 0.1);
+  const silent = v > 0.28 && v < 0.42;
+  const recTalk = v > 0.42 && v < 1 && !silent;
+  const photoUp = spring({ frame: lf - 0.84 * (vf ?? dur), fps, config: { damping: 12 } });
+  return (
+    <>
+      <Fly lf={lf} fps={fps}>
+        <RoomWall color="#3b2a22" trim="#25180f" />
+        <group position={[0.9, 2.95, -2.0]}>
+          <Paper shape={rect(2.0, 0.55, 0.05)} color="#1d1410" depth={0.04} />
+          <TextPlane lines={[{ text: 'KAUNTER', color: '#ffd64a', size: 170 }]} w={1.9} h={0.5} position={[0, 0, 0.04]} pxW={900} pxH={240} />
+        </group>
+        <group position={[2.35, 1.4, -2.0]}>
+          <Paper shape={rect(0.9, 1.3, 0.04)} color="#5b3a24" depth={0.04} />
+          {[0, 1, 2].map((i) => <Sprite key={i} name="key" w={0.24} position={[-0.25 + i * 0.25, 0.1, 0.06]} />)}
+        </group>
+        <Lamp x={-1.6} y={1.6} on={0.7} />
+      </Fly>
+      {/* receptionist di belakang kaunter */}
+      <Walker look={RECEP} x={1.0} y={-0.25} z={-0.9} scale={0.7} lf={lf} moving={0} flip
+        pose={{ eyes: silent ? 'wide' : 'open', mouth: recTalk && Math.sin(lf * 1.1) > 0 ? 0.6 : 0, armF: v > 0.84 ? 1.6 : 0.3, head: silent ? 0 : Math.sin(lf * 0.1) * 0.05 }} />
+      <group position={[1.0, -1.15, -0.55]}>
+        <Paper shape={rect(2.6, 1.3, 0.05)} color="#5b3a24" depth={0.25} />
+        <Paper shape={rect(2.8, 0.14, 0.03)} color="#3a2416" depth={0.3} position={[0, 0.68, 0]} />
+        <Sprite name="bell" w={0.5} position={[-0.7, 0.93, 0.2]} />
+      </group>
+      {v > 0.84 ? (
+        <group position={[0.75, -0.2 + photoUp * 1.65, -0.25]} rotation={[0, 0, -0.08]} scale={photoUp * 0.9}>
+          <OldPhoto />
+        </group>
+      ) : null}
+      {v > 0.5 ? <HangBanner text="Ditutup 3 bulan" lf={lf - 0.5 * (vf ?? dur)} fps={fps} y={3.55} z={-0.4} /> : null}
+      {/* sahabat ketiga berlari ke kaunter dan bercerita */}
+      <Walker look={SAHABAT[2]} x={interpolate(run, [0, 1], [-4.4, -1.35])} y={-0.45} z={-0.3} scale={0.72} lf={lf} moving={run > 0 && run < 1 ? 1 : 0} speed={1.1}
+        shake={run >= 1 ? 0.5 : 0}
+        pose={{ eyes: 'wide', mouth: v > 0.1 && v < 0.3 && Math.sin(lf * 1.2) > 0 ? 0.7 : 0, armF: v > 0.1 && v < 0.3 ? 1.2 + Math.sin(lf * 0.4) * 0.4 : undefined }} />
+    </>
+  );
+};
+
+// --- babak 8: wajah dalam gambar = bayang di bilik air → kembali kepada sahabat
+const Wajah = ({ lf, dur, fps, vf }: Ctx) => {
+  const v = lf / Math.max(1, vf ?? dur);
+  if (v < 0.48) {
+    const swap = seg(v, 0.28, 0.36);
+    const flash = Math.max(0, 1 - Math.abs(v - 0.32) / 0.04);
+    return (
+      <>
+        <RoomWall color="#16141c" trim="#0e0c12" />
+        {swap < 1 ? (
+          <group position={[0, 1.1, 0.2]} scale={interpolate(v, [0, 0.32], [1.9, 2.2], clamp) * (1 - swap)}>
+            <OldPhoto />
+          </group>
+        ) : null}
+        {swap > 0 ? (
+          <group position={[0, 0.9, -1.2]}>
+            <Door x={0} y={0.3} z={-0.6} open={1} color="#6a6a72" w={1.6} h={3.2} />
+            <group scale={swap * 0.95} position={[0, -0.2, -0.45]}>
+              <Puppet look={BAYANG} pose={{ armF: 0.2 }} />
+            </group>
+          </group>
+        ) : null}
+        <Walker look={SAHABAT[2]} x={-1.9} y={-1.0} z={0.4} scale={0.62} lf={lf} moving={0} shake={1.2}
+          pose={{ eyes: 'wide', mouth: 0.8, armF: 2.3 }} />
+        <pointLight position={[0, 1.5, 3]} intensity={300 * flash} distance={14} color="#e6ecff" />
+      </>
+    );
+  }
+  // kembali ke bilik pertama, bertiga tak mahu berpisah
+  const run = seg(v, 0.5, 0.66);
+  const huddle = seg(v, 0.82, 0.95);
+  return (
+    <>
+      <RoomWall color="#3a2e28" trim="#241a14" />
+      <Window x={0} y={2.4} />
+      <Lamp x={-1.6} y={0.4} on={flickerAt(lf) * 0.8} />
+      <Walker look={SAHABAT[0]} x={-1.45 + huddle * 0.75} y={-0.9} z={-0.45} scale={0.66} lf={lf} moving={0}
+        pose={{ eyes: v > 0.68 ? 'wide' : 'open', armF: v > 0.68 ? 1.2 : 0.3, mouth: 0 }} shake={huddle} />
+      <Walker look={SAHABAT[1]} x={1.45 - huddle * 0.75} y={-0.9} z={-0.45} scale={0.66} lf={lf} moving={0} flip
+        pose={{ eyes: v > 0.68 ? 'wide' : 'open', armF: v > 0.68 ? 1.2 : 0.3, mouth: 0 }} shake={huddle} />
+      <Walker look={SAHABAT[2]} x={interpolate(run, [0, 1], [4.4, 0])} y={-0.55 - huddle * 0.3} z={-0.25} scale={0.66} lf={lf}
+        moving={run > 0 && run < 1 ? 1 : 0} speed={1.1} flip shake={huddle}
+        pose={{ eyes: 'wide', mouth: v > 0.66 && v < 0.82 && Math.sin(lf * 1.2) > 0 ? 0.7 : 0, armF: v > 0.66 && v < 0.82 ? 1.5 + Math.sin(lf * 0.4) * 0.5 : 2.2 }} />
+      <Bed x={-1.45} />
+      <Bed x={1.45} />
+    </>
+  );
+};
+
+// --- babak 9: pagi, tinggalkan hotel → pintu 378 tertutup → gelap + logo
+const Pagi = ({ lf, dur, fps, scene, vf }: Ctx) => {
+  const v = lf / Math.max(1, vf ?? dur);
+  const closeAt = sfxAt(scene, 'door_close')[0];
+  if (v < 0.42) {
+    const walk = seg(v, 0.02, 0.4);
+    return (
+      <>
+        <HauntedBackdrop />
+        <mesh position={[0, 1.2, -1.9]}><planeGeometry args={[6.4, 6.6]} /><meshBasicMaterial color="#ffb978" transparent opacity={0.32} /></mesh>
+        <Paper shape={circle(0.42)} color="#ffe2a0" glow="#ffc860" position={[-1.9, 3.3, -1.85]} />
+        {SAHABAT.map((look, k) => (
+          <Walker key={k} look={look} x={interpolate(walk, [0, 1], [-1.4 + k * 0.95, 4.4 + k * 0.95])} y={-0.55} z={-0.3 + k * 0.05}
+            lf={lf + k * 5} moving={1} pose={{ hold: 'bag', head: -0.05 }} />
+        ))}
+      </>
+    );
+  }
+  const closeEnd = closeAt != null ? closeAt * fps : dur * 0.8;
+  const open = interpolate(lf, [0.45 * (vf ?? dur), closeEnd], [1, 0], clamp);
+  return (
+    <>
+      <RoomWall color="#3a3428" trim="#24201a" />
+      <Lamp x={-1.9} y={1.6} on={flickerAt(lf) * 0.7} />
+      <Lamp x={1.9} y={1.6} on={0.4} />
+      <Door x={0} open={open} label="378" />
+    </>
+  );
+};
+
+// kamera khas ikut babak (x, y, z) — dekati pintu bilik air
+const CAMS: Partial<Record<ShowSet, (lf: number, dur: number, vf: number) => { x: number; z: number; ly?: number }>> = {
+  malam: (lf, dur, vf) => { const k = seg(lf, vf * 0.7, dur); return { x: k * 1.6, z: interpolate(k, [0, 1], [13.9, 10.2]), ly: -0.4 + k * 0.3 }; },
+  ketuk: (lf, dur) => { const k = seg(lf, 0, dur); return { x: k * 0.55, z: interpolate(k, [0, 1], [13.6, 11.4]) }; },
+  bayang: (lf, dur) => { const k = seg(lf, 0, dur * 0.4); return { x: 0.5 - k * 0.5, z: interpolate(k, [0, 1], [11.5, 13.2]) }; },
+  wajah: (lf, dur, vf) => { const k = seg(lf, 0, vf * 0.3); return { x: 0, z: interpolate(k, [0, 1], [13.2, 12.0]), ly: -0.2 }; },
+  pagi: (lf, dur, vf) => { const k = seg(lf, vf * 0.42, dur); return { x: 0, z: interpolate(k, [0, 1], [13.6, 10.8]) }; },
 };
 
 // ---------------------------------------------------------------- lampu & kamera
@@ -1165,11 +1623,11 @@ const Lights = ({ mode }: { mode: 'warm' | 'night' | 'dusk' | 'horror' }) => {
   );
 };
 
-const Rig = ({ z }: { z: number }) => {
+const Rig = ({ z, x = 0, ly = -0.4 }: { z: number; x?: number; ly?: number }) => {
   const { camera } = useThree();
   const frame = useCurrentFrame();
-  camera.position.set(Math.sin(frame * 0.01) * 0.12, -0.2, z);
-  camera.lookAt(0, -0.4, 0);
+  camera.position.set(x + Math.sin(frame * 0.01) * 0.12, ly + 0.2, z);
+  camera.lookAt(x, ly, 0);
   return null;
 };
 
@@ -1180,6 +1638,7 @@ const SETS: Partial<Record<ShowSet, (c: Ctx) => ReactNode>> = {
   school: School, move: Move, hours: Hours, three: Three, chat: Chat, meetup: Meetup,
   versus: Versus, brain: BrainScene, fatigue: Fatigue, bike: Bike, sleep: Sleep, rest: Rest,
   podcast: Podcast, seram: Seram,
+  tiga: Tiga, bilik: Bilik, malam: Malam, ketuk: Ketuk, bayang: Bayang, kaunter: Kaunter, wajah: Wajah, pagi: Pagi,
 };
 
 const World = ({ props }: { props: ShowProps }) => {
@@ -1200,12 +1659,14 @@ const World = ({ props }: { props: ShowProps }) => {
   const prev = timeline[timeline.indexOf(cur) - 1]?.scene.set;
   const ctaWarm = cur.scene.set === 'cta' && prev === 'meetup';
   const theme = props.theme;
-  const mode = theme === 'placthinc' ? 'horror' : cur.scene.set === 'scroll' || cur.scene.set === 'chat' || cur.scene.set === 'sleep' ? 'night' : ctaWarm ? 'warm' : cur.scene.set === 'rest' || (cur.scene.set === 'cta' && prev === 'rest') ? 'dusk' : cur.scene.set === 'balcony' || cur.scene.set === 'cta' || cur.scene.set === 'road' ? 'dusk' : 'warm';
+  const nightSet = ['malam', 'ketuk', 'bayang'].includes(cur.scene.set);
+  const mode = theme === 'placthinc' ? (cur.scene.set === 'pagi' && lf < cur.voiceFrames * 0.42 ? 'dusk' : nightSet ? 'night' : 'horror') : cur.scene.set === 'scroll' || cur.scene.set === 'chat' || cur.scene.set === 'sleep' ? 'night' : ctaWarm ? 'warm' : cur.scene.set === 'rest' || (cur.scene.set === 'cta' && prev === 'rest') ? 'dusk' : cur.scene.set === 'balcony' || cur.scene.set === 'cta' || cur.scene.set === 'road' ? 'dusk' : 'warm';
   const storyZ = interpolate(lf, [0, cur.dur], [13.9, 13.2], clamp);
   const camZ = cur.scene.set === 'intro' || cur.scene.set === 'curtain' ? 14.3 : storyZ;
+  const cam = CAMS[cur.scene.set]?.(lf, cur.dur, cur.voiceFrames);
   return (
     <>
-      <Rig z={camZ} />
+      <Rig z={cam?.z ?? camZ} x={cam?.x ?? 0} ly={cam?.ly ?? -0.4} />
       <color attach="background" args={['#120a0c']} />
       <Lights mode={mode} />
       <Stage open={open} dark={theme === 'placthinc'} />
@@ -1215,9 +1676,9 @@ const World = ({ props }: { props: ShowProps }) => {
         const F = first ? SETS[first.scene.set] : undefined;
         const inFirst = first && (cur === first || cur === curtainScene);
         if (F && first && curtainScene && inFirst) {
-          return <F lf={frame - curtainScene.start} dur={first.dur + curtainScene.dur} fps={fps} scene={first.scene} theme={theme} />;
+          return <F lf={frame - curtainScene.start} dur={first.dur + curtainScene.dur} fps={fps} scene={first.scene} theme={theme} vf={first.voiceFrames + curtainScene.dur} />;
         }
-        return Set ? <Set lf={lf} dur={cur.dur} fps={fps} scene={cur.scene} prev={prev} theme={theme} /> : null;
+        return Set ? <Set lf={lf} dur={cur.dur} fps={fps} scene={cur.scene} prev={prev} theme={theme} vf={cur.voiceFrames} /> : null;
       })()}
       {intro.length ? (theme === 'placthinc'
         ? <PlacthincHosts frame={frame} fps={fps} intro={intro} title={props.title ?? ''} />
@@ -1231,7 +1692,8 @@ const timelineOf = (scenes: ShowScene[], fps: number): Timed[] => {
   let t = 0;
   return scenes.map((scene) => {
     const dur = Math.round(scene.duration * fps);
-    const item = { start: t, dur, scene, voiceFrames: Math.max(0, dur - Math.round(0.45 * fps)) };
+    const vfr = scene.voiceSec ? Math.min(dur, Math.round(scene.voiceSec * fps)) : Math.max(0, dur - Math.round(0.45 * fps));
+    const item = { start: t, dur, scene, voiceFrames: vfr };
     t += dur;
     return item;
   });
@@ -1281,14 +1743,42 @@ export const PuppetShow = (props: ShowProps) => {
       {timeline.map((s, i) => (
         <Sequence key={i} from={s.start} durationInFrames={s.dur}>
           {s.scene.voice ? <Audio src={staticFile(s.scene.voice)} /> : null}
-          {s.scene.say ? <Subtitle text={s.scene.say} dur={s.dur} /> : null}
+          {s.scene.say ? <Subtitle text={s.scene.caption ?? s.scene.say} dur={s.voiceFrames + Math.round(0.3 * fps)} /> : null}
         </Sequence>
       ))}
+      {timeline.flatMap((s, i) => (s.scene.sfx ?? []).map((x, j) => {
+        const len = Math.round((x.dur ?? 6) * fps);
+        const fd = Math.max(1, Math.round((x.fade ?? 0) * fps));
+        return (
+          <Sequence key={`sfx${i}-${j}`} from={s.start + Math.round(x.at * fps)} durationInFrames={len}>
+            <Audio src={staticFile(`sfx/${x.src}.wav`)} loop={x.loop}
+              volume={(f) => (x.volume ?? 0.6) * (x.fade ? Math.min(1, f / fd, (len - f) / fd) : 1)} />
+          </Sequence>
+        );
+      }))}
+      {props.theme === 'placthinc' && timeline.length ? <EndCard timeline={timeline} /> : null}
       {cta?.text && ctaT ? (
         <Sequence from={ctaT.start} durationInFrames={ctaT.dur}>
           <CtaText text={cta.text} />
         </Sequence>
       ) : null}
+    </AbsoluteFill>
+  );
+};
+
+// Penutup episod seram: gelap perlahan + logo PLACTHINC (babak terakhir 'pagi')
+const EndCard = ({ timeline }: { timeline: Timed[] }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const last = timeline[timeline.length - 1];
+  if (last.scene.set !== 'pagi') return null;
+  const end = last.start + last.dur;
+  const dark = interpolate(frame, [end - fps * 3.4, end - fps * 2.4], [0, 1], clamp);
+  const logo = spring({ frame: frame - (end - fps * 2.4), fps, config: { damping: 12 } });
+  if (dark <= 0) return null;
+  return (
+    <AbsoluteFill style={{ backgroundColor: `rgba(0,0,0,${dark})`, alignItems: 'center', justifyContent: 'center' }}>
+      <Img src={staticFile('placthinc/logo.png')} style={{ width: 760, transform: `scale(${logo})`, opacity: logo }} />
     </AbsoluteFill>
   );
 };
