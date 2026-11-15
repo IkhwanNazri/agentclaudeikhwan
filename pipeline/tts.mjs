@@ -40,9 +40,10 @@ for (const [i, scene] of doc.scenes.entries()) {
   if (!scene.say) continue;
   const file = `${slug}_${i}.wav`;
   const pcm = join(outDir, `.voice_${i}.pcm`);
-  synthesize(directorPrompt(style, scene.say), pcm);
+  synthesize(directorPrompt(style, scene.say), pcm, scene.voiceName || voice.voiceName);
   run('ffmpeg', ['-v', 'error', '-y', '-f', 's16le', '-ar', '24000', '-ac', '1', '-i', pcm, join(publicDir, file)]);
   cleanTail(join(publicDir, file));
+  if (doc.voiceSpeed && doc.voiceSpeed !== 1) speedUp(join(publicDir, file), doc.voiceSpeed);
   const seconds = audioSeconds(join(publicDir, file));
   scene.voice = file;
   scene.duration = Math.max(scene.duration, Math.ceil((seconds + 0.4) * 10) / 10);
@@ -67,12 +68,12 @@ function directorPrompt(styleNote, transcript) {
   ].join('\n');
 }
 
-function synthesize(text, pcmPath) {
+function synthesize(text, pcmPath, voiceName) {
   const body = JSON.stringify({
     contents: [{ parts: [{ text }] }],
     generationConfig: {
       responseModalities: ['AUDIO'],
-      speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice.voiceName } } },
+      speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName } } },
     },
   });
   const bodyFile = pcmPath + '.req.json';
@@ -126,6 +127,13 @@ function cleanTail(file) {
   run('ffmpeg', ['-v', 'error', '-y', '-i', file, '-af', `atrim=0:${cut},afade=t=in:d=0.02,afade=t=out:st=${fadeOut}:d=0.06`, tmp]);
   run('mv', [tmp, file]);
   if (cut < dur) console.log(`  potong bunyi hujung: ${dur.toFixed(2)}s → ${cut.toFixed(2)}s`);
+}
+
+// Cepatkan suara tanpa ubah pic (cth 1.15 untuk muatkan dalam had durasi)
+function speedUp(file, factor) {
+  const tmp = file.replace(/\.wav$/, '.fast.wav');
+  run('ffmpeg', ['-v', 'error', '-y', '-i', file, '-af', `atempo=${factor}`, tmp]);
+  run('mv', [tmp, file]);
 }
 
 function audioSeconds(file) {

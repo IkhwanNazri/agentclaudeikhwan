@@ -1,0 +1,79 @@
+{
+  "composition": "PuppetShow",
+  "title": "Kenapa masa cepat je berjalan?",
+  "voiceStyle": "Mesra macam kawan bercerita, sederhana laju, ceria dan sikit kelakar. Fakta disebut jelas dan tenang.",
+  "scenes": [
+    {
+      "set": "intro",
+      "speaker": "host1",
+      "voiceName": "Leda",
+      "say": "Weh, baru semalam Januari, tiba-tiba dah November?!",
+      "duration": 3.6
+    },
+    {
+      "set": "intro",
+      "speaker": "host2",
+      "voiceName": "Puck",
+      "say": "Betul tu! Kenapa masa rasa cepat je berjalan?",
+      "duration": 4.1,
+      "title": true
+    },
+    {
+      "set": "intro",
+      "speaker": "host1",
+      "voiceName": "Leda",
+      "say": "Jom kita tengok!",
+      "duration": 1.5
+    },
+    {
+      "set": "curtain",
+      "duration": 1.6
+    },
+    {
+      "set": "routine",
+      "say": "Bangun, kerja, balik, tidur. Ulang. Rutin sama je, dan bulan pun lesap macam tu.",
+      "duration": 7.4
+    },
+    {
+      "set": "study",
+      "say": "Tapi ni bukan kau sorang. Kajian 2005 di Munich tanya 499 orang, umur 14 sampai 94. Untuk jam, minggu dan bulan, jawapan tak beza ikut umur.",
+      "duration": 12.4,
+      "banner": "499 orang · umur 14–94"
+    },
+    {
+      "set": "road",
+      "say": "Bila tanya sepuluh tahun lepas rasa laju tak, baru nampak kesan umur. Tapi kesan dia kecil, dan hanya untuk skala tahun.",
+      "duration": 7.8,
+      "banner": "10 tahun lepas?"
+    },
+    {
+      "set": "janet",
+      "say": "Kenapa? Paul Janet, abad ke-19, kata setiap tahun makin kecil bila dibanding seluruh hidup kau. Tapi itu teori lama, bukan terbukti.",
+      "duration": 10.6,
+      "banner": "Teori lama · bukan terbukti"
+    },
+    {
+      "set": "memory",
+      "say": "Salah satu teori lain: rutin sama, kurang kenangan baru, tahun rasa padat. Tapi ini masih dipertikai, jangan telan bulat-bulat.",
+      "duration": 10.4,
+      "banner": "Salah satu teori"
+    },
+    {
+      "set": "scroll",
+      "say": "Satu lagi, scroll. Kajian LMU Munich 2026 kata scroll buat masa terasa lebih pendek, dan kau susah nak ingat lepas tu.",
+      "duration": 9.0
+    },
+    {
+      "set": "balcony",
+      "say": "Minggu ni cuba satu benda baru. Tak janji masa perlahan, tapi sekurang-kurangnya ada cerita nak diingat.",
+      "duration": 7.5
+    },
+    {
+      "set": "cta",
+      "say": "Follow untuk fakta kerja dan otak yang korang tak tahu.",
+      "duration": 3.9,
+      "text": "Follow untuk fakta kerja & otak"
+    }
+  ],
+  "voiceSpeed": 1.15
+}

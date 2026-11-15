@@ -1,217 +1,90 @@
 {
-  "title": "Kenapa waktu rasa sekejap zaman sekarang",
-  "look": "puppet",
-  "voiceStyle": "Cakap dalam Bahasa Melayu Malaysia, nada mesra macam kawan bercerita, sederhana laju; lebih tenang dan jelas di babak fakta; hangat dan mengajak di hujung",
+  "composition": "PuppetShow",
+  "title": "Kenapa masa cepat je berjalan?",
+  "voiceStyle": "Mesra macam kawan bercerita, sederhana laju, ceria dan sikit kelakar. Fakta disebut jelas dan tenang.",
   "scenes": [
     {
-      "duration": 3,
-      "say": "Baru semalam Januari. Kenapa dah November?",
-      "align": "flex-start",
-      "elements": [
-        {
-          "text": "Baru semalam Januari. Dah November?",
-          "style": "hook",
-          "animation": "pop",
-          "delay": 0.2,
-          "highlightWords": [
-            "November"
-          ]
-        }
-      ],
-      "scene3d": {
-        "set": "office",
-        "camera": "close",
-        "time": "day",
-        "props": [
-          "calendar"
-        ],
-        "actors": [
-          {
-            "outfit": "office",
-            "skin": "#e9b994",
-            "action": "stressed",
-            "expression": "stressed",
-            "x": 0
-          }
-        ]
-      }
+      "set": "intro",
+      "speaker": "host1",
+      "voiceName": "Leda",
+      "say": "Weh, baru semalam Januari, tiba-tiba dah November?!",
+      "duration": 3.6,
+      "voice": "2026-11-12-waktu-rasa-sekejap_0.wav"
     },
     {
-      "duration": 6,
+      "set": "intro",
+      "speaker": "host2",
+      "voiceName": "Puck",
+      "say": "Betul tu! Kenapa masa rasa cepat je berjalan?",
+      "duration": 4.1,
+      "title": true,
+      "voice": "2026-11-12-waktu-rasa-sekejap_1.wav"
+    },
+    {
+      "set": "intro",
+      "speaker": "host1",
+      "voiceName": "Leda",
+      "say": "Jom kita tengok!",
+      "duration": 1.5,
+      "voice": "2026-11-12-waktu-rasa-sekejap_2.wav"
+    },
+    {
+      "set": "curtain",
+      "duration": 1.6
+    },
+    {
+      "set": "routine",
       "say": "Bangun, kerja, balik, tidur. Ulang. Rutin sama je, dan bulan pun lesap macam tu.",
-      "scene3d": {
-        "set": "office",
-        "camera": "wide",
-        "time": "day",
-        "props": [
-          "calendar"
-        ],
-        "actors": [
-          {
-            "outfit": "office",
-            "skin": "#e9b994",
-            "action": "typing",
-            "expression": "tired",
-            "x": 0,
-            "energy": 0.9,
-            "energyTo": 0.3
-          }
-        ]
-      }
+      "duration": 7.4,
+      "voice": "2026-11-12-waktu-rasa-sekejap_4.wav"
     },
     {
-      "duration": 8,
-      "say": "Ni bukan kau sorang. Kajian 2005 di Munich tanya 499 orang umur 14 sampai 94. Untuk jam, minggu, bulan, jawapan tak beza ikut umur.",
-      "scene3d": {
-        "set": "studio",
-        "camera": "medium",
-        "props": [
-          "clock"
-        ],
-        "actors": [
-          {
-            "outfit": "office",
-            "skin": "#e9b994",
-            "action": "thinking",
-            "expression": "normal",
-            "x": 0
-          }
-        ]
-      }
+      "set": "study",
+      "say": "Tapi ni bukan kau sorang. Kajian 2005 di Munich tanya 499 orang, umur 14 sampai 94. Untuk jam, minggu dan bulan, jawapan tak beza ikut umur.",
+      "duration": 12.4,
+      "banner": "499 orang · umur 14–94",
+      "voice": "2026-11-12-waktu-rasa-sekejap_5.wav"
     },
     {
-      "duration": 8,
-      "say": "Tapi bila tanya sepuluh tahun lepas rasa laju tak, baru nampak kesan umur. Kesan dia kecil, dan hanya untuk skala tahun.",
-      "scene3d": {
-        "set": "studio",
-        "camera": "medium",
-        "angle": 0,
-        "props": [
-          "posts"
-        ],
-        "actors": [
-          {
-            "outfit": "office",
-            "skin": "#e9b994",
-            "action": "idle",
-            "expression": "normal",
-            "x": 0,
-            "facing": 180
-          }
-        ]
-      }
+      "set": "road",
+      "say": "Bila tanya sepuluh tahun lepas rasa laju tak, baru nampak kesan umur. Tapi kesan dia kecil, dan hanya untuk skala tahun.",
+      "duration": 7.8,
+      "banner": "10 tahun lepas?",
+      "voice": "2026-11-12-waktu-rasa-sekejap_6.wav"
     },
     {
-      "duration": 8,
+      "set": "janet",
       "say": "Kenapa? Paul Janet, abad ke-19, kata setiap tahun makin kecil bila dibanding seluruh hidup kau. Tapi itu teori lama, bukan terbukti.",
-      "scene3d": {
-        "set": "studio",
-        "camera": "close",
-        "actors": [
-          {
-            "outfit": "office",
-            "skin": "#e9b994",
-            "action": "thinking",
-            "expression": "normal",
-            "x": 0
-          }
-        ]
-      }
+      "duration": 10.6,
+      "banner": "Teori lama · bukan terbukti",
+      "voice": "2026-11-12-waktu-rasa-sekejap_7.wav"
     },
     {
-      "duration": 8,
+      "set": "memory",
       "say": "Salah satu teori lain: rutin sama, kurang kenangan baru, tahun rasa padat. Tapi ini masih dipertikai, jangan telan bulat-bulat.",
-      "scene3d": {
-        "set": "studio",
-        "camera": "medium",
-        "props": [
-          "shelf"
-        ],
-        "actors": [
-          {
-            "outfit": "office",
-            "skin": "#e9b994",
-            "action": "walking",
-            "expression": "tired",
-            "x": 0,
-            "z": 0.6
-          }
-        ]
-      }
+      "duration": 10.4,
+      "banner": "Salah satu teori",
+      "voice": "2026-11-12-waktu-rasa-sekejap_8.wav"
     },
     {
-      "duration": 8,
+      "set": "scroll",
       "say": "Satu lagi, scroll. Kajian LMU Munich 2026 kata scroll buat masa terasa lebih pendek, dan kau susah nak ingat lepas tu.",
-      "scene3d": {
-        "set": "bedroom",
-        "camera": "close",
-        "time": "night",
-        "props": [
-          "clock"
-        ],
-        "actors": [
-          {
-            "outfit": "office",
-            "skin": "#e9b994",
-            "action": "lying_awake",
-            "expression": "tired",
-            "x": 0.15,
-            "z": -0.5
-          }
-        ]
-      }
+      "duration": 9.0,
+      "voice": "2026-11-12-waktu-rasa-sekejap_9.wav"
     },
     {
-      "duration": 7,
+      "set": "balcony",
       "say": "Minggu ni cuba satu benda baru. Tak janji masa perlahan, tapi sekurang-kurangnya ada cerita nak diingat.",
-      "scene3d": {
-        "set": "studio",
-        "camera": "medium",
-        "props": [
-          "plant"
-        ],
-        "actors": [
-          {
-            "outfit": "office",
-            "skin": "#e9b994",
-            "action": "idle",
-            "expression": "happy",
-            "x": -0.2
-          }
-        ]
-      }
+      "duration": 7.5,
+      "voice": "2026-11-12-waktu-rasa-sekejap_10.wav"
     },
     {
-      "duration": 5,
+      "set": "cta",
       "say": "Follow untuk fakta kerja dan otak yang korang tak tahu.",
-      "align": "flex-start",
-      "elements": [
-        {
-          "text": "Follow untuk fakta kerja & otak yang korang tak tahu",
-          "style": "body",
-          "animation": "fadeIn",
-          "delay": 0.4,
-          "highlightWords": [
-            "Follow"
-          ]
-        }
-      ],
-      "scene3d": {
-        "set": "studio",
-        "camera": "close",
-        "props": [
-          "plant"
-        ],
-        "actors": [
-          {
-            "outfit": "office",
-            "skin": "#e9b994",
-            "action": "idle",
-            "expression": "happy",
-            "x": -0.2
-          }
-        ]
-      }
+      "duration": 3.9,
+      "text": "Follow untuk fakta kerja & otak",
+      "voice": "2026-11-12-waktu-rasa-sekejap_11.wav"
     }
-  ]
+  ],
+  "voiceSpeed": 1.15
 }
