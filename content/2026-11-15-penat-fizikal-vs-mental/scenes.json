@@ -1,0 +1,73 @@
+{
+  "composition": "PuppetShow",
+  "title": "Mana lagi penat: kerja fizikal atau kerja mental office?",
+  "voiceStyle": "Mesra macam kawan bercerita, ringan dan sikit kelakar, laju dan padat macam TikToker. Fakta disebut jelas. Penutup perlahan dan menenangkan.",
+  "voiceSpeed": 1.05,
+  "scenes": [
+    {
+      "set": "intro",
+      "speaker": "host1",
+      "voiceName": "Leda",
+      "say": "Duduk je kerja office, kenapa balik rasa macam lori langgar?",
+      "duration": 5.5,
+      "voice": "2026-11-15-penat-fizikal-vs-mental_0.wav"
+    },
+    {
+      "set": "intro",
+      "speaker": "host2",
+      "voiceName": "Puck",
+      "say": "Mana lagi penat: kerja fizikal atau kerja mental?",
+      "duration": 4.1,
+      "title": true,
+      "voice": "2026-11-15-penat-fizikal-vs-mental_1.wav"
+    },
+    {
+      "set": "curtain",
+      "duration": 1.3
+    },
+    {
+      "set": "versus",
+      "say": "Ali angkat kotak sepanjang hari. Aina menaip depan skrin. Dua-dua balik rumah dengan muka penat.",
+      "duration": 7.4,
+      "voice": "2026-11-15-penat-fizikal-vs-mental_3.wav"
+    },
+    {
+      "set": "brain",
+      "say": "Otak cuma 2% berat badan, tapi guna lebih kurang 20% tenaga badan ketika rehat.",
+      "duration": 7.7,
+      "banner": "2% berat, 20% tenaga",
+      "voice": "2026-11-15-penat-fizikal-vs-mental_4.wav"
+    },
+    {
+      "set": "fatigue",
+      "say": "Kajian cadangkan, fikir berat berjam-jam buat glutamate bertimbun di bahagian depan otak. Aina pun jadi kurang sabar.",
+      "duration": 7.6,
+      "banner": "Glutamate bertimbun",
+      "voice": "2026-11-15-penat-fizikal-vs-mental_5.wav"
+    },
+    {
+      "set": "bike",
+      "say": "Lepas 90 minit tugas mental berat, peserta berbasikal sampai letih dalam 640 saat. Kumpulan lain tahan 754 saat.",
+      "duration": 8.4,
+      "banner": "640s lawan 754s",
+      "voice": "2026-11-15-penat-fizikal-vs-mental_6.wav"
+    },
+    {
+      "set": "sleep",
+      "say": "Dapatan kajian, bukan nasihat doktor: aktiviti fizikal dikaitkan dengan tidur lebih baik, stres dengan tidur terganggu. Ali lena, Aina scroll telefon.",
+      "duration": 9.1,
+      "banner": "Dapatan kajian",
+      "voice": "2026-11-15-penat-fizikal-vs-mental_7.wav"
+    },
+    {
+      "set": "rest",
+      "say": "Jadi kerja fizikal atau mental, dua-dua penat. Cukupkan masa rehat ye.",
+      "duration": 5.5,
+      "voice": "2026-11-15-penat-fizikal-vs-mental_8.wav"
+    },
+    {
+      "set": "cta",
+      "duration": 2.6
+    }
+  ]
+}

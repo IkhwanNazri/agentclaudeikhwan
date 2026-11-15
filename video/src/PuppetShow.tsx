@@ -12,7 +12,8 @@ import {
 } from './puppet/kit';
 
 export type ShowSet = 'intro' | 'curtain' | 'routine' | 'study' | 'road' | 'janet' | 'memory' | 'scroll' | 'balcony' | 'cta'
-  | 'school' | 'move' | 'hours' | 'three' | 'chat' | 'meetup';
+  | 'school' | 'move' | 'hours' | 'three' | 'chat' | 'meetup'
+  | 'versus' | 'brain' | 'fatigue' | 'bike' | 'sleep' | 'rest';
 export type ShowScene = {
   set: ShowSet;
   duration: number;
@@ -364,6 +365,30 @@ const Cta = ({ lf, dur, fps, prev }: Ctx) => {
   const wave = Math.sin(lf * 0.7) * 0.35;
   const hostsUp = rise(lf, fps, 10);
   const mamak = prev === 'meetup';
+  if (prev === 'rest') {
+    return (
+      <>
+        <RestSet lf={dur} fps={fps} />
+        <Puppeteer rod={1.4} x={-0.75} y={-0.45} z={-0.45} scale={0.85}>
+          <Puppet look={ALI} pose={{ armF: 2.5 + wave, mouth: 0.6 }} />
+        </Puppeteer>
+        <Puppeteer rod={1.4} x={0.75} y={-0.45} z={-0.45} scale={0.85}>
+          <group scale={[-1, 1, 1]}>
+            <Puppet look={AINA} pose={{ armF: 2.5 - wave, mouth: 0.6 }} />
+          </group>
+        </Puppeteer>
+        <ParkBench />
+        <Puppeteer rod={1.75} x={-1.95} y={-0.25 + hostsUp} z={0.2} scale={0.8}>
+          <Puppet look={HOST1} pose={{ armF: 2.4 - wave }} />
+        </Puppeteer>
+        <Puppeteer rod={1.75} x={1.95} y={-0.25 + hostsUp} z={0.2} scale={0.8}>
+          <group scale={[-1, 1, 1]}>
+            <Puppet look={HOST2} pose={{ armF: 2.4 + wave }} />
+          </group>
+        </Puppeteer>
+      </>
+    );
+  }
   return (
     <>
       {mamak ? <MeetupSet lf={dur} fps={fps} ticks={4} /> : <BalconySet lf={dur} fps={fps} />}
@@ -667,6 +692,264 @@ const Meetup = ({ lf, dur, fps }: Ctx) => {
   );
 };
 
+
+// ---------------------------------------------------------------- babak: penat fizikal vs mental
+
+const ALI: Look = { hair: 'cap', hairColor: '#f2c230', shirt: '#f07f2a', pants: '#3d4a63', skin: '#b97a58' };
+
+const Brain = ({ glow = 0 }: { glow?: number }) => (
+  <group>
+    {[[-0.55, 0.15, 0.62], [0.05, 0.42, 0.7], [0.62, 0.12, 0.6], [-0.1, -0.2, 0.62], [0.55, -0.3, 0.45], [-0.6, -0.32, 0.42]].map(([x, y, r], i) => (
+      <Paper key={i} shape={circle(r)} color="#f2a7b5" depth={0.05} position={[x, y, i * 0.004]} />
+    ))}
+    <Paper shape={rect(0.28, 0.55, 0.1)} color="#e48d9e" position={[0.35, -0.85, -0.02]} rotation={[0, 0, 0.3]} />
+    {[[-0.6, 0.3, 0.6], [0.0, 0.55, -0.3], [0.5, 0.25, 0.9], [-0.2, -0.15, -0.6], [0.45, -0.3, 0.2], [-0.75, -0.2, 1.2], [0.15, 0.05, 1.5]].map(([x, y, r], i) => (
+      <Paper key={i} shape={rect(0.42, 0.035, 0.015)} color="#c96a7e" depth={0.01} position={[x, y, 0.04]} rotation={[0, 0, r]} />
+    ))}
+    {glow > 0 ? <Paper shape={ellipse(0.5, 0.45)} color="#ffe28a" glow="#ffcf4a" depth={0.01} position={[-0.6, 0.15, 0.05]} /> : null}
+  </group>
+);
+
+const Versus = ({ lf, dur, fps }: Ctx) => {
+  const t = lf / dur;
+  const tired = interpolate(t, [0.55, 0.8], [0, 1], clamp);
+  const lift = Math.sin(lf * 0.35);
+  return (
+    <>
+      <Fly lf={lf} fps={fps}>
+        {/* kiri: tapak binaan */}
+        <Paper shape={rect(3.1, 7.6, 0)} color="#a9d3ee" depth={0.05} position={[-1.55, 1.4, -2.2]} cast={false} />
+        <Paper shape={rect(0.12, 3.6, 0)} color="#e8b33c" position={[-2.4, 2.6, -2.12]} />
+        <Paper shape={rect(2.0, 0.12, 0)} color="#e8b33c" position={[-1.5, 4.35, -2.12]} />
+        <Paper shape={rect(0.03, 1.2, 0)} color="#555" position={[-0.7, 3.75, -2.1]} />
+        {Array.from({ length: 6 }, (_, i) => (
+          <Paper key={i} shape={rect(0.55, 0.28, 0.02)} color="#c2654a" position={[-2.6 + (i % 3) * 0.6 + (Math.floor(i / 3) % 2) * 0.3, -1.0 + Math.floor(i / 3) * 0.3, -2.0]} />
+        ))}
+        {/* kanan: office */}
+        <Paper shape={rect(3.1, 7.6, 0)} color="#efe3cc" depth={0.05} position={[1.55, 1.4, -2.2]} cast={false} />
+        <Paper shape={rect(1.3, 1.4, 0.03)} color="#9fc9e6" position={[1.6, 2.6, -2.12]} />
+        <Paper shape={rect(0.08, 7.6, 0)} color={C.ink} position={[0, 1.4, -2.1]} />
+      </Fly>
+      <Puppeteer rod={1.75} x={-1.4} y={-0.1 + rise(lf, fps) - tired * 0.15 + lift * 0.06} z={-0.3} scale={0.85} tilt={tired * 0.08}>
+        <Puppet look={ALI} pose={{ armF: 1.6 + lift * 0.35, armB: 1.4 + lift * 0.35, hold: 'box', eyes: tired > 0.5 ? 'closed' : 'open', head: tired * 0.15 }} />
+      </Puppeteer>
+      <Puppeteer rod={1.6} x={1.35} y={-0.35 + rise(lf, fps, 6) - tired * 0.12} z={-0.4} scale={0.85} tilt={-tired * 0.08}>
+        <Puppet look={AINA} pose={{ armF: 1.2 + Math.sin(lf * 1.3) * 0.12, armB: 1.0 + Math.sin(lf * 1.3 + 1) * 0.12, eyes: tired > 0.5 ? 'closed' : 'open', head: -tired * 0.15 }} />
+      </Puppeteer>
+      {/* meja office di depan Aina */}
+      <group position={[1.4, -1.15, -0.1]}>
+        <Paper shape={rect(2.2, 0.14, 0.02)} color={C.wood} position={[0, 0.25, 0]} />
+        <Paper shape={rect(2.0, 0.8, 0.02)} color="#7a4a2b" position={[0, -0.25, -0.03]} />
+        <Paper shape={poly([[-0.4, 0], [0.4, 0], [0.33, 0.55], [-0.33, 0.55]])} color="#5d6670" position={[0.55, 0.32, 0.02]} />
+      </group>
+    </>
+  );
+};
+
+const BrainScene = ({ lf, dur, fps, scene }: Ctx) => {
+  const t = lf / dur;
+  const share = interpolate(t, [0.35, 0.75], [0.001, 0.2], clamp);
+  return (
+    <>
+      <Fly lf={lf} fps={fps}>
+        <Wall color="#f3e2cf" />
+        <group position={[-1.05, 1.95, -1.5]} scale={0.9}>
+          <Brain />
+          <group position={[0, -1.35, 0]}>
+            <Paper shape={rect(1.5, 0.45, 0.08)} color={C.cream} />
+            <TextPlane lines={[{ text: '2% berat', color: C.ink, size: 130 }]} w={1.4} h={0.4} position={[0, 0, 0.03]} pxW={800} pxH={230} />
+          </group>
+        </group>
+        <group position={[1.3, 1.95, -1.5]}>
+          <Paper shape={circle(0.7)} color="#e3d2b0" depth={0.04} />
+          <Paper shape={pie(0.7, share)} color={C.red} depth={0.06} position={[0, 0, 0.02]} />
+          <group position={[0, -1.05, 0]}>
+            <Paper shape={rect(1.5, 0.45, 0.08)} color={C.cream} />
+            <TextPlane lines={[{ text: '20% tenaga', color: C.red, size: 130 }]} w={1.4} h={0.4} position={[0, 0, 0.03]} pxW={800} pxH={230} />
+          </group>
+        </group>
+      </Fly>
+      <Puppeteer rod={1.45} x={0.1} y={-0.75 + rise(lf, fps)} z={-0.3} scale={0.62}>
+        <Puppet look={AINA} pose={{ armF: 2.3 + Math.sin(lf * 0.3) * 0.15, eyes: t > 0.5 ? 'wide' : 'open' }} />
+      </Puppeteer>
+      {scene.banner ? <HangBanner text={scene.banner} lf={lf} fps={fps} /> : null}
+    </>
+  );
+};
+
+const Fatigue = ({ lf, dur, fps, scene }: Ctx) => {
+  const t = lf / dur;
+  const n = Math.floor(interpolate(t, [0.1, 0.8], [0, 18], clamp));
+  const sleepy = t > 0.6;
+  return (
+    <>
+      <Fly lf={lf} fps={fps}>
+        <Wall color="#e6dcef" />
+        <group position={[0, 1.6, -1.5]} scale={1.35}>
+          <Brain />
+          {Array.from({ length: n }, (_, i) => (
+            <Paper key={i} shape={circle(0.07 + (i % 3) * 0.02)} color="#5fb83a" depth={0.03}
+              position={[-0.95 + ((i * 37) % 70) / 100, -0.25 + ((i * 53) % 80) / 100 + Math.sin(lf * 0.2 + i) * 0.03, 0.09]} />
+          ))}
+          <group position={[-0.75, -0.95, 0.05]}>
+            <Paper shape={rect(0.9, 0.3, 0.06)} color={C.cream} />
+            <TextPlane lines={[{ text: 'depan otak', color: C.ink, size: 110 }]} w={0.85} h={0.26} position={[0, 0, 0.03]} pxW={700} pxH={210} />
+          </group>
+        </group>
+      </Fly>
+      <Puppeteer rod={1.6} x={1.4} y={-0.5 + rise(lf, fps) - (sleepy ? 0.12 : 0)} z={-0.3} scale={0.8} tilt={sleepy ? -0.1 : 0}>
+        <Puppet look={AINA} pose={{ armF: sleepy ? 0.1 : 1.0 + Math.sin(lf * 1.2) * 0.1, eyes: sleepy && Math.sin(lf * 0.3) > -0.4 ? 'closed' : 'open', head: sleepy ? -0.2 : 0 }} />
+      </Puppeteer>
+      {scene.banner ? <HangBanner text={scene.banner} lf={lf} fps={fps} /> : null}
+    </>
+  );
+};
+
+const Wheel = ({ spin }: { spin: number }) => (
+  <group rotation={[0, 0, -spin]}>
+    <Paper shape={circle(0.42)} color="#2a2a30" depth={0.04} />
+    <Paper shape={circle(0.33)} color="#d8d0c0" depth={0.045} />
+    {[0, 1, 2].map((k) => (
+      <Paper key={k} shape={rect(0.66, 0.03, 0)} color="#555" depth={0.05} rotation={[0, 0, (k * Math.PI) / 3]} />
+    ))}
+  </group>
+);
+
+const Bike = ({ lf, dur, fps, scene }: Ctx) => {
+  const t = lf / dur;
+  // masa disimulasi: kanan sampai 754s pada ~85% babak, kiri berhenti 640s
+  const sim = interpolate(t, [0.12, 0.85], [0, 754], clamp);
+  const left = Math.min(640, sim);
+  const leftDone = sim >= 640;
+  const riders = [
+    { x: -1.4, time: left, done: leftDone, look: AINA, tag: 'lepas tugas mental' },
+    { x: 1.4, time: sim, done: sim >= 754, look: { ...AINA, hair: 'short' as const, hairColor: '#1f1a18', lanyard: false, shirt: '#4f9d8a', skin: '#c98d62' }, tag: 'tonton dokumentari' },
+  ];
+  return (
+    <>
+      <Fly lf={lf} fps={fps}>
+        <Wall color="#dfe8ee" />
+        <Paper shape={rect(6.2, 0.9, 0)} color="#c9d4dc" position={[0, -1.6, -2.15]} cast={false} />
+      </Fly>
+      {riders.map(({ x, time, done, look, tag }, i) => {
+        const ped = done ? 0 : lf * 0.5;
+        const sec = Math.floor(time / 10) * 10;
+        return (
+          <group key={i}>
+            {/* pemasa */}
+            <group position={[x, 2.95, -1.0]}>
+              <Paper shape={rect(1.8, 0.75, 0.12)} color={done ? (i === 0 ? '#f3b0a8' : '#bfe3c0') : '#222'} depth={0.05} />
+              <TextPlane lines={[{ text: `${done ? (i === 0 ? 640 : 754) : sec}s`, color: done ? C.ink : '#7dff9a', size: 200 }]} w={1.7} h={0.7} position={[0, 0, 0.035]} pxW={800} pxH={330} />
+              <group position={[0, -0.6, 0]}>
+                <Paper shape={rect(1.8, 0.36, 0.06)} color={C.cream} />
+                <TextPlane lines={[{ text: tag, color: '#6b4a2b', size: 100 }]} w={1.7} h={0.32} position={[0, 0, 0.03]} pxW={900} pxH={170} />
+              </group>
+            </group>
+            <Puppeteer rod={1.45} x={x} y={-0.25 + rise(lf, fps, 4 + i * 4) - (done && i === 0 ? 0.15 : 0)} z={-0.55} scale={0.72} tilt={done && i === 0 ? 0.12 : 0}>
+              <Puppet look={look} pose={{ armF: 1.4, armB: 1.3, leg: Math.sin(ped) * 0.45, eyes: done && i === 0 ? 'closed' : 'open', head: done && i === 0 ? 0.2 : 0 }} />
+            </Puppeteer>
+            {/* basikal statik di depan */}
+            <group position={[x, -1.25, -0.25]}>
+              <group position={[-0.55, 0, 0]}><Wheel spin={ped} /></group>
+              <group position={[0.55, 0, 0]}><Wheel spin={ped} /></group>
+              <Paper shape={poly([[-0.55, 0], [-0.05, 0.6], [0.55, 0], [0.45, 0], [-0.05, 0.45], [-0.45, 0]])} color={i === 0 ? '#c23a3a' : '#2f6f8e'} position={[0, 0, 0.06]} />
+              <Paper shape={rect(0.4, 0.1, 0.04)} color="#222" position={[-0.15, 0.68, 0.07]} />
+            </group>
+          </group>
+        );
+      })}
+      {scene.banner ? <HangBanner text={scene.banner} lf={lf} fps={fps} y={3.85} /> : null}
+    </>
+  );
+};
+
+const Bed = ({ x }: { x: number }) => (
+  <group position={[x, -1.25, -0.2]}>
+    <Paper shape={rect(2.5, 0.55, 0.08)} color="#7a4a2b" />
+    <Paper shape={rect(2.3, 0.35, 0.12)} color="#8fa9d8" position={[0, 0.35, 0.03]} />
+    <Paper shape={rect(0.2, 1.2, 0.05)} color="#6e4630" position={[-1.2, 0.35, -0.02]} />
+  </group>
+);
+
+const Sleep = ({ lf, dur, fps, scene }: Ctx) => {
+  const t = lf / dur;
+  return (
+    <>
+      <Fly lf={lf} fps={fps}>
+        <Paper shape={rect(3.1, 7.6, 0)} color="#273150" depth={0.05} position={[-1.55, 1.4, -2.2]} cast={false} />
+        <Paper shape={rect(3.1, 7.6, 0)} color="#2f2a48" depth={0.05} position={[1.55, 1.4, -2.2]} cast={false} />
+        <Paper shape={rect(0.08, 7.6, 0)} color={C.ink} position={[0, 1.4, -2.1]} />
+        <Paper shape={circle(0.28)} color="#f3eccc" glow="#c9c29a" position={[-2.2, 3.4, -2.05]} />
+        <group position={[1.6, 3.1, -2.05]}><Clock spin={lf * 0.15 + 6} r={0.45} /></group>
+      </Fly>
+      {/* Ali baring lena (tiada batang: dibaringkan atas katil) */}
+      <group position={[-1.45, -0.62 + rise(lf, fps) * 0.3, -0.35]} rotation={[0, 0, Math.PI / 2]} scale={0.6}>
+        <Puppet look={{ ...ALI, hair: 'short' }} pose={{ eyes: 'closed', armF: 0.3, mouth: 0 }} />
+      </group>
+      {Array.from({ length: 3 }, (_, i) => {
+        const p = ((lf * 0.03 + i / 3) % 1);
+        return (
+          <group key={i} position={[-1.1 + p * 0.5, 0.0 + p * 1.4, -0.3]} scale={0.5 + p * 0.5}>
+            <TextPlane lines={[{ text: 'Z', color: '#e8f0ff', size: 300 }]} w={0.35} h={0.35} pxW={300} pxH={300} />
+          </group>
+        );
+      })}
+      <Bed x={-1.45} />
+      {/* Aina duduk scroll telefon */}
+      <Puppeteer rod={1.45} x={1.35} y={-0.45 + rise(lf, fps, 6)} z={-0.45} scale={0.78}>
+        <Puppet look={AINA} pose={{ armF: 1.25, hold: 'phone', eyes: 'wide', head: Math.sin(lf * 0.15) * 0.05 }} />
+      </Puppeteer>
+      <pointLight position={[1.7, 0.4, 0.2]} intensity={3.5} distance={3} color="#7fdcff" />
+      <Bed x={1.45} />
+      {scene.banner && t > 0 ? <HangBanner text={scene.banner} lf={lf} fps={fps} /> : null}
+    </>
+  );
+};
+
+const RestSet = ({ lf, fps }: { lf: number; fps: number }) => (
+  <Fly lf={lf} fps={fps}>
+    <Wall color="#f5a77c" />
+    <Paper shape={rect(6.2, 3.4, 0)} color="#f8c48f" position={[0, 3.6, -2.18]} cast={false} />
+    <Paper shape={circle(0.55)} color="#ffe2a8" glow="#ffb36a" position={[0.9, 1.5, -2.15]} />
+    <Paper shape={poly([[-3.1, -2.2], [-3.1, 0.7], [-1.6, 1.2], [0, 0.8], [1.5, 1.3], [3.1, 0.75], [3.1, -2.2]])} color="#7fae6b" position={[0, 0, -2.12]} />
+    {[-2.3, 2.3].map((x, i) => (
+      <group key={i} position={[x, 0.9, -1.95]}>
+        <Paper shape={rect(0.22, 1.6, 0)} color="#7a5236" position={[0, -0.3, 0]} />
+        <Paper shape={circle(0.75)} color={i ? '#5f9a58' : '#6aa862'} position={[0, 0.8, 0.02]} />
+      </group>
+    ))}
+    {[[-1.2, 3.2], [-0.8, 3.4], [1.9, 3.0]].map(([bx, by], i) => (
+      <Paper key={i} shape={poly([[-0.12, 0], [0, -0.05], [0.12, 0], [0, 0.03]])} color="#5a3d4a" position={[bx + Math.sin(lf * 0.05 + i) * 0.2, by, -1.9]} />
+    ))}
+  </Fly>
+);
+
+const ParkBench = () => (
+  <group position={[0, -1.15, -0.1]}>
+    <Paper shape={rect(3.6, 0.16, 0.04)} color="#8a5a3b" position={[0, 0.55, 0]} />
+    <Paper shape={rect(3.6, 0.16, 0.04)} color="#8a5a3b" position={[0, 0.3, 0]} />
+    <Paper shape={rect(3.6, 0.16, 0.04)} color="#8a5a3b" position={[0, 0.05, 0]} />
+    <Paper shape={rect(0.14, 0.9, 0)} color="#333" position={[-1.5, -0.3, -0.02]} />
+    <Paper shape={rect(0.14, 0.9, 0)} color="#333" position={[1.5, -0.3, -0.02]} />
+  </group>
+);
+
+const Rest = ({ lf, fps }: Ctx) => {
+  const breathe = Math.sin(lf * 0.12) * 0.03;
+  return (
+    <>
+      <RestSet lf={lf} fps={fps} />
+      <Puppeteer rod={1.4} x={-0.75} y={-0.45 + rise(lf, fps) + breathe} z={-0.45} scale={0.85} tilt={0.06}>
+        <Puppet look={ALI} pose={{ armF: 0.1, armB: 0.1, eyes: 'closed', head: 0.12 }} />
+      </Puppeteer>
+      <Puppeteer rod={1.4} x={0.75} y={-0.45 + rise(lf, fps, 6) - breathe} z={-0.45} scale={0.85} tilt={-0.06}>
+        <Puppet look={AINA} pose={{ armF: 0.1, armB: 0.1, eyes: 'closed', head: -0.12 }} />
+      </Puppeteer>
+      <ParkBench />
+    </>
+  );
+};
+
 // ---------------------------------------------------------------- pembukaan: dua pengacara
 
 const TitleCard = ({ title }: { title: string }) => {
@@ -753,6 +1036,7 @@ const Rig = ({ z }: { z: number }) => {
 const SETS: Partial<Record<ShowSet, (c: Ctx) => ReactNode>> = {
   routine: Routine, study: Study, road: Road, janet: Janet, memory: Memory, scroll: Scroll, balcony: Balcony, cta: Cta,
   school: School, move: Move, hours: Hours, three: Three, chat: Chat, meetup: Meetup,
+  versus: Versus, brain: BrainScene, fatigue: Fatigue, bike: Bike, sleep: Sleep, rest: Rest,
 };
 
 const World = ({ props }: { props: ShowProps }) => {
@@ -772,7 +1056,7 @@ const World = ({ props }: { props: ShowProps }) => {
   const Set = SETS[cur.scene.set];
   const prev = timeline[timeline.indexOf(cur) - 1]?.scene.set;
   const ctaWarm = cur.scene.set === 'cta' && prev === 'meetup';
-  const mode = cur.scene.set === 'scroll' || cur.scene.set === 'chat' ? 'night' : ctaWarm ? 'warm' : cur.scene.set === 'balcony' || cur.scene.set === 'cta' || cur.scene.set === 'road' ? 'dusk' : 'warm';
+  const mode = cur.scene.set === 'scroll' || cur.scene.set === 'chat' || cur.scene.set === 'sleep' ? 'night' : ctaWarm ? 'warm' : cur.scene.set === 'rest' || (cur.scene.set === 'cta' && prev === 'rest') ? 'dusk' : cur.scene.set === 'balcony' || cur.scene.set === 'cta' || cur.scene.set === 'road' ? 'dusk' : 'warm';
   const storyZ = interpolate(lf, [0, cur.dur], [13.9, 13.2], clamp);
   const camZ = cur.scene.set === 'intro' || cur.scene.set === 'curtain' ? 14.3 : storyZ;
   return (
