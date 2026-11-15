@@ -1,0 +1,71 @@
+{
+  "composition": "PuppetShow",
+  "title": "Kenapa orang dewasa makin kurang kawan?",
+  "voiceStyle": "Mesra macam kawan bercerita, sikit sayu tapi ringan, laju dan padat macam TikToker. Fakta disebut jelas.",
+  "voiceSpeed": 1.05,
+  "scenes": [
+    {
+      "set": "intro",
+      "speaker": "host1",
+      "voiceName": "Leda",
+      "say": "Weh, bila kali last kau lepak dengan kawan?",
+      "duration": 2.8,
+      "voice": "2026-11-15-kenapa-dewasa-kurang-kawan_0.wav"
+    },
+    {
+      "set": "intro",
+      "speaker": "host2",
+      "voiceName": "Puck",
+      "say": "Kenapa orang dewasa makin kurang kawan?",
+      "duration": 2.7,
+      "title": true,
+      "voice": "2026-11-15-kenapa-dewasa-kurang-kawan_1.wav"
+    },
+    {
+      "set": "curtain",
+      "duration": 1.3
+    },
+    {
+      "set": "school",
+      "say": "Masa sekolah, Aina ada ramai kawan. Jumpa tiap hari, tak payah plan.",
+      "duration": 4.7,
+      "voice": "2026-11-15-kenapa-dewasa-kurang-kawan_3.wav"
+    },
+    {
+      "set": "move",
+      "say": "Lepas tu dia pindah kerja. Kawan lama makin jauh, kawan baru pun tak datang sendiri.",
+      "duration": 6.5,
+      "voice": "2026-11-15-kenapa-dewasa-kurang-kawan_4.wav"
+    },
+    {
+      "set": "hours",
+      "say": "Kajian Universiti Kansas 2018, anggaran purata: lebih kurang 50 jam jadi kawan biasa, 90 jam jadi kawan, lebih 200 jam jadi kawan rapat.",
+      "duration": 11.3,
+      "banner": "50 · 90 · 200 jam",
+      "voice": "2026-11-15-kenapa-dewasa-kurang-kawan_5.wav"
+    },
+    {
+      "set": "three",
+      "say": "Menurut ahli sosiologi, kawan perlukan tiga benda: dekat, jumpa berulang, dan suasana selesa. Bila hidup berubah, susah nak cukup.",
+      "duration": 8.3,
+      "banner": "Dekat · Berulang · Selesa",
+      "voice": "2026-11-15-kenapa-dewasa-kurang-kawan_6.wav"
+    },
+    {
+      "set": "chat",
+      "say": "Group chat penuh 'Jom lepak!'. Balasnya cuma 'Next time'.",
+      "duration": 4.6,
+      "voice": "2026-11-15-kenapa-dewasa-kurang-kawan_7.wav"
+    },
+    {
+      "set": "meetup",
+      "say": "Tip: tetapkan satu malam tetap. Teh tarik, ulang tiap minggu. Jam pun bertambah.",
+      "duration": 6.6,
+      "voice": "2026-11-15-kenapa-dewasa-kurang-kawan_8.wav"
+    },
+    {
+      "set": "cta",
+      "duration": 2.6
+    }
+  ]
+}

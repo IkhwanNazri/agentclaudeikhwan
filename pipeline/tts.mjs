@@ -8,6 +8,9 @@ import { spawnSync } from 'node:child_process';
 
 const ROOT = resolve(dirname(new URL(import.meta.url).pathname), '..');
 const cleanOnly = process.argv.includes('--clean-only');
+// --only=5,8 : jana semula babak tertentu sahaja
+const onlyArg = process.argv.find((a) => a.startsWith('--only='));
+const only = onlyArg ? new Set(onlyArg.slice(7).split(',').map(Number)) : null;
 const scenesPath = process.argv.slice(2).find((a) => !a.startsWith('--'));
 if (!scenesPath) {
   console.error('Usage: node pipeline/tts.mjs content/<slug>/scenes.json [--clean-only]');
@@ -38,15 +41,25 @@ if (cleanOnly) {
 
 for (const [i, scene] of doc.scenes.entries()) {
   if (!scene.say) continue;
+  if (only && !only.has(i)) continue;
   const file = `${slug}_${i}.wav`;
   const pcm = join(outDir, `.voice_${i}.pcm`);
-  synthesize(directorPrompt(style, scene.say), pcm, scene.voiceName || voice.voiceName);
-  run('ffmpeg', ['-v', 'error', '-y', '-f', 's16le', '-ar', '24000', '-ac', '1', '-i', pcm, join(publicDir, file)]);
-  cleanTail(join(publicDir, file));
+  // TTS kadang-kadang ulang ayat dua kali: kalau terlalu panjang berbanding bilangan perkataan, cuba lagi
+  const words = scene.say.split(/\s+/).filter(Boolean).length;
+  const maxSec = words / 2.2 + 1.5;
+  let seconds = 0;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    synthesize(directorPrompt(style, scene.say), pcm, scene.voiceName || voice.voiceName);
+    run('ffmpeg', ['-v', 'error', '-y', '-f', 's16le', '-ar', '24000', '-ac', '1', '-i', pcm, join(publicDir, file)]);
+    cleanTail(join(publicDir, file));
+    seconds = audioSeconds(join(publicDir, file));
+    if (seconds <= maxSec) break;
+    console.log(`  scene ${i}: suara ${seconds.toFixed(1)}s terlalu panjang (had ${maxSec.toFixed(1)}s), cuba lagi (${attempt}/3)`);
+  }
   if (doc.voiceSpeed && doc.voiceSpeed !== 1) speedUp(join(publicDir, file), doc.voiceSpeed);
-  const seconds = audioSeconds(join(publicDir, file));
+  seconds = audioSeconds(join(publicDir, file));
   scene.voice = file;
-  scene.duration = Math.max(scene.duration, Math.ceil((seconds + 0.4) * 10) / 10);
+  scene.duration = Math.ceil((seconds + 0.4) * 10) / 10;
   console.log(`scene ${i}: ${seconds.toFixed(1)}s suara → durasi ${scene.duration}s`);
 }
 

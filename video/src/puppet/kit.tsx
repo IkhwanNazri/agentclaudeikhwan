@@ -436,7 +436,7 @@ export const Puppeteer = ({ children, rod, x = 0, y = 0, z = 0, tilt = 0, scale 
 
 export type Look = {
   skin?: string;
-  hair?: 'bob' | 'bun' | 'short' | 'grey' | 'cap';
+  hair?: 'bob' | 'bun' | 'short' | 'grey' | 'cap' | 'hijab';
   hairColor?: string;
   shirt?: string;
   pants?: string;
@@ -453,7 +453,7 @@ export type Pose = {
   head?: number;
   mouth?: number; // 0 tutup .. 1 buka
   eyes?: 'open' | 'wide' | 'closed';
-  hold?: 'coffee' | 'phone' | 'clock' | 'pot' | 'book' | 'mic' | null;
+  hold?: 'coffee' | 'phone' | 'clock' | 'pot' | 'book' | 'mic' | 'box' | 'teh' | null;
   phoneGlow?: number;
 };
 
@@ -488,6 +488,22 @@ const HoldItem = ({ item, glow = 1 }: { item: NonNullable<Pose['hold']>; glow?: 
         <Paper shape={poly([[-0.17, 0], [0.17, 0], [0.13, -0.26], [-0.13, -0.26]])} color="#c0643a" />
         <Paper shape={ellipse(0.09, 0.22)} color={C.green} position={[-0.05, 0.2, -0.01]} rotation={[0, 0, 0.3]} />
         <Paper shape={ellipse(0.08, 0.2)} color="#6b9a5a" position={[0.07, 0.18, -0.02]} rotation={[0, 0, -0.35]} />
+      </group>
+    );
+  if (item === 'box')
+    return (
+      <group position={[-0.1, -0.95, 0.07]}>
+        <Paper shape={rect(0.62, 0.5, 0.03)} color="#c99a5b" />
+        <Paper shape={rect(0.62, 0.08, 0)} color="#a87a3f" position={[0, 0.12, 0.02]} />
+        <Paper shape={rect(0.14, 0.5, 0)} color="#e6c48a" position={[0, 0, 0.025]} />
+      </group>
+    );
+  if (item === 'teh')
+    return (
+      <group position={[0.02, -0.95, 0.06]}>
+        <Paper shape={poly([[-0.11, 0.2], [0.11, 0.2], [0.09, -0.16], [-0.09, -0.16]])} color="#e9e4dc" />
+        <Paper shape={poly([[-0.1, 0.08], [0.1, 0.08], [0.085, -0.14], [-0.085, -0.14]])} color="#b9773f" depth={0.01} position={[0, 0, 0.022]} />
+        <Paper shape={rect(0.2, 0.08, 0.03)} color="#f3e2c4" depth={0.01} position={[0, 0.13, 0.022]} />
       </group>
     );
   if (item === 'book')
@@ -540,6 +556,26 @@ const BEARD = custom('beard', () => {
   s.quadraticCurveTo(-0.2, -0.35, -0.5, -0.05);
   return s;
 });
+const HIJAB_BACK = custom('hijabBack', () => {
+  const s = new THREE.Shape();
+  s.moveTo(-0.62, -0.1);
+  s.absarc(0, 0.02, 0.66, Math.PI, 0, true);
+  s.lineTo(0.62, -0.1);
+  s.quadraticCurveTo(0.72, -0.7, 0.55, -0.95);
+  s.lineTo(-0.55, -0.95);
+  s.quadraticCurveTo(-0.72, -0.7, -0.62, -0.1);
+  return s;
+});
+const HIJAB_FRONT = custom('hijabFront', () => {
+  const s = new THREE.Shape();
+  s.moveTo(-0.62, 0.0);
+  s.quadraticCurveTo(-0.62, 0.7, 0, 0.7);
+  s.quadraticCurveTo(0.62, 0.7, 0.62, 0.0);
+  s.quadraticCurveTo(0.5, 0.36, 0, 0.36);
+  s.quadraticCurveTo(-0.5, 0.36, -0.62, 0.0);
+  return s;
+});
+const HIJAB_DRAPE = poly([[-0.5, -0.3], [0.5, -0.3], [0.62, -0.98], [-0.62, -0.98]]);
 const MOUTH_SMILE = custom('mouthSmile', () => {
   const s = new THREE.Shape();
   s.absarc(0, -0.2, 0.12, Math.PI, 0, false);
@@ -616,6 +652,12 @@ export const Puppet = ({ look = AINA, pose = {} }: { look?: Look; pose?: Pose })
       {/* kepala */}
       <group position={[0, 1.2, 0.02]} rotation={[0, 0, head]}>
         {look.hair === 'bob' ? <Paper shape={HAIR_BACK_BOB} color={hairC} position={[0, 0, -0.04]} /> : null}
+        {look.hair === 'hijab' ? (
+          <>
+            <Paper shape={HIJAB_BACK} color={hairC} position={[0, 0, -0.04]} />
+            <Paper shape={HIJAB_DRAPE} color={hairC} position={[0, 0, -0.01]} />
+          </>
+        ) : null}
         {look.hair === 'bun' ? (
           <>
             <Paper shape={circle(0.3)} color={hairC} position={[0, 0.72, -0.04]} />
@@ -625,6 +667,7 @@ export const Puppet = ({ look = AINA, pose = {} }: { look?: Look; pose?: Pose })
         <Paper shape={circle(0.55)} color={skin} />
         {look.hair === 'bob' || look.hair === 'bun' ? <Paper shape={FRINGE} color={hairC} position={[0, 0, 0.03]} /> : null}
         {look.hair === 'short' || look.hair === 'grey' ? <Paper shape={SHORT_HAIR} color={hairC} position={[0, 0, 0.03]} /> : null}
+        {look.hair === 'hijab' ? <Paper shape={HIJAB_FRONT} color={hairC} position={[0, 0, 0.03]} /> : null}
         {look.hair === 'cap' ? (
           <>
             <Paper shape={SHORT_HAIR} color={look.hairColor ?? '#2f7d5b'} position={[0, 0.02, 0.03]} />
