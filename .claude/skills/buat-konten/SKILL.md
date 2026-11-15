@@ -30,9 +30,15 @@ Tunggu `research.md`.
 
 ## 3. Writer
 Panggil subagent `writer` dengan folder kerja. Tunggu `script.md` + `caption.txt`.
+**Gaya default PuppetShow** (baca `docs/puppet-show.md`): suruh writer tulis `scenes.json` format PuppetShow juga (2 intro pengacara, curtain, 5-6 babak cerita, `cta` senyap TANPA say/text). Beri writer senarai set yang ada + set baru yang kau cadang untuk topik tu. 45-60 saat.
 
 ## 4. Maker
-Panggil subagent `maker` dengan folder kerja. Tunggu `video.mp4`.
+- **PuppetShow (default):** orchestrator buat sendiri (maker haiku tak cukup kuat untuk bina set baru):
+  1. Bina set baru yang perlu dalam `video/src/PuppetShow.tsx` → `cd video && npx tsc`.
+  2. `node pipeline/tts.mjs <folder>/scenes.json` (semak jumlah durasi 45-60s; ringkaskan ayat kalau lebih).
+  3. Semak 6-8 frame dengan `remotion still` (arahan dalam docs), betulkan teks terpotong/bertindih.
+  4. `node pipeline/render.mjs <folder>/scenes.json` di latar belakang (~20 minit).
+- Gaya lama (hanya kalau owner minta): panggil subagent `maker`.
 
 ## 5. Reviewer
 Panggil subagent `reviewer` dengan folder kerja.
@@ -47,4 +53,4 @@ Kalau token Telegram tiada / gagal, beritahu owner path video dan ringkasan revi
 Commit fail teks dalam folder kerja (research.md, script.md, scenes.json, caption.txt, review.md). video.mp4 tak dicommit (gitignore).
 
 ## Laporan akhir kepada owner (ringkas)
-Topik, hook, skor reviewer, status Telegram.
+Topik, hook, skor reviewer, status Telegram. Hantar juga video dalam chat (SendUserFile).

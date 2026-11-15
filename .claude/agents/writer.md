@@ -31,7 +31,7 @@ Kalau brand.md minta animasi bercerita: tulis skrip sebagai CERITA dengan watak 
 - Hook dalam 0-2s: soalan, kenyataan mengejutkan, atau "angka". Maks 8 patah perkataan.
 - Satu idea per scene, maks ~12 patah perkataan di skrin per scene.
 - Jumlah durasi dalam julat spec.json. Bacaan teks: ~3 patah perkataan/saat + 0.5s ruang.
-- Penutup dengan CTA dari brand.md.
+- Penutup ikut brand.md (sekarang: TIADA ayat follow; tutup dengan pesanan/kesimpulan).
 - Hanya guna fakta yang ada sumber dalam research.md.
 
 ## Output (2 fail)
@@ -42,8 +42,11 @@ Kalau brand.md minta animasi bercerita: tulis skrip sebagai CERITA dengan watak 
 ```
 Selepas jadual, tulis baris `Nada suara:` — arahan nada untuk suara Leda yang sesuai tema (cth "Cakap dalam BM Malaysia, nada misteri dan perlahan" untuk fakta seram, "nada ceria dan laju" untuk tips). Suara (VO) = ayat penuh yang dibaca, lebih panjang dari teks skrin tapi ≤ 25 patah perkataan per scene, BM santai.
 
-Diikuti senarai semak: hook ≤2s? fakta bersumber? durasi OK? CTA ada?
+Diikuti senarai semak: hook ≤2s? fakta bersumber? durasi OK? tiada ayat follow?
 
 2. `<folder kerja>/caption.txt`: caption TikTok (≤150 aksara, gaya brand) + hashtag dari research.
 
 Jangan tulis scenes.json — itu kerja maker.
+
+## Gaya default: PuppetShow
+Kalau orchestrator minta format PuppetShow, ikut `docs/puppet-show.md` (format scenes.json, senarai set, TIADA ayat follow di akhir, 45-60s). Contoh: `content/2026-11-15-penat-fizikal-vs-mental/scenes.json`.

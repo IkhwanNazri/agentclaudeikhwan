@@ -30,6 +30,12 @@ Dipasang oleh `scripts/install-skills.sh` (versi dikunci, tidak dicommit):
 | marketing-psychology | coreyhaines31/marketingskills | reviewer |
 | remotion-best-practices | remotion-dev/skills | maker |
 
+## Gaya video (keputusan owner — jangan lupa)
+- Default: **teater boneka kertas 3D** (`PuppetShow`). Baca `docs/puppet-show.md` sebelum buat video.
+- Pembukaan 2 pengacara → tirai buka → cerita. Tangan dalang gaya kertas dengan jari jelas.
+- **Tiada ayat "Follow" di akhir.** Panjang 45-60 saat.
+- Video siap → `scripts/telegram.sh send` (owner tengok di Telegram dari HP).
+
 ## Prinsip kos sifar
 Jangan tambah API berbayar atau set API key berbayar. Kalau sesuatu perlukan bayaran, beritahu owner dan cari alternatif percuma.
 
@@ -38,9 +44,11 @@ Jangan tambah API berbayar atau set API key berbayar. Kalau sesuatu perlukan bay
 - `config/spec.json` — spek teknikal render (saiz, fps, warna, animasi dibenarkan).
 - `pipeline/render.mjs` — validasi scenes.json → render mp4 guna Remotion.
 - `video/` — projek Remotion (`video/src/TikTokVideo.tsx`). `cd video && npm run studio` untuk preview.
-- `video/src/LowPoly3D.tsx` — latar 3D low-poly gaya PS2 (Three.js).
+- `video/src/PuppetShow.tsx` + `video/src/puppet/kit.tsx` — gaya utama teater boneka kertas 3D (set, boneka, tangan, pentas).
+- `docs/puppet-show.md` — panduan PuppetShow: kehendak owner, format scenes.json, senarai set, langkah render.
+- `video/src/LowPoly3D.tsx` — latar 3D low-poly gaya PS2 (gaya lama).
 - `pipeline/tts.mjs` — suara Gemini TTS (Leda), key `GEMINI_API_KEY` dari AI Studio (percuma).
-- `scripts/telegram.sh` — `send`, `check`, `chatid`.
+- `scripts/telegram.sh` — `send`, `check`, `chatid`. Chat ID betul dalam `config/telegram_chat_id`.
 - `content/<tarikh>-<slug>/` — satu folder setiap video.
 
 ## Peraturan
