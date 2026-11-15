@@ -34,6 +34,7 @@ Dipasang oleh `scripts/install-skills.sh` (versi dikunci, tidak dicommit):
 - Default: **teater boneka kertas 3D** (`PuppetShow`). Baca `docs/puppet-show.md` sebelum buat video.
 - Pembukaan 2 pengacara → tirai buka → cerita. Tangan dalang gaya kertas dengan jari jelas.
 - **Tiada ayat "Follow" di akhir.** Panjang 45-60 saat.
+- **Cerita seram = tema PLACTHINC** (`"theme": "placthinc"`): dua pengacara rasmi (host lelaki cermin mata + co-host tudung pink) WAJIB muncul dalam semua babak. Set `podcast`/`seram`, lihat `docs/puppet-show.md`.
 - Video siap → `scripts/telegram.sh send` (owner tengok di Telegram dari HP).
 
 ## Prinsip kos sifar

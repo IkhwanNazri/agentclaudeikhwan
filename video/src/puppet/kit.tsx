@@ -731,16 +731,16 @@ const curtainGeo = (side: 1 | -1) => {
   g.translate(-1.6 * side, 0, 0);
   return g;
 };
-const curtainMat = () => {
+const curtainMat = (color: string = C.red) => {
   const t = paperTexture().clone();
   t.repeat.set(3, 6);
   t.needsUpdate = true;
-  return new THREE.MeshStandardMaterial({ color: C.red, map: t, roughness: 0.75, side: THREE.DoubleSide });
+  return new THREE.MeshStandardMaterial({ color, map: t, roughness: 0.75, side: THREE.DoubleSide });
 };
 
-const Curtain = ({ side, open }: { side: 1 | -1; open: number }) => {
+const Curtain = ({ side, open, dark = false }: { side: 1 | -1; open: number; dark?: boolean }) => {
   const geo = useMemo(() => curtainGeo(side), [side]);
-  const mat = useMemo(curtainMat, []);
+  const mat = useMemo(() => curtainMat(dark ? '#2a2628' : C.red), [dark]);
   const sx = interpolate(open, [0, 1], [1, 0.24]);
   return (
     <group position={[3.2 * side, 1.25, 0.55]} scale={[sx, 1, 1]}>
@@ -751,7 +751,7 @@ const Curtain = ({ side, open }: { side: 1 | -1; open: number }) => {
 
 const VALANCE = poly([[-2.8, 0.4], [2.8, 0.4], [2.8, -0.2], [2.1, -0.55], [1.4, -0.2], [0.7, -0.55], [0, -0.2], [-0.7, -0.55], [-1.4, -0.2], [-2.1, -0.55], [-2.8, -0.2]]);
 
-export const Stage = ({ open }: { open: number }) => (
+export const Stage = ({ open, dark = false }: { open: number; dark?: boolean }) => (
   <group>
     <mesh position={[0, 0, -4]} receiveShadow>
       <planeGeometry args={[30, 30]} />
@@ -760,9 +760,9 @@ export const Stage = ({ open }: { open: number }) => (
     <Paper cast={false} shape={rect(0.7, 8.6, 0.05)} color={C.gold} depth={0.25} position={[-3.05, 1.1, 0.9]} />
     <Paper cast={false} shape={rect(0.7, 8.6, 0.05)} color={C.gold} depth={0.25} position={[3.05, 1.1, 0.9]} />
     <Paper cast={false} shape={rect(6.8, 1.0, 0.05)} color={C.gold} depth={0.25} position={[0, 5.0, 0.9]} />
-    <Paper cast={false} shape={VALANCE} color={C.redDark} depth={0.12} position={[0, 4.25, 0.75]} />
-    <Curtain side={-1} open={open} />
-    <Curtain side={1} open={open} />
+    <Paper cast={false} shape={VALANCE} color={dark ? '#151314' : C.redDark} depth={0.12} position={[0, 4.25, 0.75]} />
+    <Curtain side={-1} open={open} dark={dark} />
+    <Curtain side={1} open={open} dark={dark} />
     <Paper cast={false} shape={rect(7.4, 5.0, 0.06)} color={C.wood} depth={0.3} position={[0, -4.65, 1.25]} />
     <Paper cast={false} shape={rect(7.4, 0.22, 0.04)} color={C.gold} depth={0.36} position={[0, -2.17, 1.25]} />
     <Paper cast={false} shape={rect(5.6, 1.4, 0.3)} color={C.woodDark} depth={0.05} position={[0, -3.5, 1.42]} />

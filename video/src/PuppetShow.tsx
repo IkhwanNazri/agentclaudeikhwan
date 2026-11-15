@@ -10,10 +10,13 @@ import '@fontsource/poppins/800.css';
 import {
   AINA, Banner, C, Calendar, Clock, Paper, Puppet, Puppeteer, Stage, TextPlane, circle, ellipse, pie, poly, rect, type Look,
 } from './puppet/kit';
+import { HangLamp, HauntedBackdrop, HostOnRod, PodcastDesk, Sprite, flickerAt, loadPlacthinc, type Mood, type Who } from './puppet/placthinc';
 
 export type ShowSet = 'intro' | 'curtain' | 'routine' | 'study' | 'road' | 'janet' | 'memory' | 'scroll' | 'balcony' | 'cta'
   | 'school' | 'move' | 'hours' | 'three' | 'chat' | 'meetup'
-  | 'versus' | 'brain' | 'fatigue' | 'bike' | 'sleep' | 'rest';
+  | 'versus' | 'brain' | 'fatigue' | 'bike' | 'sleep' | 'rest'
+  | 'podcast' | 'seram';
+export type SeramProp = 'house' | 'mirror' | 'key' | 'photos' | 'bell' | 'skull' | 'lantern' | 'books';
 export type ShowScene = {
   set: ShowSet;
   duration: number;
@@ -24,8 +27,10 @@ export type ShowScene = {
   title?: boolean;
   banner?: string;
   text?: string;
+  prop?: SeramProp; // set seram: prop utama di tengah
+  mood?: Mood; // reaksi pengacara (talk/shock/scared/sad/happy/angry)
 };
-export type ShowProps = { title?: string; scenes: ShowScene[] };
+export type ShowProps = { title?: string; theme?: 'placthinc'; scenes: ShowScene[] };
 
 const STEP = 2; // 15fps rasa stop-motion
 const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
@@ -35,7 +40,7 @@ const HOST2: Look = { hair: 'short', hairColor: '#1f1a18', shirt: '#e07a3f', pan
 
 // ---------------------------------------------------------------- utiliti
 
-type Ctx = { lf: number; dur: number; fps: number; scene: ShowScene; prev?: ShowSet };
+type Ctx = { lf: number; dur: number; fps: number; scene: ShowScene; prev?: ShowSet; theme?: 'placthinc' };
 
 const rise = (lf: number, fps: number, delay = 3) => interpolate(spring({ frame: lf - delay, fps, config: { damping: 13 } }), [0, 1], [-6.5, 0]);
 const talk = (lf: number, voiceFrames: number) => (lf < voiceFrames ? (Math.sin(lf * 1.25) > -0.2 ? 0.9 : 0.25) : 0);
@@ -361,7 +366,9 @@ const Balcony = ({ lf, dur, fps }: Ctx) => {
   );
 };
 
-const Cta = ({ lf, dur, fps, prev }: Ctx) => {
+const Cta = (c: Ctx) => {
+  if (c.theme === 'placthinc') return <PlacthincCta {...c} />;
+  const { lf, dur, fps, prev } = c;
   const wave = Math.sin(lf * 0.7) * 0.35;
   const hostsUp = rise(lf, fps, 10);
   const mamak = prev === 'meetup';
@@ -952,7 +959,7 @@ const Rest = ({ lf, fps }: Ctx) => {
 
 // ---------------------------------------------------------------- pembukaan: dua pengacara
 
-const TitleCard = ({ title }: { title: string }) => {
+const TitleCard = ({ title, skull = false }: { title: string; skull?: boolean }) => {
   const words = title.toUpperCase().split(' ');
   const mid = Math.ceil(words.length / 2);
   return (
@@ -965,9 +972,11 @@ const TitleCard = ({ title }: { title: string }) => {
         { text: words.slice(0, mid).join(' '), color: C.ink, size: 130 },
         { text: words.slice(mid).join(' '), color: C.red, size: 130 },
       ]} w={3.6} h={1.7} position={[0, 0, 0.06]} pxW={1100} pxH={520} />
-      <group position={[1.75, 0.95, 0.08]} rotation={[0, 0, 0.2]} scale={0.6}>
-        <Clock spin={0} r={0.62} />
-      </group>
+      {skull ? <Sprite name="skull" w={0.75} position={[1.75, 0.85, 0.1]} rotation={[0, 0, 0.2]} /> : (
+        <group position={[1.75, 0.95, 0.08]} rotation={[0, 0, 0.2]} scale={0.6}>
+          <Clock spin={0} r={0.62} />
+        </group>
+      )}
     </group>
   );
 };
@@ -1005,9 +1014,142 @@ const Hosts = ({ frame, fps, intro, title }: { frame: number; fps: number; intro
   );
 };
 
+// ---------------------------------------------------------------- tema PLACTHINC (cerita seram, pengacara tetap)
+
+// host1 = cohost (tudung pink, suara Leda), host2 = host (lelaki, suara Puck)
+const WHO: Record<'host1' | 'host2', Who> = { host1: 'cohost', host2: 'host' };
+const speakerOf = (scene: ShowScene): Who | null => (scene.say ? WHO[scene.speaker ?? 'host1'] : null);
+const voiceOf = (dur: number, fps: number) => Math.max(0, dur - Math.round(0.45 * fps));
+
+const HangingLogo = ({ lf, fps, y = 3.25, w = 3.4, delay = 0, z = 0.3 }: { lf: number; fps: number; y?: number; w?: number; delay?: number; z?: number }) => {
+  const drop = interpolate(spring({ frame: lf - delay, fps, config: { damping: 11 } }), [0, 1], [4, 0]);
+  return (
+    <group position={[0, y + drop, z]} rotation={[0, 0, Math.sin(lf * 0.1) * 0.03]}>
+      <mesh position={[-1.1, 1.2, -0.02]}><cylinderGeometry args={[0.008, 0.008, 2, 4]} /><meshStandardMaterial color="#222" /></mesh>
+      <mesh position={[1.1, 1.2, -0.02]}><cylinderGeometry args={[0.008, 0.008, 2, 4]} /><meshStandardMaterial color="#222" /></mesh>
+      <Sprite name="logo" w={w} />
+    </group>
+  );
+};
+
+// Babak podcast: dua pengacara di meja, logo, lampu gantung, rumah berhantu di belakang
+const Podcast = ({ lf, dur, fps, scene }: Ctx) => {
+  const who = speakerOf(scene);
+  const talking = lf < voiceOf(dur, fps);
+  const up = rise(lf, fps, 2);
+  const fl = flickerAt(lf);
+  const mood = scene.mood ?? 'talk';
+  return (
+    <>
+      <Fly lf={lf} fps={fps}>
+        <HauntedBackdrop />
+        <HangLamp x={-1.9} y={2.6} flicker={fl} />
+        <HangLamp x={1.9} y={2.6} flicker={flickerAt(lf + 7)} />
+      </Fly>
+      <HangingLogo lf={lf} fps={fps} y={3.0} w={3.0} delay={6} />
+      {scene.banner ? <HangBanner text={scene.banner} lf={lf} fps={fps} y={1.6} z={-0.6} /> : null}
+      <HostOnRod who="host" x={-1.3} y={-0.55 + up} z={0.9} scale={0.82} lf={lf} talking={who === 'host' && talking} mood={who === 'host' ? mood : mood === 'talk' ? 'idle' : mood} />
+      <HostOnRod who="cohost" x={1.3} y={-0.55 + up} z={0.9} scale={0.82} lf={lf} talking={who === 'cohost' && talking} mood={who === 'cohost' ? mood : mood === 'talk' ? 'idle' : mood} />
+      <PodcastDesk lf={lf} />
+    </>
+  );
+};
+
+const PROP_W: Record<SeramProp, number> = { house: 0, mirror: 1.7, key: 1.5, photos: 1.9, bell: 1.7, skull: 1.8, lantern: 1.4, books: 1.7 };
+
+// Babak cerita seram: prop utama tergantung di tengah, pengacara mengintai di bawah dan bereaksi
+const Seram = ({ lf, dur, fps, scene }: Ctx) => {
+  const who = speakerOf(scene);
+  const talking = lf < voiceOf(dur, fps);
+  const up = rise(lf, fps, 6);
+  const prop = scene.prop ?? 'house';
+  const mood: Mood = scene.mood ?? 'scared';
+  const flash = mood === 'shock' ? interpolate(lf, [8, 10, 14, 16, 20], [0, 1, 0.1, 0.8, 0], clamp) : 0;
+  const swing = Math.sin(lf * 0.13) * 0.08;
+  const drop = interpolate(spring({ frame: lf - 4, fps, config: { damping: 9 } }), [0, 1], [6, 0]);
+  const zoom = interpolate(lf, [0, dur], [1, 1.08], clamp);
+  return (
+    <>
+      <Fly lf={lf} fps={fps}>
+        <group scale={prop === 'house' ? zoom * 1.05 : 1}>
+          <HauntedBackdrop dim={prop === 'house' ? 1.05 : 1} />
+        </group>
+      </Fly>
+      {prop !== 'house' ? (
+        <group position={[0, 1.35 + drop, 0.2]} rotation={[0, 0, swing]}>
+          <mesh position={[0, 1.6, -0.02]}><cylinderGeometry args={[0.008, 0.008, 2.4, 4]} /><meshStandardMaterial color="#d8c8a8" /></mesh>
+          <Sprite name={prop} w={PROP_W[prop]} position={[0, 0, 0]} glow={prop === 'lantern' ? 0.8 * flickerAt(lf) : 0} />
+        </group>
+      ) : null}
+      {scene.banner ? <HangBanner text={scene.banner} lf={lf} fps={fps} y={3.4} z={-0.4} /> : null}
+      <HostOnRod who="host" x={-1.75} y={-1.05 + up} z={1.0} scale={0.7} lf={lf} talking={who === 'host' && talking} mood={who === 'host' && mood === 'talk' ? 'talk' : mood} />
+      <HostOnRod who="cohost" x={1.75} y={-1.05 + up} z={1.0} scale={0.7} lf={lf} talking={who === 'cohost' && talking} mood={who === 'cohost' && mood === 'talk' ? 'talk' : mood} />
+      <pointLight position={[0, 2, 4]} intensity={400 * flash} distance={20} color="#dfe8ff" />
+    </>
+  );
+};
+
+// Penutup: dua pengacara melambai, logo, tirai tutup (senyap)
+const PlacthincCta = ({ lf, fps }: Ctx) => {
+  const up = rise(lf, fps, 4);
+  return (
+    <>
+      <HauntedBackdrop />
+      <HangingLogo lf={lf} fps={fps} y={2.7} w={3.4} />
+      <HostOnRod who="host" x={-1.2} y={-0.6 + up} z={0.9} scale={0.85} lf={lf} talking={false} mood="happy" gesture="hand5" />
+      <HostOnRod who="cohost" x={1.2} y={-0.6 + up} z={0.9} scale={0.85} lf={lf} talking={false} mood="happy" gesture="hand5" />
+      <PodcastDesk lf={lf} />
+    </>
+  );
+};
+
+// Pembukaan: dua pengacara depan tirai hitam, logo + kad tajuk turun
+const PlacthincHosts = ({ frame, fps, intro, title }: { frame: number; fps: number; intro: Timed[]; title: string }) => {
+  const cur = intro.find((s) => frame >= s.start && frame < s.start + s.dur);
+  const last = intro[intro.length - 1];
+  const introEnd = last.start + last.dur;
+  const titleScene = intro.find((s) => s.scene.title);
+  const exit = interpolate(frame, [introEnd, introEnd + fps * 0.6], [0, 1], clamp);
+  if (exit >= 1) return null;
+  const enter = interpolate(spring({ frame, fps, config: { damping: 12 } }), [0, 1], [-2.5, 0]);
+  const y = -0.35 + enter - exit * 7;
+  const talking = (w: Who) => !!cur && speakerOf(cur.scene) === w && frame - cur.start < cur.voiceFrames;
+  const lf = cur ? frame - cur.start : frame;
+  const titleIn = titleScene ? spring({ frame: frame - titleScene.start - 4, fps, config: { damping: 10 } }) : 0;
+  const titleY = interpolate(titleIn, [0, 1], [7, 1.7]) + exit * 7;
+  return (
+    <>
+      <group position={[0, exit * 7 + titleIn * 0.35, 0]}>
+        <HangingLogo lf={frame} fps={fps} y={2.95} w={3.0} delay={2} z={1.05} />
+      </group>
+      {titleScene ? (
+        <group position={[0, titleY, 1.15]} rotation={[0, 0, Math.sin(frame * 0.12) * 0.03]} scale={0.62}>
+          <TitleCard title={title} skull />
+        </group>
+      ) : null}
+      <HostOnRod who="host" x={-1.35} y={y} z={1.0} scale={0.9} lf={lf} talking={talking('host')} mood={cur?.scene.mood ?? 'talk'} />
+      <HostOnRod who="cohost" x={1.35} y={y} z={1.0} scale={0.9} lf={lf} talking={talking('cohost')} mood={cur?.scene.mood ?? 'talk'} />
+    </>
+  );
+};
+
 // ---------------------------------------------------------------- lampu & kamera
 
-const Lights = ({ mode }: { mode: 'warm' | 'night' | 'dusk' }) => {
+const Lights = ({ mode }: { mode: 'warm' | 'night' | 'dusk' | 'horror' }) => {
+  if (mode === 'horror') {
+    return (
+      <>
+        <ambientLight intensity={0.3} color="#c9c2ff" />
+        <hemisphereLight args={['#8a90c8', '#1a0c0c', 0.45]} />
+        <directionalLight position={[0.8, 3.5, 12]} intensity={1.1} color="#d6dcff" castShadow
+          shadow-mapSize-width={1024} shadow-mapSize-height={1024}
+          shadow-camera-left={-6} shadow-camera-right={6} shadow-camera-top={7} shadow-camera-bottom={-6} shadow-bias={-0.0005} />
+        <spotLight position={[0, 7, 10]} angle={0.42} penumbra={0.7} intensity={190} decay={2} color="#ffe6c4" castShadow
+          shadow-mapSize-width={1024} shadow-mapSize-height={1024} />
+        <pointLight position={[0, -1.6, 2.2]} intensity={5} distance={6} color="#ffa24a" />
+      </>
+    );
+  }
   const key = mode === 'night' ? '#9fb4ff' : mode === 'dusk' ? '#ffc79a' : '#ffd6a8';
   return (
     <>
@@ -1037,6 +1179,7 @@ const SETS: Partial<Record<ShowSet, (c: Ctx) => ReactNode>> = {
   routine: Routine, study: Study, road: Road, janet: Janet, memory: Memory, scroll: Scroll, balcony: Balcony, cta: Cta,
   school: School, move: Move, hours: Hours, three: Three, chat: Chat, meetup: Meetup,
   versus: Versus, brain: BrainScene, fatigue: Fatigue, bike: Bike, sleep: Sleep, rest: Rest,
+  podcast: Podcast, seram: Seram,
 };
 
 const World = ({ props }: { props: ShowProps }) => {
@@ -1056,7 +1199,8 @@ const World = ({ props }: { props: ShowProps }) => {
   const Set = SETS[cur.scene.set];
   const prev = timeline[timeline.indexOf(cur) - 1]?.scene.set;
   const ctaWarm = cur.scene.set === 'cta' && prev === 'meetup';
-  const mode = cur.scene.set === 'scroll' || cur.scene.set === 'chat' || cur.scene.set === 'sleep' ? 'night' : ctaWarm ? 'warm' : cur.scene.set === 'rest' || (cur.scene.set === 'cta' && prev === 'rest') ? 'dusk' : cur.scene.set === 'balcony' || cur.scene.set === 'cta' || cur.scene.set === 'road' ? 'dusk' : 'warm';
+  const theme = props.theme;
+  const mode = theme === 'placthinc' ? 'horror' : cur.scene.set === 'scroll' || cur.scene.set === 'chat' || cur.scene.set === 'sleep' ? 'night' : ctaWarm ? 'warm' : cur.scene.set === 'rest' || (cur.scene.set === 'cta' && prev === 'rest') ? 'dusk' : cur.scene.set === 'balcony' || cur.scene.set === 'cta' || cur.scene.set === 'road' ? 'dusk' : 'warm';
   const storyZ = interpolate(lf, [0, cur.dur], [13.9, 13.2], clamp);
   const camZ = cur.scene.set === 'intro' || cur.scene.set === 'curtain' ? 14.3 : storyZ;
   return (
@@ -1064,18 +1208,20 @@ const World = ({ props }: { props: ShowProps }) => {
       <Rig z={camZ} />
       <color attach="background" args={['#120a0c']} />
       <Lights mode={mode} />
-      <Stage open={open} />
+      <Stage open={open} dark={theme === 'placthinc'} />
       {(() => {
         // Set babak pertama turun semasa tirai dibuka dan bersambung tanpa lompat
         const first = timeline.find((s) => SETS[s.scene.set]);
         const F = first ? SETS[first.scene.set] : undefined;
         const inFirst = first && (cur === first || cur === curtainScene);
         if (F && first && curtainScene && inFirst) {
-          return <F lf={frame - curtainScene.start} dur={first.dur + curtainScene.dur} fps={fps} scene={first.scene} />;
+          return <F lf={frame - curtainScene.start} dur={first.dur + curtainScene.dur} fps={fps} scene={first.scene} theme={theme} />;
         }
-        return Set ? <Set lf={lf} dur={cur.dur} fps={fps} scene={cur.scene} prev={prev} /> : null;
+        return Set ? <Set lf={lf} dur={cur.dur} fps={fps} scene={cur.scene} prev={prev} theme={theme} /> : null;
       })()}
-      {intro.length ? <Hosts frame={frame} fps={fps} intro={intro} title={props.title ?? ''} /> : null}
+      {intro.length ? (theme === 'placthinc'
+        ? <PlacthincHosts frame={frame} fps={fps} intro={intro} title={props.title ?? ''} />
+        : <Hosts frame={frame} fps={fps} intro={intro} title={props.title ?? ''} />) : null}
     </>
   );
 };
@@ -1114,13 +1260,13 @@ export const PuppetShow = (props: ShowProps) => {
   const [handle] = useState(() => delayRender('fonts'));
   const [ready, setReady] = useState(false);
   useEffect(() => {
-    Promise.all([document.fonts.load('800 100px Poppins'), document.fonts.load('600 100px Poppins')])
+    Promise.all([document.fonts.load('800 100px Poppins'), document.fonts.load('600 100px Poppins'), props.theme === 'placthinc' ? loadPlacthinc() : null])
       .catch(() => undefined)
       .then(() => {
         setReady(true);
         continueRender(handle);
       });
-  }, [handle]);
+  }, [handle, props.theme]);
   const timeline = timelineOf(props.scenes, fps);
   const cta = props.scenes.find((s) => s.set === 'cta');
   const ctaT = timeline.find((s) => s.scene.set === 'cta');

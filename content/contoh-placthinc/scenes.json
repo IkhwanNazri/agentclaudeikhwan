@@ -1,0 +1,74 @@
+{
+  "composition": "PuppetShow",
+  "theme": "placthinc",
+  "title": "Bilik hotel yang tak pernah disewa",
+  "voiceStyle": "Bercerita seram, perlahan dan berbisik, macam podcast misteri.",
+  "voiceSpeed": 1,
+  "scenes": [
+    {
+      "set": "intro",
+      "speaker": "host2",
+      "voiceName": "Puck",
+      "say": "Korang pernah dengar pasal bilik hotel yang tak pernah disewa?",
+      "duration": 4.6,
+      "voice": "contoh-placthinc_0.wav"
+    },
+    {
+      "set": "intro",
+      "speaker": "host1",
+      "voiceName": "Leda",
+      "say": "Malam ni kita buka kisahnya.",
+      "duration": 4.1,
+      "title": true,
+      "mood": "scared",
+      "voice": "contoh-placthinc_1.wav"
+    },
+    {
+      "set": "curtain",
+      "duration": 1.3
+    },
+    {
+      "set": "seram",
+      "prop": "house",
+      "speaker": "host2",
+      "voiceName": "Puck",
+      "say": "Hotel lama ni berdiri atas bukit sejak tahun lapan puluhan.",
+      "duration": 6.4,
+      "banner": "Hotel atas bukit",
+      "voice": "contoh-placthinc_3.wav"
+    },
+    {
+      "set": "seram",
+      "prop": "bell",
+      "speaker": "host1",
+      "voiceName": "Leda",
+      "say": "Tengah malam, loceng kaunter berbunyi sendiri.",
+      "duration": 4.2,
+      "mood": "scared",
+      "voice": "contoh-placthinc_4.wav"
+    },
+    {
+      "set": "seram",
+      "prop": "mirror",
+      "speaker": "host2",
+      "voiceName": "Puck",
+      "say": "Dan cermin dalam bilik tu retak dari dalam!",
+      "duration": 4.2,
+      "mood": "shock",
+      "voice": "contoh-placthinc_5.wav"
+    },
+    {
+      "set": "podcast",
+      "speaker": "host1",
+      "voiceName": "Leda",
+      "say": "Korang berani tidur situ?",
+      "duration": 2.2,
+      "mood": "talk",
+      "voice": "contoh-placthinc_6.wav"
+    },
+    {
+      "set": "cta",
+      "duration": 2.6
+    }
+  ]
+}
