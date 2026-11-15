@@ -1,7 +1,5 @@
-Babak 1 sahaja (15s), tiada suara — owner rakam sendiri.
-Masa dialog untuk rakaman:
-0-2s  syot lebar
-2-6.5s  HOST: "Kau pernah tak dengar kisah sebuah bilik hotel yang sepatutnya tidak dihuni?"
-6.5-10s  CO-HOST: "Kenapa? Apa yang berlaku dalam bilik tu?"
-10-13.6s  HOST: "Malam ini aku nak ceritakan kisah Bilik 378."
-13.6-15s  syot lebar
+Babak 1 (15s) — susun atur ikut gambar, watak dari zip PLACTHINC. Tiada suara.
+Masa dialog:
+1.5-6.3s HOST: "Kau pernah tak dengar kisah sebuah bilik hotel yang sepatutnya tidak dihuni?"
+6.8-9.8s CO-HOST: "Kenapa? Apa yang berlaku dalam bilik tu?"
+10.3-14.2s HOST: "Malam ini aku nak ceritakan kisah Bilik 378."

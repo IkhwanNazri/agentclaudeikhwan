@@ -1,0 +1,8 @@
+{
+  "duration": 15,
+  "lines": [
+    { "who": "host", "from": 1.5, "to": 6.3 },
+    { "who": "cohost", "from": 6.8, "to": 9.8, "mood": "scared" },
+    { "who": "host", "from": 10.3, "to": 14.2 }
+  ]
+}
