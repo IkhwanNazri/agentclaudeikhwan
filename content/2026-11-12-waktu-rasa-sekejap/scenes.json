@@ -1,90 +1,75 @@
 {
   "composition": "PuppetShow",
   "title": "Kenapa masa cepat je berjalan?",
-  "voiceStyle": "Mesra macam kawan bercerita, sederhana laju, ceria dan sikit kelakar. Fakta disebut jelas dan tenang.",
+  "voiceStyle": "Mesra macam kawan bercerita, ceria, laju dan padat macam TikToker. Fakta disebut jelas.",
+  "voiceSpeed": 1.05,
   "scenes": [
     {
       "set": "intro",
       "speaker": "host1",
       "voiceName": "Leda",
-      "say": "Weh, baru semalam Januari, tiba-tiba dah November?!",
-      "duration": 3.6,
+      "say": "Weh, baru semalam Januari, dah November?!",
+      "duration": 3.1,
       "voice": "2026-11-12-waktu-rasa-sekejap_0.wav"
     },
     {
       "set": "intro",
       "speaker": "host2",
       "voiceName": "Puck",
-      "say": "Betul tu! Kenapa masa rasa cepat je berjalan?",
-      "duration": 4.1,
+      "say": "Kenapa masa rasa cepat je berjalan?",
+      "duration": 2.4,
       "title": true,
       "voice": "2026-11-12-waktu-rasa-sekejap_1.wav"
     },
     {
-      "set": "intro",
-      "speaker": "host1",
-      "voiceName": "Leda",
-      "say": "Jom kita tengok!",
-      "duration": 1.5,
-      "voice": "2026-11-12-waktu-rasa-sekejap_2.wav"
-    },
-    {
       "set": "curtain",
-      "duration": 1.6
+      "duration": 1.3
     },
     {
       "set": "routine",
-      "say": "Bangun, kerja, balik, tidur. Ulang. Rutin sama je, dan bulan pun lesap macam tu.",
-      "duration": 7.4,
-      "voice": "2026-11-12-waktu-rasa-sekejap_4.wav"
+      "say": "Bangun, kerja, tidur, ulang. Sedar-sedar, bulan pun lesap.",
+      "duration": 4.6,
+      "voice": "2026-11-12-waktu-rasa-sekejap_3.wav"
     },
     {
       "set": "study",
-      "say": "Tapi ni bukan kau sorang. Kajian 2005 di Munich tanya 499 orang, umur 14 sampai 94. Untuk jam, minggu dan bulan, jawapan tak beza ikut umur.",
-      "duration": 12.4,
+      "say": "Kajian di Munich tahun 2005 tanya 499 orang. Untuk minggu dan bulan, rasa masa sama je, tak kira umur.",
+      "duration": 6.9,
       "banner": "499 orang · umur 14–94",
-      "voice": "2026-11-12-waktu-rasa-sekejap_5.wav"
+      "voice": "2026-11-12-waktu-rasa-sekejap_4.wav"
     },
     {
       "set": "road",
-      "say": "Bila tanya sepuluh tahun lepas rasa laju tak, baru nampak kesan umur. Tapi kesan dia kecil, dan hanya untuk skala tahun.",
-      "duration": 7.8,
+      "say": "Tapi bila tanya sepuluh tahun lepas, baru nampak kesan umur. Itu pun kecil je.",
+      "duration": 5.4,
       "banner": "10 tahun lepas?",
-      "voice": "2026-11-12-waktu-rasa-sekejap_6.wav"
-    },
-    {
-      "set": "janet",
-      "say": "Kenapa? Paul Janet, abad ke-19, kata setiap tahun makin kecil bila dibanding seluruh hidup kau. Tapi itu teori lama, bukan terbukti.",
-      "duration": 10.6,
-      "banner": "Teori lama · bukan terbukti",
-      "voice": "2026-11-12-waktu-rasa-sekejap_7.wav"
+      "voice": "2026-11-12-waktu-rasa-sekejap_5.wav"
     },
     {
       "set": "memory",
-      "say": "Salah satu teori lain: rutin sama, kurang kenangan baru, tahun rasa padat. Tapi ini masih dipertikai, jangan telan bulat-bulat.",
-      "duration": 10.4,
+      "say": "Salah satu teori: rutin sama, kurang kenangan baru. Tapi teori ni masih dipertikai.",
+      "duration": 7.3,
       "banner": "Salah satu teori",
-      "voice": "2026-11-12-waktu-rasa-sekejap_8.wav"
+      "voice": "2026-11-12-waktu-rasa-sekejap_6.wav"
     },
     {
       "set": "scroll",
-      "say": "Satu lagi, scroll. Kajian LMU Munich 2026 kata scroll buat masa terasa lebih pendek, dan kau susah nak ingat lepas tu.",
-      "duration": 9.0,
-      "voice": "2026-11-12-waktu-rasa-sekejap_9.wav"
+      "say": "Scroll pun sama. Kajian LMU 2026 kata masa rasa lebih pendek, dan lepas tu susah nak ingat.",
+      "duration": 7.9,
+      "voice": "2026-11-12-waktu-rasa-sekejap_7.wav"
     },
     {
       "set": "balcony",
-      "say": "Minggu ni cuba satu benda baru. Tak janji masa perlahan, tapi sekurang-kurangnya ada cerita nak diingat.",
-      "duration": 7.5,
-      "voice": "2026-11-12-waktu-rasa-sekejap_10.wav"
+      "say": "Jadi minggu ni, cuba satu benda baru. Sekurang-kurangnya ada cerita nak diingat.",
+      "duration": 5.8,
+      "voice": "2026-11-12-waktu-rasa-sekejap_8.wav"
     },
     {
       "set": "cta",
-      "say": "Follow untuk fakta kerja dan otak yang korang tak tahu.",
-      "duration": 3.9,
+      "say": "Follow untuk fakta otak yang korang tak tahu!",
+      "duration": 3.6,
       "text": "Follow untuk fakta kerja & otak",
-      "voice": "2026-11-12-waktu-rasa-sekejap_11.wav"
+      "voice": "2026-11-12-waktu-rasa-sekejap_9.wav"
     }
-  ],
-  "voiceSpeed": 1.15
+  ]
 }
