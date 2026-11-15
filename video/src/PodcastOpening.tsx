@@ -10,11 +10,11 @@ export type PodcastOpeningProps = { duration: number; lines: Line[] };
 
 const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
 const noise = (n: number) => { const s = Math.sin(n * 12.9898) * 43758.5453; return s - Math.floor(s); };
-const src = (n: string) => staticFile(`placthinc/${n}.png`);
+const src = (n: string) => staticFile(`placthinc2/${n}.png`);
 
 const FACE: Record<Who, { idle: string; open: string; scared: string; happy: string }> = {
-  host: { idle: 'hexpr0', open: 'hexpr3', scared: 'hexpr6', happy: 'hexpr1' },
-  cohost: { idle: 'cexpr0', open: 'cexpr1', scared: 'cexpr4', happy: 'cexpr3' },
+  host: { idle: 'mexpr0', open: 'mexpr1', scared: 'mexpr2', happy: 'mexpr4' },
+  cohost: { idle: 'fexpr4', open: 'fexpr0', scared: 'fexpr5', happy: 'fexpr3' },
 };
 
 const abs = (s: CSSProperties): CSSProperties => ({ position: 'absolute', ...s });
@@ -52,7 +52,7 @@ const HostPuppet = ({ who, cx, cy, bw, line, frame, fps, inward }: { who: Who; c
   const f = FACE[who];
   const mood = line?.mood ?? 'talk';
   const face = talking ? (mouthOpen ? f.open : mood === 'scared' ? f.scared : f.idle) : f.idle;
-  const bh = bw * (who === 'host' ? 621 / 333 : 636 / 321);
+  const bh = bw * (558 / (who === 'host' ? 258 : 252));
   const bob = talking ? Math.abs(Math.sin(lf * 0.28)) * 10 : Math.sin(frame * 0.07 + (who === 'host' ? 1 : 0)) * 4;
   const tilt = talking ? Math.sin(lf * 0.17) * 5 : Math.sin(frame * 0.05) * 1.5;
   const hw = bw * (who === 'host' ? 0.86 : 0.83);
@@ -63,13 +63,13 @@ const HostPuppet = ({ who, cx, cy, bw, line, frame, fps, inward }: { who: Who; c
   return (
     <>
       <div style={abs({ left: cx - bw / 2, top: cy - bh / 2 - bob, width: bw, height: bh })}>
-        <Img src={src(`${who}_body`)} style={{ width: '100%', height: '100%' }} />
+        <Img src={src(who === 'host' ? 'male_body' : 'female_body')} style={{ width: '100%', height: '100%' }} />
       </div>
       <div style={abs({ left: cx - hw / 2, top: cy - bh * 0.31 - hw * 0.45 - bob * 1.2, width: hw, transformOrigin: '50% 85%', transform: `rotate(${tilt}deg)` })}>
         <Img src={src(face)} style={{ width: '100%' }} />
       </div>
       <div style={abs({ left: cx + inward * bw * 0.62 - bw * 0.3, top: handY, width: bw * 0.6, transformOrigin: '50% 100%', transform: `rotate(${handRot}deg) scaleX(${-inward})` })}>
-        <Img src={src('hand0')} style={{ width: '100%' }} />
+        <Img src={src('hand10')} style={{ width: '100%' }} />
       </div>
     </>
   );
@@ -99,8 +99,8 @@ export const PodcastOpening = ({ lines }: PodcastOpeningProps) => {
         <HostPuppet who="cohost" cx={285} cy={1230} bw={470} line={lineOf('cohost')} frame={frame} fps={fps} inward={1} />
         <HostPuppet who="host" cx={795} cy={1230} bw={470} line={lineOf('host')} frame={frame} fps={fps} inward={-1} />
         {/* mikrofon */}
-        <Img src={src('mic')} style={abs({ left: 385, top: 1130, width: 140, transform: 'rotate(-8deg)' })} />
-        <Img src={src('mic')} style={abs({ left: 555, top: 1130, width: 140, transform: 'rotate(8deg) scaleX(-1)' })} />
+        <Img src={src('mic0')} style={abs({ left: 385, top: 1130, width: 140, transform: 'rotate(-8deg)' })} />
+        <Img src={src('mic0')} style={abs({ left: 555, top: 1130, width: 140, transform: 'rotate(8deg) scaleX(-1)' })} />
         {/* meja kayu */}
         <div style={abs({ left: -20, top: 1500, width: 1120, height: 460, background: 'linear-gradient(#6b3f26 0%, #5a3320 8%, #3e2416 100%)', borderTop: '10px solid #8a5634', boxShadow: '0 -18px 50px rgba(0,0,0,0.7)' })} />
         <div style={abs({ left: -20, top: 1500, width: 1120, height: 460, background: 'repeating-linear-gradient(0deg, transparent 0 22px, rgba(0,0,0,0.08) 22px 24px)' })} />
