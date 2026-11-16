@@ -6,6 +6,7 @@ import showDemo from '../../content/contoh-puppet/scenes.json';
 import demo from '../../content/contoh-demo/scenes.json';
 import { ImageScene, type ImageSceneProps } from './ImageScene';
 import scene1 from '../../content/2026-11-15-bilik-378/scene1.json';
+import { CharacterSheet } from './paper/CharacterSheet';
 import { PodcastOpening, type PodcastOpeningProps } from './PodcastOpening';
 import opening from '../../content/2026-11-15-bilik-378/scene1-puppet.json';
 
@@ -22,6 +23,7 @@ export const RemotionRoot = () => (
   <Composition id="PodcastOpening" component={PodcastOpening} width={spec.width} height={spec.height} fps={spec.fps}
     durationInFrames={Math.round((opening as PodcastOpeningProps).duration * spec.fps)} defaultProps={opening as PodcastOpeningProps}
     calculateMetadata={({ props }) => ({ durationInFrames: Math.round(props.duration * spec.fps) })} />
+  <Composition id="CharacterSheet" component={CharacterSheet} width={1920} height={1080} fps={30} durationInFrames={1} />
   <Composition
     id="TikTok"
     component={TikTokVideo}
