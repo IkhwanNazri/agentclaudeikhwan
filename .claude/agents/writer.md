@@ -50,3 +50,4 @@ Jangan tulis scenes.json — itu kerja maker.
 
 ## Gaya default: PuppetShow
 Kalau orchestrator minta format PuppetShow, ikut `docs/puppet-show.md` (format scenes.json, senarai set, TIADA ayat follow di akhir, 45-60s). Contoh: `content/2026-11-15-penat-fizikal-vs-mental/scenes.json`.
+**Cerita seram/misteri:** WAJIB `"theme": "placthinc"` dan guna set `intro`/`podcast`/`seram`/`cta` sahaja (medan `prop`, `mood`, `speaker`). Contoh: `content/contoh-placthinc/scenes.json`.

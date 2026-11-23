@@ -75,3 +75,24 @@ Perkara yang selalu perlu dibetulkan: label/teks terpotong di tepi pentas (x mes
 - `tts.mjs` cuba semula automatik kalau TTS ulang ayat dua kali (suara terlalu panjang).
 - `config/telegram_chat_id` = chat ID owner yang betul. `TELEGRAM_CHAT_ID` dalam environment salah (bukan nombor), jadi skrip guna fail ni.
 - Env var (`GEMINI_API_KEY`, `TELEGRAM_*`) hanya terbaca bila sesi bermula.
+
+## Tema PLACTHINC: cerita seram (WAJIB bila owner minta cerita seram/misteri)
+Owner beri aset rasmi PLACTHINC (master sheet dipotong jadi `video/public/placthinc/*.png` guna `scripts/cut-placthinc.py`). **Setiap cerita seram mesti guna `"theme": "placthinc"`** supaya dua pengacara yang sama muncul dalam SEMUA babak:
+- `host2` = **host lelaki** (rambut ikal hitam, cermin mata, blazer coklat), suara **Puck**
+- `host1` = **co-host perempuan** (tudung pink, blazer kelabu gelap, skirt hitam), suara **Leda**
+- Tirai hitam, logo PLACTHINC (jangan tulis "BILIK 307" di mana-mana), meja podcast + 2 mikrofon + tanglung + buku + tengkorak, latar rumah berhantu.
+
+Kod: `video/src/puppet/placthinc.tsx` (`Host`, `HostOnRod`, `PodcastDesk`, `Sprite`). Tak perlu bina set baru untuk cerita seram; cukup guna set ni dalam scenes.json:
+
+| Set | Isi | Medan tambahan |
+|---|---|---|
+| `intro` | 2 pengacara depan tirai hitam + logo + kad tajuk (tengkorak) | `speaker`, `mood` |
+| `podcast` | 2 pengacara di meja podcast, logo, lampu gantung berkelip | `speaker`, `mood`, `banner` |
+| `seram` | latar rumah berhantu, prop tergantung di tengah, 2 pengacara bereaksi di bawah | `prop`, `speaker`, `mood`, `banner` |
+| `cta` | 2 pengacara melambai di meja, tirai tutup (senyap) | — |
+
+- `prop`: `house` (zoom rumah) · `mirror` · `key` · `photos` · `bell` · `skull` · `lantern` · `books`
+- `mood` (ekspresi + tangan): `talk` · `scared` (default seram, tangan doa) · `shock` (kilat putih) · `sad` · `happy` · `angry`
+- Ekspresi muka bertukar ikut mulut bercakap; yang tak bercakap ikut `mood`.
+
+Contoh penuh: `content/contoh-placthinc/scenes.json`.

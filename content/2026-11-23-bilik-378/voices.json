@@ -1,0 +1,27 @@
+{
+  "voiceStyle": "Cakap santai dan semula jadi macam podcaster Malaysia berbual, sedikit misteri. Jangan kedengaran macam robot atau pembaca berita.",
+  "scenes": [
+    {
+      "say": "Kau pernah tak dengar kisah sebuah bilik hotel yang sepatutnya tidak dihuni?",
+      "voiceName": "Achird",
+      "duration": 4.7,
+      "voice": "2026-11-23-bilik-378_0.wav",
+      "voiceSec": 4.25
+    },
+    {
+      "say": "Kenapa? Apa yang berlaku dalam bilik tu?",
+      "voiceName": "Leda",
+      "voiceStyle": "Perempuan, ingin tahu dan sedikit cemas, santai semula jadi.",
+      "duration": 2.9,
+      "voice": "2026-11-23-bilik-378_1.wav",
+      "voiceSec": 2.45
+    },
+    {
+      "say": "Malam ini aku nak ceritakan kisah Bilik 378.",
+      "voiceName": "Achird",
+      "duration": 5.1,
+      "voice": "2026-11-23-bilik-378_2.wav",
+      "voiceSec": 4.61
+    }
+  ]
+}
