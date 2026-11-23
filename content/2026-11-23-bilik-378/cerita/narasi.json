@@ -1,0 +1,13 @@
+{
+  "voiceStyle": "Lelaki bercerita kisah seram macam podcaster Malaysia, tenang, perlahan sikit dan misteri, semula jadi, bukan robot.",
+  "wordsPerSec": 1.6,
+  "scenes": [
+    {
+      "say": "Tiga orang sahabat datang ke sebuah hotel lama untuk menghadiri kursus selama tiga hari. Mereka menyewa dua bilik. Dua orang berkongsi satu bilik yang ada dua katil. Seorang lagi memilih bilik berasingan.",
+      "voiceName": "Achird",
+      "duration": 15,
+      "voice": "cerita_0.wav",
+      "voiceSec": 14.53
+    }
+  ]
+}
