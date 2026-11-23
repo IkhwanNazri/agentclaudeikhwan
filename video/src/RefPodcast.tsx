@@ -1,11 +1,12 @@
 // Babak podcast guna GAMBAR RUJUKAN OWNER sendiri (watak 100% sama), dihidupkan lapisan demi lapisan:
 // mulut buka/tutup ikut dialog, kelip mata, kamera ikut yang bercakap. (Tiada gerak kepala/tangan: latar ikut bergerak.)
 // 2D sahaja → render laju. Tiada suara (owner rakam sendiri).
-import type { ReactNode } from 'react';
-import { AbsoluteFill, Easing, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
+import { useMemo, type ReactNode } from 'react';
+import { useAudioData, type AudioData } from '@remotion/media-utils';
+import { AbsoluteFill, Audio, Easing, Img, Sequence, interpolate, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 
 type Who = 'host' | 'cohost';
-export type RefLine = { who: Who; from: number; to: number };
+export type RefLine = { who: Who; from: number; to: number; voice?: string };
 export type RefPodcastProps = { duration: number; lines: RefLine[]; wideStart?: number; wideEnd?: number };
 
 const IMG = 'placthinc/opening.png';
@@ -61,6 +62,30 @@ const Mouth = ({ s, who, state }: { s: number; who: Who; state: 0 | 1 | 2 }) => 
   );
 };
 
+// lip-sync: buka mulut ikut kekuatan suara (RMS) pada frame ini
+const rmsAt = (d: AudioData, t: number, win: number) => {
+  const w = d.channelWaveforms[0];
+  const a = Math.max(0, Math.floor(t * d.sampleRate));
+  const b = Math.min(w.length, a + Math.floor(win * d.sampleRate));
+  let sum = 0;
+  for (let i = a; i < b; i++) sum += w[i] * w[i];
+  return b > a ? Math.sqrt(sum / (b - a)) : 0;
+};
+const AudioMouth = ({ s, who, line }: { s: number; who: Who; line: RefLine }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const data = useAudioData(staticFile(line.voice ?? ''));
+  const peak = useMemo(() => {
+    if (!data) return 1;
+    let m = 0.0001;
+    for (let t = 0; t < data.durationInSeconds; t += 1 / fps) m = Math.max(m, rmsAt(data, t, 1 / fps));
+    return m;
+  }, [data, fps]);
+  if (!data) return <Mouth s={s} who={who} state={1} />;
+  const lvl = rmsAt(data, frame / fps - line.from, 1 / fps) / peak;
+  return <Mouth s={s} who={who} state={lvl > 0.42 ? 0 : lvl > 0.16 ? 2 : 1} />;
+};
+
 const Blink = ({ s, who }: { s: number; who: Who }) => (
   <>
     {RIG[who].eyes.map((e, i) => (
@@ -112,7 +137,7 @@ export const RefPodcast = ({ lines, wideStart = 1.4, wideEnd = 1.4, duration }: 
         {/* hanya tampalan dalam muka: latar tak terusik */}
         {(['cohost', 'host'] as Who[]).map((w) => (
           <div key={w}>
-            <Mouth s={s} who={w} state={mouthState(w)} />
+            {cur && cur.who === w && cur.voice ? <AudioMouth s={s} who={w} line={cur} /> : <Mouth s={s} who={w} state={mouthState(w)} />}
             {blinking(w) ? <Blink s={s} who={w} /> : null}
           </div>
         ))}
@@ -128,6 +153,9 @@ export const RefPodcast = ({ lines, wideStart = 1.4, wideEnd = 1.4, duration }: 
         return <div key={j} style={{ position: 'absolute', left: x, top: y, width: 5, height: 5, borderRadius: '50%', background: '#ffd9a0', opacity: 0.12 + noise(j + 2) * 0.3 }} />;
       })}
       <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 45%, transparent 45%, rgba(0,0,0,0.65) 100%)' }} />
+      {lines.map((l, i) => (l.voice ? (
+        <Sequence key={i} from={Math.round(l.from * fps)}><Audio src={staticFile(l.voice)} /></Sequence>
+      ) : null))}
     </AbsoluteFill>
   );
 };
