@@ -1,5 +1,5 @@
 // Babak podcast guna GAMBAR RUJUKAN OWNER sendiri (watak 100% sama), dihidupkan lapisan demi lapisan:
-// mulut buka/tutup ikut dialog, kelip mata, kepala angguk/senget, tangan bergerak, kamera ikut yang bercakap.
+// mulut buka/tutup ikut dialog, kelip mata, kamera ikut yang bercakap. (Tiada gerak kepala/tangan: latar ikut bergerak.)
 // 2D sahaja → render laju. Tiada suara (owner rakam sendiri).
 import type { ReactNode } from 'react';
 import { AbsoluteFill, Easing, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
@@ -36,19 +36,6 @@ const RIG: Record<Who, {
 const noise = (n: number) => { const s = Math.sin(n * 12.9898) * 43758.5453; return s - Math.floor(s); };
 const ease = Easing.inOut(Easing.cubic);
 const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
-
-// lapisan: salinan gambar yang ditopeng bujur (tepi lembut) dan boleh dipusing pada satu titik
-const Layer = ({ s, e, pivot, rot, dy = 0, children }: { s: number; e: Ell; pivot: [number, number]; rot: number; dy?: number; children?: ReactNode }) => {
-  const mask = `radial-gradient(ellipse ${e.rx * s}px ${e.ry * s}px at ${e.x * s}px ${e.y * s}px, #000 78%, transparent 100%)`;
-  return (
-    <div style={{ position: 'absolute', inset: 0, transformOrigin: `${pivot[0] * s}px ${pivot[1] * s}px`, transform: `translateY(${dy * s}px) rotate(${rot}deg)` }}>
-      <div style={{ position: 'absolute', inset: 0, WebkitMaskImage: mask, maskImage: mask }}>
-        <Img src={staticFile(IMG)} style={{ width: '100%', height: '100%', display: 'block' }} />
-      </div>
-      {children}
-    </div>
-  );
-};
 
 const Patch = ({ s, e, color, children }: { s: number; e: Ell; color: string; children?: ReactNode }) => (
   <div style={{ position: 'absolute', left: (e.x - e.rx) * s, top: (e.y - e.ry) * s, width: e.rx * 2 * s, height: e.ry * 2 * s }}>
@@ -116,22 +103,17 @@ export const RefPodcast = ({ lines, wideStart = 1.4, wideEnd = 1.4, duration }: 
     return n > 0.55 ? 0 : n > 0.25 ? 2 : 1;
   };
   const blinking = (w: Who) => (frame + (w === 'host' ? 41 : 0)) % Math.round(fps * 3.4) < 4;
-  const headRot = (w: Who) => (talking(w) ? Math.sin(frame * 0.17 + (w === 'host' ? 1 : 0)) * 2.2 : Math.sin(frame * 0.05) * 0.6);
-  const headDy = (w: Who) => (talking(w) ? -Math.abs(Math.sin(frame * 0.28)) * 4 : 0);
-  const handRot = (w: Who) => (talking(w) ? Math.sin(frame * 0.22) * 6 : Math.sin(frame * 0.04) * 1);
 
   return (
     <AbsoluteFill style={{ backgroundColor: '#050304', overflow: 'hidden' }}>
       <Img src={staticFile(IMG)} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(40px) brightness(0.35)', transform: 'scale(1.15)' }} />
       <div style={{ position: 'absolute', left: tx, top: ty, width: sw, height: sh, overflow: 'hidden' }}>
         <Img src={staticFile(IMG)} style={{ width: '100%', height: '100%', display: 'block' }} />
+        {/* hanya tampalan dalam muka: latar tak terusik */}
         {(['cohost', 'host'] as Who[]).map((w) => (
           <div key={w}>
-            <Layer s={s} e={RIG[w].hand} pivot={RIG[w].wrist} rot={handRot(w)} />
-            <Layer s={s} e={RIG[w].head} pivot={RIG[w].neck} rot={headRot(w)} dy={headDy(w)}>
-              <Mouth s={s} who={w} state={mouthState(w)} />
-              {blinking(w) ? <Blink s={s} who={w} /> : null}
-            </Layer>
+            <Mouth s={s} who={w} state={mouthState(w)} />
+            {blinking(w) ? <Blink s={s} who={w} /> : null}
           </div>
         ))}
         {/* kelip lampu & tanglung */}
