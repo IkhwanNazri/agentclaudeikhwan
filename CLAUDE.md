@@ -31,6 +31,7 @@ Dipasang oleh `scripts/install-skills.sh` (versi dikunci, tidak dicommit):
 | remotion-best-practices | remotion-dev/skills | maker |
 
 ## Gaya video (keputusan owner — jangan lupa)
+- **TERKINI (23 Nov 2026): Podcast 2D dari gambar rujukan owner — baca `docs/podcast-2d.md` DULU.** Watak sama macam gambar owner (jangan generate), tiada batang kayu, suara co-host Leda + host Achird, lip-sync, render 2D laju, hantar Telegram. Peraturan PuppetShow/3D di bawah = gaya lama.
 - Default: **teater boneka kertas 3D** (`PuppetShow`). Baca `docs/puppet-show.md` sebelum buat video.
 - Pembukaan 2 pengacara → tirai buka → cerita. Tangan dalang gaya kertas dengan jari jelas.
 - **Tiada ayat "Follow" di akhir.** Panjang 45-60 saat.

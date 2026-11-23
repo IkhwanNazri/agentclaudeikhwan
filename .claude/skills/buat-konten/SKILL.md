@@ -34,6 +34,7 @@ Panggil subagent `writer` dengan folder kerja. Tunggu `script.md` + `caption.txt
 **Cerita seram:** suruh writer guna tema PLACTHINC (`"theme": "placthinc"`, set `podcast`/`seram`). Tak perlu bina set baru, terus TTS + render.
 
 ## 4. Maker
+- **GAYA TERKINI (diluluskan owner):** ikut `docs/podcast-2d.md` — podcast 2D `RefPodcast` dari gambar owner, suara Leda (co-host) + Achird (host). Orchestrator buat sendiri, render 2D, hantar Telegram. Babak cerita: minta gambar daripada owner.
 - **PuppetShow (default):** orchestrator buat sendiri (maker haiku tak cukup kuat untuk bina set baru):
   1. Bina set baru yang perlu dalam `video/src/PuppetShow.tsx` → `cd video && npx tsc`.
   2. `node pipeline/tts.mjs <folder>/scenes.json` (semak jumlah durasi 45-60s; ringkaskan ayat kalau lebih).
