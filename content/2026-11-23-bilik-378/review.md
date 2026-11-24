@@ -1,1 +1,1 @@
-Bilik 378 v2 (~3:25): "follow" ganti "subscribe"; tambah babak masuk bilik, tidur→terjaga ketukan, hantu di muka→menjerit, lari turun tangga.
+Bilik 378 v3 (~3:00): nombor bilik dulu baru pintu buka, sari kata tanpa jeda, SFX rakaman sebenar (CC0: Meta Open Sound + Kenney) — ketukan, pintu, jam, drone, jeritan, tapak kaki.
