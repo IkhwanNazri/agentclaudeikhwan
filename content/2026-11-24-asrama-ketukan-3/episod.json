@@ -169,25 +169,25 @@
     "voiceSec": 12.94
    },
    {
-    "image": "story/akL01-dorm.png",
-    "w": 941,
-    "h": 1582,
+    "image": "story/ak03b-tidur.png",
+    "w": 1087,
+    "h": 1347,
     "duration": 8.6,
     "from": {
-     "x": 470,
-     "y": 1000,
+     "x": 543,
+     "y": 750,
      "zoom": 1.0
     },
     "to": {
-     "x": 470,
-     "y": 1150,
+     "x": 543,
+     "y": 1000,
      "zoom": 1.2
     },
     "fog": 0.15,
     "glows": [
      {
-      "x": 110,
-      "y": 420,
+      "x": 100,
+      "y": 330,
       "r": 160,
       "color": "#cfd8ff",
       "flicker": 0
@@ -873,25 +873,25 @@
     "voiceSec": 9.77
    },
    {
-    "image": "story/akL01-dorm.png",
-    "w": 941,
-    "h": 1582,
+    "image": "story/ak03b-tidur.png",
+    "w": 1087,
+    "h": 1347,
     "duration": 13.2,
     "from": {
-     "x": 470,
-     "y": 900,
-     "zoom": 1.0
+     "x": 543,
+     "y": 1000,
+     "zoom": 1.2
     },
     "to": {
-     "x": 400,
-     "y": 850,
-     "zoom": 1.12
+     "x": 543,
+     "y": 800,
+     "zoom": 1.0
     },
     "fog": 0.15,
     "glows": [
      {
       "x": 100,
-      "y": 450,
+      "y": 350,
       "r": 420,
       "color": "#ffdca8",
       "flicker": 0,
@@ -899,7 +899,7 @@
      },
      {
       "x": 100,
-      "y": 450,
+      "y": 350,
       "r": 200,
       "color": "#cfd8ff",
       "flicker": 0
