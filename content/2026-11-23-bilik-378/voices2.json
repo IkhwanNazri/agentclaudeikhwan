@@ -1,0 +1,21 @@
+{
+  "voiceStyle": "Cakap santai dan semula jadi macam podcaster Malaysia berbual. Jangan kedengaran macam robot.",
+  "scenes": [
+    {
+      "say": "Sebelum kita mulakan cerita, jangan lupa subscribe.",
+      "voiceName": "Leda",
+      "voiceStyle": "Perempuan, mesra dan ceria sikit, santai.",
+      "duration": 3.7,
+      "voice": "2026-11-23-bilik-378_0.wav",
+      "voiceSec": 3.21
+    },
+    {
+      "say": "Baik. Sekarang, kita mulakan kisahnya.",
+      "voiceName": "Achird",
+      "voiceStyle": "Lelaki, tenang lalu bertukar misteri.",
+      "duration": 3.7,
+      "voice": "2026-11-23-bilik-378_1.wav",
+      "voiceSec": 3.28
+    }
+  ]
+}

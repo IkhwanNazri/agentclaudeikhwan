@@ -13,6 +13,7 @@ video/public/*
 !video/public/placthinc/
 !video/public/sfx/
 !video/public/placthinc2/
+!video/public/story/
 # skill komuniti dipasang oleh scripts/install-skills.sh
 .claude/skills/last30days/
 .claude/skills/social/

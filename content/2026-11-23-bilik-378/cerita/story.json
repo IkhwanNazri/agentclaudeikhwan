@@ -1,0 +1,27 @@
+{
+  "shots": [
+    {
+      "image": "story/b378-01-hotel.png", "w": 941, "h": 1672, "duration": 16,
+      "from": { "x": 470, "y": 700, "zoom": 1.0 },
+      "to": { "x": 400, "y": 960, "zoom": 1.28 },
+      "fog": 0.6,
+      "glows": [
+        { "x": 430, "y": 738, "r": 95, "flicker": 0.08 },
+        { "x": 905, "y": 728, "r": 95, "flicker": 0.06 },
+        { "x": 315, "y": 135, "r": 160, "color": "#cfd8ff", "flicker": 0 },
+        { "x": 705, "y": 850, "r": 140, "flicker": 0.04 }
+      ],
+      "faces": [
+        { "lid": "rgb(237,157,109)", "seed": 0, "eyes": [{ "x": 165, "y": 840, "rx": 13, "ry": 11 }, { "x": 232, "y": 843, "rx": 13, "ry": 11 }] },
+        { "lid": "rgb(240,160,111)", "seed": 37, "eyes": [{ "x": 385, "y": 893, "rx": 13, "ry": 10 }, { "x": 438, "y": 893, "rx": 13, "ry": 10 }] },
+        { "lid": "rgb(240,160,111)", "seed": 71, "eyes": [{ "x": 577, "y": 958, "rx": 12, "ry": 10 }, { "x": 625, "y": 958, "rx": 12, "ry": 10 }] }
+      ],
+      "voice": "story/b378-n01.wav", "voiceAt": 0.6,
+      "sfx": [
+        { "src": "ambience", "at": 0, "dur": 16, "volume": 0.35, "loop": true, "fade": 1.5 },
+        { "src": "suspense", "at": 0, "dur": 16, "volume": 0.18, "loop": true, "fade": 2 },
+        { "src": "whoosh", "at": 0.1, "dur": 1.2, "volume": 0.35 }
+      ]
+    }
+  ]
+}

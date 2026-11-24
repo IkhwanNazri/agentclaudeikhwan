@@ -1,0 +1,13 @@
+{
+  "voiceStyle": "Lelaki bercerita kisah seram macam podcaster Malaysia, perlahan, berbisik dan tegang, semula jadi, bukan robot.",
+  "wordsPerSec": 2,
+  "scenes": [
+    {
+      "say": "Dia cuba tenangkan diri, dan kembali tidur. Tapi tak lama kemudian, dia rasa ada sesuatu yang sangat dekat dengan mukanya. Bila dia buka mata, wajah itu betul-betul ada di depannya!",
+      "voiceName": "Achird",
+      "duration": 16.9,
+      "voice": "b378n6b_0.wav",
+      "voiceSec": 16.49
+    }
+  ]
+}

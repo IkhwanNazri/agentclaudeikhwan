@@ -30,3 +30,18 @@ Simpan salinan suara dalam `content/<folder>/voice/` (kuota TTS percuma terhad ~
 
 ## Babak cerita (seterusnya)
 Guna cara sama: owner beri gambar setiap babak (gaya sama). Untuk gerak kepala/tangan sebenar, minta owner jana aset BERLAPIS (latar tanpa watak, badan tanpa kepala, kepala tanpa mulut, tangan berasingan, set mulut) — prompt contoh dalam sejarah chat / tulis semula ikut keperluan.
+
+## SFX (WAJIB rakaman sebenar, bukan sintetik)
+Owner tak suka bunyi sintetik ("macam robot"). `video/public/sfx/*.wav` kini rakaman CC0:
+Meta Open Sound (`facebookincubator/Meta-open-sound`: ketukan, jam seram, drone, impak, whoosh, room tone, jeritan) dan
+Kenney RPG Audio (`Boyquotes/kenney-rpg-audio-for-godot`: pintu buka/tutup, kriut, tapak kaki → `run.wav`). Lesen dalam folder sfx.
+`scripts/gen-sfx.py` = lama (sintetik), jangan guna.
+
+## Sari kata
+Tengah skrin (y≈1180, kiri 70 / kanan 170) supaya tak ganggu butang TikTok. MESTI berterusan tanpa jeda:
+suara/sari kata di peringkat atas `StoryScene` (boleh merentas syot), sari kata kekal hingga ayat seterusnya.
+Babak tanpa suara (cth ketukan) guna `captions: [{text, at, sec}]`.
+
+## Episod penuh
+Komposisi `Episode` = podcast (`RefPodcast`) + cerita (`StoryScene`). Contoh: `content/2026-11-23-bilik-378/episod.json`.
+Watak cerita: `content/2026-11-23-bilik-378/ref/watak-cerita.png`. Podcast: "jangan lupa follow" (owner minta, bukan subscribe).

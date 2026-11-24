@@ -31,7 +31,12 @@ Dipasang oleh `scripts/install-skills.sh` (versi dikunci, tidak dicommit):
 | remotion-best-practices | remotion-dev/skills | maker |
 
 ## Gaya video (keputusan owner — jangan lupa)
-- **TERKINI (23 Nov 2026): Podcast 2D dari gambar rujukan owner — baca `docs/podcast-2d.md` DULU.** Watak sama macam gambar owner (jangan generate), tiada batang kayu, suara co-host Leda + host Achird, lip-sync, render 2D laju, hantar Telegram. Peraturan PuppetShow/3D di bawah = gaya lama.
+- **TERKINI (24 Nov 2026) — gaya diluluskan owner, baca `docs/podcast-2d.md` DULU:**
+  - Gaya seni: kartun 2D kertas potong (garis hitam tebal, tekstur kertas, seram sinematik). Gambar DIJANA OWNER (ChatGPT/Gemini), aku hanya hidupkan. JANGAN lukis/generate watak sendiri.
+  - Podcast: `RefPodcast` dari gambar owner (`video/public/placthinc/opening.png`), co-host Leda + host Achird, lip-sync, tiada batang kayu, ajak "follow".
+  - Cerita: `StoryScene` (gambar menegak 9:16 setiap babak, versi A/B untuk kejutan), narasi Achird, watak ikut `content/2026-11-23-bilik-378/ref/watak-cerita.png`.
+  - Episod: komposisi `Episode` (podcast + cerita). Sari kata tengah skrin tanpa jeda. SFX rakaman sebenar CC0 (bukan sintetik). Render 2D, hantar Telegram.
+  - Contoh lengkap: `content/2026-11-23-bilik-378/episod.json`.
 - Default: **teater boneka kertas 3D** (`PuppetShow`). Baca `docs/puppet-show.md` sebelum buat video.
 - Pembukaan 2 pengacara → tirai buka → cerita. Tangan dalang gaya kertas dengan jari jelas.
 - **Tiada ayat "Follow" di akhir.** Panjang 45-60 saat.
