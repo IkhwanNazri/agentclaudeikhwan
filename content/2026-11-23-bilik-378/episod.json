@@ -6,31 +6,36 @@
     "who": "host",
     "from": 1.5,
     "to": 5.7,
-    "voice": "2026-11-23-bilik-378_0.wav"
+    "voice": "2026-11-23-bilik-378_0.wav",
+    "say": "Kau pernah tak dengar kisah sebuah bilik hotel yang sepatutnya tidak dihuni?"
    },
    {
     "who": "cohost",
     "from": 6.1,
     "to": 8.6,
-    "voice": "2026-11-23-bilik-378_1.wav"
+    "voice": "2026-11-23-bilik-378_1.wav",
+    "say": "Kenapa? Apa yang berlaku dalam bilik tu?"
    },
    {
     "who": "host",
     "from": 9.0,
     "to": 13.6,
-    "voice": "2026-11-23-bilik-378_2.wav"
+    "voice": "2026-11-23-bilik-378_2.wav",
+    "say": "Malam ini aku nak ceritakan kisah Bilik 378."
    },
    {
     "who": "cohost",
     "from": 14.0,
     "to": 17.2,
-    "voice": "story/b378-p4.wav"
+    "voice": "story/b378-p4.wav",
+    "say": "Sebelum kita mulakan cerita, jangan lupa subscribe."
    },
    {
     "who": "host",
     "from": 17.6,
     "to": 20.9,
-    "voice": "story/b378-p5.wav"
+    "voice": "story/b378-p5.wav",
+    "say": "Baik. Sekarang, kita mulakan kisahnya."
    }
   ]
  },
@@ -146,7 +151,9 @@
      }
     ],
     "voice": "story/b378-n01.wav",
-    "voiceAt": 0.6
+    "voiceAt": 0.6,
+    "say": "Tiga orang sahabat datang ke sebuah hotel lama untuk menghadiri kursus selama tiga hari. Mereka menyewa dua bilik. Dua orang berkongsi satu bilik yang ada dua katil. Seorang lagi memilih bilik berasingan.",
+    "voiceSec": 14.53
    },
    {
     "image": "story/b378-02-bilik1.png",
@@ -173,7 +180,9 @@
      }
     ],
     "voice": "story/b378-n02.wav",
-    "voiceAt": 0.6
+    "voiceAt": 0.6,
+    "say": "Dua orang sahabat berehat di bilik pertama. Mereka ada dua katil, dan ruang yang cukup untuk berehat.",
+    "voiceSec": 8.48
    },
    {
     "image": "story/b378-03-koridor.png",
@@ -214,7 +223,9 @@
       "dur": 2,
       "volume": 0.45
      }
-    ]
+    ],
+    "say": "Tapi sahabat ketiga mendapat Bilik 378. Bilik itu hanya ada satu katil. Pada mulanya, dia tak rasa apa-apa yang pelik.",
+    "voiceSec": 12.88
    },
    {
     "image": "story/b378-04-bilik378A.png",
@@ -257,7 +268,9 @@
       "dur": 2.5,
       "volume": 0.4
      }
-    ]
+    ],
+    "say": "Malam pertama berlalu seperti biasa. Mereka sangka hotel itu cuma hotel lama yang sunyi. Namun, semuanya berubah pada malam kedua.",
+    "voiceSec": 10.58
    },
    {
     "image": "story/b378-04-bilik378A.png",
@@ -328,7 +341,9 @@
       "dur": 2.5,
       "volume": 0.6
      }
-    ]
+    ],
+    "say": "Hampir pukul satu pagi, dia terdengar sesuatu dari bilik air. Tiga ketukan... perlahan.",
+    "voiceSec": 8.08
    },
    {
     "image": "story/b378-05-bilikairA.png",
@@ -377,7 +392,9 @@
       "dur": 3,
       "volume": 0.9
      }
-    ]
+    ],
+    "say": "Dia cuba periksa. Tapi bilik air itu kosong. Bila dia berpaling, satu bayang hitam sedang berdiri di belakang pintu.",
+    "voiceSec": 7.69
    },
    {
     "image": "story/b378-06-kaunterA.png",
@@ -423,7 +440,9 @@
       "volume": 0.55
      }
     ],
-    "toAt": 8.8
+    "toAt": 8.8,
+    "say": "Ketakutan, dia terus berlari ke kaunter hotel dan menceritakan semuanya. Receptionist itu terus terdiam bila mendengar nombor Bilik 378. Bilik itu sebenarnya sudah ditutup tiga bulan, selepas berlaku satu kematian.",
+    "voiceSec": 21.28
    },
    {
     "image": "story/b378-07-gambar.png",
@@ -450,7 +469,9 @@
       "dur": 1.2,
       "volume": 0.6
      }
-    ]
+    ],
+    "say": "Receptionist menunjukkan sekeping gambar penghuni lama bilik itu. Dan dia kenal wajah itu. Itulah wajah yang dilihatnya di dalam bilik air.",
+    "voiceSec": 10.69
    },
    {
     "image": "story/b378-05-bilikairB.png",
@@ -507,7 +528,9 @@
      }
     ],
     "voice": "story/b378-n09.wav",
-    "voiceAt": 0.6
+    "voiceAt": 0.6,
+    "say": "Dia segera kembali kepada dua sahabatnya, dan menceritakan semuanya. Malam itu, mereka tak mahu tidur berasingan lagi.",
+    "voiceSec": 9.81
    },
    {
     "image": "story/b378-09-pagi.png",
@@ -535,7 +558,9 @@
      }
     ],
     "voice": "story/b378-n10.wav",
-    "voiceAt": 0.5
+    "voiceAt": 0.5,
+    "say": "Keesokan paginya, mereka terus tinggalkan hotel itu.",
+    "voiceSec": 4.05
    },
    {
     "image": "story/b378-10-pintu.png",
@@ -571,7 +596,9 @@
       "dur": 2.3,
       "volume": 0.7
      }
-    ]
+    ],
+    "say": "Tapi satu persoalan masih belum terjawab. Kalau Bilik 378 sudah ditutup tiga bulan... siapa sebenarnya yang berada di dalamnya malam itu?",
+    "voiceSec": 16.62
    }
   ]
  }

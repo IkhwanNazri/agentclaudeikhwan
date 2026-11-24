@@ -3,10 +3,12 @@
 // 2D sahaja → render laju. Tiada suara (owner rakam sendiri).
 import { useMemo, type ReactNode } from 'react';
 import { useAudioData, type AudioData } from '@remotion/media-utils';
+import '@fontsource/poppins/800.css';
+import { Captions } from './Captions';
 import { AbsoluteFill, Audio, Easing, Img, Sequence, interpolate, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 
 type Who = 'host' | 'cohost';
-export type RefLine = { who: Who; from: number; to: number; voice?: string };
+export type RefLine = { who: Who; from: number; to: number; voice?: string; say?: string };
 export type RefPodcastProps = { duration: number; lines: RefLine[]; wideStart?: number; wideEnd?: number };
 
 const IMG = 'placthinc/opening.png';
@@ -154,7 +156,10 @@ export const RefPodcast = ({ lines, wideStart = 1.4, wideEnd = 1.4, duration }: 
       })}
       <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 45%, transparent 45%, rgba(0,0,0,0.65) 100%)' }} />
       {lines.map((l, i) => (l.voice ? (
-        <Sequence key={i} from={Math.round(l.from * fps)}><Audio src={staticFile(l.voice)} /></Sequence>
+        <Sequence key={i} from={Math.round(l.from * fps)} durationInFrames={Math.round((l.to - l.from + 0.4) * fps)}>
+          <Audio src={staticFile(l.voice)} />
+          {l.say ? <Captions text={l.say} sec={l.to - l.from} /> : null}
+        </Sequence>
       ) : null))}
     </AbsoluteFill>
   );

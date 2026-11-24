@@ -1,5 +1,7 @@
 // Babak cerita 2D dari gambar owner (menegak 9:16): kamera zoom/pan, kabus, cahaya berkelip, kelip mata watak,
 // tukar versi gambar (A→B) dengan kesan seram, narasi + SFX. Satu fail JSON setiap video (senarai babak).
+import '@fontsource/poppins/800.css';
+import { Captions } from './Captions';
 import { AbsoluteFill, Audio, Easing, Img, Sequence, interpolate, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 
 type Ell = { x: number; y: number; rx: number; ry: number };
@@ -12,7 +14,7 @@ export type Shot = {
   from?: Cam; to?: Cam; glows?: Glow[]; faces?: BlinkFace[]; fog?: number;
   toAt?: number; // saat kamera sampai 'to' (lalai: hujung syot)
   alt?: { image: string; at: number; flash?: boolean }; // tukar ke versi B pada saat 'at'
-  voice?: string; voiceAt?: number; sfx?: SfxCue[]; shake?: { at: number; dur: number; amp?: number };
+  voice?: string; voiceAt?: number; say?: string; voiceSec?: number; sfx?: SfxCue[]; shake?: { at: number; dur: number; amp?: number };
   endCard?: { at: number; logo?: string }; // gelap perlahan + logo
 };
 export type StoryProps = { shots: Shot[] };
@@ -84,7 +86,12 @@ const ShotView = ({ shot }: { shot: Shot }) => {
           <Img src={staticFile(shot.endCard.logo ?? 'placthinc2/logo.png')} style={{ width: 760, opacity: interpolate(t, [shot.endCard.at + 0.9, shot.endCard.at + 1.6], [0, 1], clamp), transform: `scale(${interpolate(t, [shot.endCard.at + 0.9, shot.endCard.at + 3], [0.92, 1.02], clamp)})` }} />
         </AbsoluteFill>
       ) : null}
-      {shot.voice ? <Sequence from={Math.round((shot.voiceAt ?? 0.4) * fps)}><Audio src={staticFile(shot.voice)} /></Sequence> : null}
+      {shot.voice ? (
+        <Sequence from={Math.round((shot.voiceAt ?? 0.4) * fps)}>
+          <Audio src={staticFile(shot.voice)} />
+          {shot.say && shot.voiceSec ? <Captions text={shot.say} sec={shot.voiceSec} /> : null}
+        </Sequence>
+      ) : null}
       {(shot.sfx ?? []).map((x, i) => {
         const len = Math.round((x.dur ?? 4) * fps);
         const fd = Math.max(1, Math.round((x.fade ?? 0) * fps));
