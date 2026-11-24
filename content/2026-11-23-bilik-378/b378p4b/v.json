@@ -1,0 +1,13 @@
+{
+  "voiceStyle": "Cakap santai dan semula jadi macam podcaster Malaysia berbual. Jangan kedengaran macam robot.",
+  "scenes": [
+    {
+      "say": "Sebelum kita mulakan cerita, jangan lupa follow.",
+      "voiceName": "Leda",
+      "voiceStyle": "Perempuan, mesra dan ceria sikit, santai.",
+      "duration": 4.3,
+      "voice": "b378p4b_0.wav",
+      "voiceSec": 3.84
+    }
+  ]
+}

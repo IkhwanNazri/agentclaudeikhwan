@@ -1,6 +1,6 @@
 {
  "podcast": {
-  "duration": 22.3,
+  "duration": 23.0,
   "lines": [
    {
     "who": "host",
@@ -26,14 +26,14 @@
    {
     "who": "cohost",
     "from": 14.0,
-    "to": 17.2,
-    "voice": "story/b378-p4.wav",
-    "say": "Sebelum kita mulakan cerita, jangan lupa subscribe."
+    "to": 17.84,
+    "voice": "story/b378p4b.wav",
+    "say": "Sebelum kita mulakan cerita, jangan lupa follow."
    },
    {
     "who": "host",
-    "from": 17.6,
-    "to": 20.9,
+    "from": 18.24,
+    "to": 21.54,
     "voice": "story/b378-p5.wav",
     "say": "Baik. Sekarang, kita mulakan kisahnya."
    }
@@ -188,7 +188,7 @@
     "image": "story/b378-03-koridor.png",
     "w": 941,
     "h": 1672,
-    "duration": 14.4,
+    "duration": 6.0,
     "fog": 0.15,
     "from": {
      "x": 470,
@@ -197,8 +197,8 @@
     },
     "to": {
      "x": 700,
-     "y": 560,
-     "zoom": 1.35
+     "y": 900,
+     "zoom": 1.3
     },
     "glows": [
      {
@@ -214,16 +214,47 @@
       "flicker": 0.06
      }
     ],
-    "voice": "story/b378-n03.wav",
-    "voiceAt": 0.6,
     "sfx": [
      {
       "src": "creak",
-      "at": 11.5,
+      "at": 4.6,
       "dur": 2,
-      "volume": 0.45
+      "volume": 0.5
+     }
+    ]
+   },
+   {
+    "image": "story/b378-03b-masuk.png",
+    "w": 941,
+    "h": 1672,
+    "duration": 14.5,
+    "fog": 0.1,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 680,
+     "y": 880,
+     "zoom": 1.35
+    },
+    "glows": [
+     {
+      "x": 455,
+      "y": 300,
+      "r": 110,
+      "flicker": 0.08
+     },
+     {
+      "x": 605,
+      "y": 870,
+      "r": 70,
+      "flicker": 0.05
      }
     ],
+    "voice": "story/b378-n03.wav",
+    "voiceAt": 0.5,
     "say": "Tapi sahabat ketiga mendapat Bilik 378. Bilik itu hanya ada satu katil. Pada mulanya, dia tak rasa apa-apa yang pelik.",
     "voiceSec": 12.88
    },
@@ -273,19 +304,19 @@
     "voiceSec": 10.58
    },
    {
-    "image": "story/b378-04-bilik378A.png",
+    "image": "story/b378-04-tidur.png",
     "w": 941,
     "h": 1672,
     "duration": 14.5,
     "fog": 0.1,
     "from": {
-     "x": 600,
+     "x": 470,
      "y": 900,
-     "zoom": 1.12
+     "zoom": 1.05
     },
     "to": {
-     "x": 700,
-     "y": 760,
+     "x": 560,
+     "y": 960,
      "zoom": 1.3
     },
     "alt": {
@@ -395,6 +426,95 @@
     ],
     "say": "Dia cuba periksa. Tapi bilik air itu kosong. Bila dia berpaling, satu bayang hitam sedang berdiri di belakang pintu.",
     "voiceSec": 7.69
+   },
+   {
+    "image": "story/b378-05c-hantu.png",
+    "w": 1199,
+    "h": 1312,
+    "duration": 18.5,
+    "fog": 0.05,
+    "from": {
+     "x": 600,
+     "y": 700,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 620,
+     "y": 560,
+     "zoom": 1.2
+    },
+    "alt": {
+     "image": "story/b378-05d-jerit.png",
+     "at": 13.1,
+     "flash": true
+    },
+    "shake": {
+     "at": 13.1,
+     "dur": 1.0,
+     "amp": 18
+    },
+    "voice": "story/b378n6b.wav",
+    "voiceAt": 0.5,
+    "voiceSec": 16.49,
+    "say": "Dia cuba tenangkan diri, dan kembali tidur. Tapi tak lama kemudian, dia rasa ada sesuatu yang sangat dekat dengan mukanya. Bila dia buka mata, wajah itu betul-betul ada di depannya!",
+    "sfx": [
+     {
+      "src": "clock",
+      "at": 0,
+      "dur": 12.5,
+      "volume": 0.22,
+      "loop": true,
+      "fade": 0.8
+     },
+     {
+      "src": "whoosh",
+      "at": 12.8,
+      "dur": 1.2,
+      "volume": 0.7
+     },
+     {
+      "src": "impact",
+      "at": 13.1,
+      "dur": 3,
+      "volume": 1
+     }
+    ]
+   },
+   {
+    "image": "story/b378-06a-lari.png",
+    "w": 1199,
+    "h": 1312,
+    "duration": 3.6,
+    "fog": 0.05,
+    "from": {
+     "x": 620,
+     "y": 700,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 640,
+     "y": 600,
+     "zoom": 1.25
+    },
+    "shake": {
+     "at": 0,
+     "dur": 3.6,
+     "amp": 7
+    },
+    "sfx": [
+     {
+      "src": "whoosh",
+      "at": 0.1,
+      "dur": 1.2,
+      "volume": 0.6
+     },
+     {
+      "src": "whoosh",
+      "at": 1.9,
+      "dur": 1.2,
+      "volume": 0.5
+     }
+    ]
    },
    {
     "image": "story/b378-06-kaunterA.png",
