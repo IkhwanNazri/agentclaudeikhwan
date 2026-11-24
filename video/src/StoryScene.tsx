@@ -9,7 +9,8 @@ export type BlinkFace = { eyes: Ell[]; lid: string; seed?: number };
 export type SfxCue = { src: string; at: number; dur?: number; volume?: number; loop?: boolean; fade?: number };
 export type Shot = {
   image: string; w: number; h: number; duration: number;
-  from?: Cam; to?: Cam; toAt?: number; // toAt: saat kamera sampai 'to' (lalai: hujung syot) glows?: Glow[]; faces?: BlinkFace[]; fog?: number;
+  from?: Cam; to?: Cam; glows?: Glow[]; faces?: BlinkFace[]; fog?: number;
+  toAt?: number; // saat kamera sampai 'to' (lalai: hujung syot)
   alt?: { image: string; at: number; flash?: boolean }; // tukar ke versi B pada saat 'at'
   voice?: string; voiceAt?: number; sfx?: SfxCue[]; shake?: { at: number; dur: number; amp?: number };
   endCard?: { at: number; logo?: string }; // gelap perlahan + logo
