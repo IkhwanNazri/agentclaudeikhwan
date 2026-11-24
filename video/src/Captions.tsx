@@ -1,7 +1,7 @@
 // Sari kata di TENGAH (elak butang kanan TikTok & kawasan caption bawah). Perkataan semasa kuning.
 import { interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
 
-export const Captions = ({ text, sec }: { text: string; sec: number }) => {
+export const Captions = ({ text, sec, hold }: { text: string; sec: number; hold?: number }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const words = text.split(/\s+/).filter(Boolean);
@@ -12,7 +12,7 @@ export const Captions = ({ text, sec }: { text: string; sec: number }) => {
   let acc = 0;
   let cur = words.length - 1;
   for (let i = 0; i < words.length; i++) { acc += weights[i]; if (t < acc) { cur = i; break; } }
-  if (frame > sec * fps + fps * 0.4) return null;
+  if (frame > (hold ?? sec + 0.4) * fps) return null;
   const start = Math.floor(cur / 4) * 4;
   const chunk = words.slice(start, start + 4);
   return (

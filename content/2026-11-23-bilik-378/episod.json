@@ -55,7 +55,7 @@
     "image": "story/b378-01-hotel.png",
     "w": 941,
     "h": 1672,
-    "duration": 16,
+    "duration": 15.23,
     "from": {
      "x": 470,
      "y": 700,
@@ -151,7 +151,7 @@
      }
     ],
     "voice": "story/b378-n01.wav",
-    "voiceAt": 0.6,
+    "voiceAt": 0.3,
     "say": "Tiga orang sahabat datang ke sebuah hotel lama untuk menghadiri kursus selama tiga hari. Mereka menyewa dua bilik. Dua orang berkongsi satu bilik yang ada dua katil. Seorang lagi memilih bilik berasingan.",
     "voiceSec": 14.53
    },
@@ -159,7 +159,7 @@
     "image": "story/b378-02-bilik1.png",
     "w": 941,
     "h": 1672,
-    "duration": 10.2,
+    "duration": 8.98,
     "fog": 0.15,
     "from": {
      "x": 470,
@@ -180,7 +180,7 @@
      }
     ],
     "voice": "story/b378-n02.wav",
-    "voiceAt": 0.6,
+    "voiceAt": 0.15,
     "say": "Dua orang sahabat berehat di bilik pertama. Mereka ada dua katil, dan ruang yang cukup untuk berehat.",
     "voiceSec": 8.48
    },
@@ -188,7 +188,7 @@
     "image": "story/b378-03-koridor.png",
     "w": 941,
     "h": 1672,
-    "duration": 6.0,
+    "duration": 4.6,
     "fog": 0.15,
     "from": {
      "x": 470,
@@ -196,9 +196,9 @@
      "zoom": 1.0
     },
     "to": {
-     "x": 700,
-     "y": 900,
-     "zoom": 1.3
+     "x": 765,
+     "y": 520,
+     "zoom": 1.45
     },
     "glows": [
      {
@@ -216,18 +216,23 @@
     ],
     "sfx": [
      {
-      "src": "creak",
-      "at": 4.6,
-      "dur": 2,
-      "volume": 0.5
+      "src": "door_open",
+      "at": 4.0,
+      "dur": 1.2,
+      "volume": 0.8
      }
-    ]
+    ],
+    "voice": "story/b378-n03.wav",
+    "say": "Tapi sahabat ketiga mendapat Bilik 378. Bilik itu hanya ada satu katil. Pada mulanya, dia tak rasa apa-apa yang pelik.",
+    "voiceSec": 12.88,
+    "voiceAt": 0.3,
+    "toAt": 3.8
    },
    {
     "image": "story/b378-03b-masuk.png",
     "w": 941,
     "h": 1672,
-    "duration": 14.5,
+    "duration": 8.93,
     "fog": 0.1,
     "from": {
      "x": 470,
@@ -253,16 +258,20 @@
       "flicker": 0.05
      }
     ],
-    "voice": "story/b378-n03.wav",
-    "voiceAt": 0.5,
-    "say": "Tapi sahabat ketiga mendapat Bilik 378. Bilik itu hanya ada satu katil. Pada mulanya, dia tak rasa apa-apa yang pelik.",
-    "voiceSec": 12.88
+    "sfx": [
+     {
+      "src": "creak",
+      "at": 0.15,
+      "dur": 1,
+      "volume": 0.7
+     }
+    ]
    },
    {
     "image": "story/b378-04-bilik378A.png",
     "w": 941,
     "h": 1672,
-    "duration": 12.4,
+    "duration": 11.08,
     "fog": 0.1,
     "from": {
      "x": 470,
@@ -283,21 +292,21 @@
      }
     ],
     "voice": "story/b378-n04.wav",
-    "voiceAt": 0.6,
+    "voiceAt": 0.15,
     "sfx": [
      {
       "src": "clock",
       "at": 0,
-      "dur": 12.4,
-      "volume": 0.3,
+      "dur": 11.08,
+      "volume": 0.35,
       "loop": true,
-      "fade": 0.8
+      "fade": 0.6
      },
      {
       "src": "impact",
-      "at": 10.6,
+      "at": 9.88,
       "dur": 2.5,
-      "volume": 0.4
+      "volume": 0.35
      }
     ],
     "say": "Malam pertama berlalu seperti biasa. Mereka sangka hotel itu cuma hotel lama yang sunyi. Namun, semuanya berubah pada malam kedua.",
@@ -307,7 +316,7 @@
     "image": "story/b378-04-tidur.png",
     "w": 941,
     "h": 1672,
-    "duration": 14.5,
+    "duration": 12.5,
     "fog": 0.1,
     "from": {
      "x": 470,
@@ -321,11 +330,11 @@
     },
     "alt": {
      "image": "story/b378-04-bilik378B.png",
-     "at": 11.6,
+     "at": 11.0,
      "flash": true
     },
     "shake": {
-     "at": 11.6,
+     "at": 11.0,
      "dur": 0.8,
      "amp": 16
     },
@@ -338,49 +347,56 @@
      }
     ],
     "voice": "story/b378-n05.wav",
-    "voiceAt": 0.6,
+    "voiceAt": 0.15,
     "sfx": [
      {
       "src": "clock",
       "at": 0,
-      "dur": 9,
-      "volume": 0.25,
+      "dur": 8.5,
+      "volume": 0.3,
       "loop": true,
       "fade": 0.5
      },
      {
       "src": "knock",
-      "at": 9.2,
-      "dur": 0.5,
+      "at": 8.6,
+      "dur": 0.3,
       "volume": 1
      },
      {
       "src": "knock",
-      "at": 10.2,
-      "dur": 0.5,
+      "at": 9.6,
+      "dur": 0.3,
       "volume": 1
      },
      {
       "src": "knock",
-      "at": 11.2,
-      "dur": 0.5,
+      "at": 10.6,
+      "dur": 0.3,
       "volume": 1
      },
      {
       "src": "impact",
-      "at": 11.6,
-      "dur": 2.5,
+      "at": 11.0,
+      "dur": 3,
       "volume": 0.6
      }
     ],
     "say": "Hampir pukul satu pagi, dia terdengar sesuatu dari bilik air. Tiga ketukan... perlahan.",
-    "voiceSec": 8.08
+    "voiceSec": 8.08,
+    "captions": [
+     {
+      "text": "TOK... TOK... TOK...",
+      "at": 8.5,
+      "sec": 2.4
+     }
+    ]
    },
    {
     "image": "story/b378-05-bilikairA.png",
     "w": 599,
     "h": 1312,
-    "duration": 11,
+    "duration": 9.0,
     "fog": 0.2,
     "from": {
      "x": 300,
@@ -394,32 +410,38 @@
     },
     "alt": {
      "image": "story/b378-05-bilikairB.png",
-     "at": 7.9,
+     "at": 7.5,
      "flash": true
     },
     "shake": {
-     "at": 7.9,
+     "at": 7.5,
      "dur": 0.7,
      "amp": 14
     },
     "voice": "story/b378-n06.wav",
-    "voiceAt": 0.4,
+    "voiceAt": 0.15,
     "sfx": [
      {
+      "src": "door_open",
+      "at": 0.2,
+      "dur": 1.2,
+      "volume": 0.6
+     },
+     {
       "src": "creak",
-      "at": 0.3,
-      "dur": 2,
-      "volume": 0.45
+      "at": 0.6,
+      "dur": 1,
+      "volume": 0.5
      },
      {
       "src": "whoosh",
-      "at": 7.6,
-      "dur": 1.2,
-      "volume": 0.7
+      "at": 7.3,
+      "dur": 0.5,
+      "volume": 0.8
      },
      {
       "src": "impact",
-      "at": 7.9,
+      "at": 7.5,
       "dur": 3,
       "volume": 0.9
      }
@@ -431,7 +453,7 @@
     "image": "story/b378-05c-hantu.png",
     "w": 1199,
     "h": 1312,
-    "duration": 18.5,
+    "duration": 17.2,
     "fog": 0.05,
     "from": {
      "x": 600,
@@ -445,38 +467,44 @@
     },
     "alt": {
      "image": "story/b378-05d-jerit.png",
-     "at": 13.1,
+     "at": 12.6,
      "flash": true
     },
     "shake": {
-     "at": 13.1,
+     "at": 12.6,
      "dur": 1.0,
      "amp": 18
     },
     "voice": "story/b378n6b.wav",
-    "voiceAt": 0.5,
+    "voiceAt": 0.15,
     "voiceSec": 16.49,
     "say": "Dia cuba tenangkan diri, dan kembali tidur. Tapi tak lama kemudian, dia rasa ada sesuatu yang sangat dekat dengan mukanya. Bila dia buka mata, wajah itu betul-betul ada di depannya!",
     "sfx": [
      {
       "src": "clock",
       "at": 0,
-      "dur": 12.5,
+      "dur": 12,
       "volume": 0.22,
       "loop": true,
       "fade": 0.8
      },
      {
       "src": "whoosh",
-      "at": 12.8,
-      "dur": 1.2,
+      "at": 12.4,
+      "dur": 0.5,
       "volume": 0.7
      },
      {
       "src": "impact",
-      "at": 13.1,
+      "at": 12.6,
       "dur": 3,
       "volume": 1
+     },
+     {
+      "src": "scream",
+      "at": 12.7,
+      "dur": 1.2,
+      "volume": 0.55
      }
     ]
    },
@@ -503,24 +531,34 @@
     },
     "sfx": [
      {
-      "src": "whoosh",
-      "at": 0.1,
-      "dur": 1.2,
-      "volume": 0.6
+      "src": "run",
+      "at": 0.0,
+      "dur": 2.4,
+      "volume": 0.8
      },
      {
       "src": "whoosh",
-      "at": 1.9,
-      "dur": 1.2,
-      "volume": 0.5
+      "at": 0.1,
+      "dur": 0.5,
+      "volume": 0.6
+     },
+     {
+      "src": "run",
+      "at": 2.2,
+      "dur": 1.4,
+      "volume": 0.7
      }
-    ]
+    ],
+    "voice": "story/b378-n07.wav",
+    "say": "Ketakutan, dia terus berlari ke kaunter hotel dan menceritakan semuanya. Receptionist itu terus terdiam bila mendengar nombor Bilik 378. Bilik itu sebenarnya sudah ditutup tiga bulan, selepas berlaku satu kematian.",
+    "voiceSec": 21.28,
+    "voiceAt": 0.1
    },
    {
     "image": "story/b378-06-kaunterA.png",
     "w": 1199,
     "h": 656,
-    "duration": 23,
+    "duration": 18.13,
     "fog": 0.05,
     "from": {
      "x": 330,
@@ -534,11 +572,11 @@
     },
     "alt": {
      "image": "story/b378-06-kaunterB.png",
-     "at": 9.4,
+     "at": 5.3,
      "flash": false
     },
     "shake": {
-     "at": 9.4,
+     "at": 5.3,
      "dur": 0.5,
      "amp": 8
     },
@@ -550,25 +588,21 @@
       "flicker": 0.05
      }
     ],
-    "voice": "story/b378-n07.wav",
-    "voiceAt": 0.6,
     "sfx": [
      {
       "src": "impact",
-      "at": 9.4,
+      "at": 5.3,
       "dur": 3,
-      "volume": 0.55
+      "volume": 0.5
      }
     ],
-    "toAt": 8.8,
-    "say": "Ketakutan, dia terus berlari ke kaunter hotel dan menceritakan semuanya. Receptionist itu terus terdiam bila mendengar nombor Bilik 378. Bilik itu sebenarnya sudah ditutup tiga bulan, selepas berlaku satu kematian.",
-    "voiceSec": 21.28
+    "toAt": 4.6
    },
    {
     "image": "story/b378-07-gambar.png",
     "w": 1199,
     "h": 1312,
-    "duration": 12.0,
+    "duration": 11.19,
     "fog": 0.05,
     "from": {
      "x": 600,
@@ -581,12 +615,12 @@
      "zoom": 1.45
     },
     "voice": "story/b378-n08.wav",
-    "voiceAt": 0.5,
+    "voiceAt": 0.15,
     "sfx": [
      {
       "src": "whoosh",
-      "at": 11.5,
-      "dur": 1.2,
+      "at": 10.889999999999999,
+      "dur": 0.5,
       "volume": 0.6
      }
     ],
@@ -597,7 +631,7 @@
     "image": "story/b378-05-bilikairB.png",
     "w": 599,
     "h": 1312,
-    "duration": 1.6,
+    "duration": 1.4,
     "fog": 0.2,
     "from": {
      "x": 380,
@@ -618,7 +652,7 @@
      {
       "src": "impact",
       "at": 0,
-      "dur": 1.6,
+      "dur": 1.4,
       "volume": 1
      }
     ]
@@ -627,7 +661,7 @@
     "image": "story/b378-08-bertiga.png",
     "w": 1199,
     "h": 1312,
-    "duration": 11.5,
+    "duration": 10.31,
     "fog": 0.1,
     "from": {
      "x": 600,
@@ -648,7 +682,7 @@
      }
     ],
     "voice": "story/b378-n09.wav",
-    "voiceAt": 0.6,
+    "voiceAt": 0.15,
     "say": "Dia segera kembali kepada dua sahabatnya, dan menceritakan semuanya. Malam itu, mereka tak mahu tidur berasingan lagi.",
     "voiceSec": 9.81
    },
@@ -656,7 +690,7 @@
     "image": "story/b378-09-pagi.png",
     "w": 1199,
     "h": 1312,
-    "duration": 6.0,
+    "duration": 4.55,
     "fog": 0.2,
     "from": {
      "x": 560,
@@ -678,7 +712,7 @@
      }
     ],
     "voice": "story/b378-n10.wav",
-    "voiceAt": 0.5,
+    "voiceAt": 0.15,
     "say": "Keesokan paginya, mereka terus tinggalkan hotel itu.",
     "voiceSec": 4.05
    },
@@ -686,7 +720,7 @@
     "image": "story/b378-10-pintu.png",
     "w": 1199,
     "h": 1312,
-    "duration": 21.0,
+    "duration": 20.0,
     "fog": 0.1,
     "from": {
      "x": 650,
@@ -699,21 +733,21 @@
      "zoom": 1.5
     },
     "voice": "story/b378-n11.wav",
-    "voiceAt": 0.6,
+    "voiceAt": 0.15,
     "endCard": {
-     "at": 17.8
+     "at": 17.0
     },
     "sfx": [
      {
       "src": "door_close",
-      "at": 17.6,
+      "at": 16.9,
       "dur": 1,
       "volume": 0.9
      },
      {
       "src": "impact",
-      "at": 18.7,
-      "dur": 2.3,
+      "at": 17.9,
+      "dur": 2.1,
       "volume": 0.7
      }
     ],

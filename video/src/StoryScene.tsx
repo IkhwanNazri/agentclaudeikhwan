@@ -16,6 +16,7 @@ export type Shot = {
   alt?: { image: string; at: number; flash?: boolean }; // tukar ke versi B pada saat 'at'
   voice?: string; voiceAt?: number; say?: string; voiceSec?: number; sfx?: SfxCue[]; shake?: { at: number; dur: number; amp?: number };
   endCard?: { at: number; logo?: string }; // gelap perlahan + logo
+  captions?: { text: string; at: number; sec: number }[]; // sari kata tanpa suara (cth TOK... TOK...)
 };
 export type StoryProps = { shots: Shot[] };
 
@@ -86,12 +87,6 @@ const ShotView = ({ shot }: { shot: Shot }) => {
           <Img src={staticFile(shot.endCard.logo ?? 'placthinc2/logo.png')} style={{ width: 760, opacity: interpolate(t, [shot.endCard.at + 0.9, shot.endCard.at + 1.6], [0, 1], clamp), transform: `scale(${interpolate(t, [shot.endCard.at + 0.9, shot.endCard.at + 3], [0.92, 1.02], clamp)})` }} />
         </AbsoluteFill>
       ) : null}
-      {shot.voice ? (
-        <Sequence from={Math.round((shot.voiceAt ?? 0.4) * fps)}>
-          <Audio src={staticFile(shot.voice)} />
-          {shot.say && shot.voiceSec ? <Captions text={shot.say} sec={shot.voiceSec} /> : null}
-        </Sequence>
-      ) : null}
       {(shot.sfx ?? []).map((x, i) => {
         const len = Math.round((x.dur ?? 4) * fps);
         const fd = Math.max(1, Math.round((x.fade ?? 0) * fps));
@@ -107,8 +102,23 @@ const ShotView = ({ shot }: { shot: Shot }) => {
 
 export const storyDuration = (p: StoryProps, fps: number) => Math.max(1, Math.round(p.shots.reduce((a, s) => a + s.duration, 0) * fps));
 
+// Suara & sari kata di peringkat atas: boleh bersambung merentas syot, sari kata kekal hingga ayat seterusnya (tiada jeda kosong)
+type Cue = { from: number; sec: number; text?: string; voice?: string };
+const cuesOf = (shots: Shot[], fps: number): Cue[] => {
+  const out: Cue[] = [];
+  let start = 0;
+  for (const s of shots) {
+    if (s.voice) out.push({ from: start + Math.round((s.voiceAt ?? 0.4) * fps), sec: s.voiceSec ?? 3, text: s.say, voice: s.voice });
+    for (const c of s.captions ?? []) out.push({ from: start + Math.round(c.at * fps), sec: c.sec, text: c.text });
+    start += Math.round(s.duration * fps);
+  }
+  return out.sort((x, y) => x.from - y.from);
+};
+
 export const StoryScene = ({ shots }: StoryProps) => {
   const { fps } = useVideoConfig();
+  const total = storyDuration({ shots }, fps);
+  const cues = cuesOf(shots, fps);
   let start = 0;
   return (
     <AbsoluteFill style={{ backgroundColor: '#000' }}>
@@ -117,6 +127,21 @@ export const StoryScene = ({ shots }: StoryProps) => {
         const d = Math.round(s.duration * fps);
         start += d;
         return <Sequence key={i} from={from} durationInFrames={d}><ShotView shot={s} /></Sequence>;
+      })}
+      {cues.map((c, i) => {
+        const next = cues[i + 1]?.from ?? total;
+        const len = Math.max(1, next - c.from);
+        const speak = Math.round((c.sec + 0.5) * fps);
+        return (
+          <Sequence key={`c${i}`} from={c.from} durationInFrames={Math.max(len, c.voice ? speak : 1)}>
+            {c.voice ? <Audio src={staticFile(c.voice)} /> : null}
+            {c.text ? (
+              <Sequence durationInFrames={len}>
+                <Captions text={c.text} sec={c.sec} hold={len / fps} />
+              </Sequence>
+            ) : null}
+          </Sequence>
+        );
       })}
     </AbsoluteFill>
   );

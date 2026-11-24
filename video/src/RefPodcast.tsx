@@ -156,9 +156,9 @@ export const RefPodcast = ({ lines, wideStart = 1.4, wideEnd = 1.4, duration }: 
       })}
       <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 45%, transparent 45%, rgba(0,0,0,0.65) 100%)' }} />
       {lines.map((l, i) => (l.voice ? (
-        <Sequence key={i} from={Math.round(l.from * fps)} durationInFrames={Math.round((l.to - l.from + 0.4) * fps)}>
+        <Sequence key={i} from={Math.round(l.from * fps)} durationInFrames={Math.round(((lines[i + 1]?.from ?? duration) - l.from) * fps)}>
           <Audio src={staticFile(l.voice)} />
-          {l.say ? <Captions text={l.say} sec={l.to - l.from} /> : null}
+          {l.say ? <Captions text={l.say} sec={l.to - l.from} hold={(lines[i + 1]?.from ?? duration) - l.from} /> : null}
         </Sequence>
       ) : null))}
     </AbsoluteFill>
