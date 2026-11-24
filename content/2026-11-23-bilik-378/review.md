@@ -1,1 +1,1 @@
-Babak podcast v3 — tanpa batang kayu, ada suara (co-host: Leda, host: Achird), mulut ikut suara.
+PLACTHINC Bilik 378 — episod penuh (~2:56). Podcast (Leda + Achird) → 11 syot cerita, narasi Achird, SFX, logo penutup.
