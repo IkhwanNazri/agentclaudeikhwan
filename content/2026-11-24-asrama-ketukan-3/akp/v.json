@@ -1,0 +1,27 @@
+{
+  "voiceStyle": "Cakap santai dan semula jadi macam podcaster Malaysia berbual, sedikit misteri. Jangan kedengaran macam robot atau pembaca berita.",
+  "scenes": [
+    {
+      "say": "Korang pernah duduk asrama? Pernah tak tinggal sorang-sorang masa cuti hujung minggu?",
+      "voiceName": "Achird",
+      "duration": 5.5,
+      "voice": "akp_0.wav",
+      "voiceSec": 5.09
+    },
+    {
+      "say": "Pernah... sunyi gila. Kenapa? Ada benda jadi ke?",
+      "voiceName": "Leda",
+      "voiceStyle": "Perempuan, ingin tahu dan sedikit cemas, santai semula jadi.",
+      "duration": 5.6,
+      "voice": "akp_1.wav",
+      "voiceSec": 5.13
+    },
+    {
+      "say": "Malam ni aku nak cerita pasal satu asrama... dan tiga ketukan di pintu dorm.",
+      "voiceName": "Achird",
+      "duration": 6.9,
+      "voice": "akp_2.wav",
+      "voiceSec": 6.44
+    }
+  ]
+}

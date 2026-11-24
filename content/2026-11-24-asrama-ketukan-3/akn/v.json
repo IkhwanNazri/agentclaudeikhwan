@@ -1,0 +1,114 @@
+{
+  "voiceStyle": "Lelaki bercerita kisah seram macam podcaster Malaysia, tenang, perlahan sikit dan misteri, semula jadi, bukan robot.",
+  "wordsPerSec": 1.8,
+  "scenes": [
+    {
+      "voiceName": "Achird",
+      "duration": 1,
+      "say": "Cuti hujung minggu. Hampir semua pelajar dah pulang ke rumah. Hanya empat orang sahabat yang masih tinggal di asrama. Malam itu, bekalan elektrik terputus."
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 1,
+      "say": "Mereka susun tilam rapat-rapat di atas lantai. Tepat pukul dua belas malam, mereka pasang radio, dan dengar rancangan cerita seram."
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 1,
+      "say": "Pukul satu pagi. Seorang demi seorang mula terlelap. Hanya dia yang masih berjaga, mendengar cerita seram di radio... sehingga akhirnya, dia juga tertidur."
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 1,
+      "say": "Tepat pukul dua setengah pagi, dia terjaga. Dia nak ke tandas. Dia cuba kejutkan kawan-kawannya, tapi tiada seorang pun yang bangun. Akhirnya, dia putuskan untuk pergi seorang diri."
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 1,
+      "say": "Dia buka locker, cari lampu suluh. Suis ditekan, tapi lampu tak menyala. Dia ketuk lampu itu pada pergelangan tangan... barulah ia menyala."
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 15.5,
+      "voiceStyle": "Berbisik perlahan dan tegang, macam cerita seram.",
+      "say": "Masa itu, dia nampak sesuatu, macam bayang hitam sedang duduk di atas kerusi. Bila dia halakan lampu suluh ke situ, bayang itu dah hilang. Rupa-rupanya, cuma tuala yang tersangkut.",
+      "voice": "akn_5.wav",
+      "voiceSec": 15.05
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 9.5,
+      "say": "Dia abaikan saja, dan keluar dari dorm. Koridor gelap gelita. Dia berjalan seorang diri menuju ke tandas.",
+      "voice": "akn_6.wav",
+      "voiceSec": 9.01
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 12.2,
+      "voiceStyle": "Tegang, makin laju di tengah ayat.",
+      "say": "Selesai di tandas, dia melangkah keluar. Tiba-tiba, satu bayang hitam melintas laju di depannya! Dia suluh kawasan itu. Tiada sesiapa. Mungkin matanya tersilap.",
+      "voice": "akn_7.wav",
+      "voiceSec": 11.78
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 13.7,
+      "voiceStyle": "Berbisik perlahan dan tegang, macam cerita seram.",
+      "say": "Sampai di pintu dorm, dia pegang tombol pintu. Tapi dari hujung mata, dia nampak sesuatu di kaki lima, dekat tangga. Rupanya, macam salah seorang kawannya.",
+      "voice": "akn_8.wav",
+      "voiceSec": 13.24
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 10,
+      "voiceStyle": "Tegang dan makin laju, cemas di hujung ayat.",
+      "say": "Tapi matanya merah menyala. Badan dan tangannya terbalik, macam sendinya menghadap arah yang salah. Makhluk itu merangkak macam labah-labah, laju, terus ke arahnya!",
+      "voice": "akn_9.wav",
+      "voiceSec": 9.56
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 6.1,
+      "voiceStyle": "Panik tapi perlahan, macam cerita seram.",
+      "say": "Dia berlari masuk ke dorm, dan kejutkan ketiga-tiga kawannya. Tapi tiada seorang pun yang bangun.",
+      "voice": "akn_10.wav",
+      "voiceSec": 5.63
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 1,
+      "voiceStyle": "Berbisik perlahan dan tegang, macam cerita seram.",
+      "say": "Dia cuba tenangkan diri. Tiba-tiba... bunyi tapak kaki. Makin lama, makin dekat."
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 10.2,
+      "voiceStyle": "Berbisik perlahan dan tegang, macam cerita seram.",
+      "say": "Dia sembunyi di bawah selimut, langsung tak bergerak. Ketukan itu makin perlahan, sebelum akhirnya, berhenti.",
+      "voice": "akn_12.wav",
+      "voiceSec": 9.77
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 13.2,
+      "say": "Suasana kembali sunyi. Dia tertidur, kerana terlalu penat dan takut. Pagi menjelma. Kawan-kawannya langsung tak tahu apa yang berlaku malam tadi.",
+      "voice": "akn_13.wav",
+      "voiceSec": 12.72
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 14.6,
+      "voiceStyle": "Perlahan dan misteri, macam penutup cerita seram.",
+      "say": "Tapi persoalannya... adakah makhluk itu benar-benar berada di luar dorm? Atau sebenarnya, sesuatu dah pun masuk ke dalam bilik, ketika mereka semua sedang tidur?",
+      "voice": "akn_14.wav",
+      "voiceSec": 14.13
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 7.4,
+      "say": "Korang pernah tak alami kejadian macam ni masa duduk asrama? Kongsikan pengalaman korang di ruangan komen.",
+      "voice": "akn_15.wav",
+      "voiceSec": 6.92
+    }
+  ]
+}

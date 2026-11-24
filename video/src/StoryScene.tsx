@@ -6,7 +6,7 @@ import { AbsoluteFill, Audio, Easing, Img, Sequence, interpolate, staticFile, us
 
 type Ell = { x: number; y: number; rx: number; ry: number };
 export type Cam = { x: number; y: number; zoom: number }; // titik fokus (px gambar) + zoom (1 = penuh bingkai)
-export type Glow = { x: number; y: number; r: number; color?: string; flicker?: number };
+export type Glow = { x: number; y: number; r: number; color?: string; flicker?: number; at?: number };
 export type BlinkFace = { eyes: Ell[]; lid: string; seed?: number };
 export type SfxCue = { src: string; at: number; dur?: number; volume?: number; loop?: boolean; fade?: number };
 export type Shot = {
@@ -17,6 +17,8 @@ export type Shot = {
   voice?: string; voiceAt?: number; say?: string; voiceSec?: number; sfx?: SfxCue[]; shake?: { at: number; dur: number; amp?: number };
   endCard?: { at: number; logo?: string }; // gelap perlahan + logo
   captions?: { text: string; at: number; sec: number }[]; // sari kata tanpa suara (cth TOK... TOK...)
+  streaks?: { at: number; dur: number; y: number; dir?: 1 | -1 }[]; // bayang hitam melintas laju (koordinat skrin)
+  eyes?: { x: number; y: number; gap: number; at: number; r?: number }[]; // sepasang mata merah menyala (px gambar)
 };
 export type StoryProps = { shots: Shot[] };
 
@@ -53,6 +55,7 @@ const ShotView = ({ shot }: { shot: Shot }) => {
         <Img src={staticFile(shot.image)} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
         {shot.alt ? <Img src={staticFile(shot.alt.image)} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: altOn }} /> : null}
         {(shot.glows ?? []).map((g, j) => {
+          if (g.at !== undefined && t < g.at) return null;
           const off = noise(Math.floor(frame / 3) + j * 13) > 1 - (g.flicker ?? 0.06);
           return (
             <div key={j} style={{ position: 'absolute', left: (g.x - g.r) * s, top: (g.y - g.r) * s, width: g.r * 2 * s, height: g.r * 2 * s, borderRadius: '50%',
@@ -68,7 +71,24 @@ const ShotView = ({ shot }: { shot: Shot }) => {
             </div>
           )) : null;
         }) : null}
+        {(shot.eyes ?? []).map((e, j) => {
+          const o = interpolate(t, [e.at, e.at + 1.2], [0, 1], clamp) * (0.85 + 0.15 * Math.sin(t * 9 + j));
+          const r = (e.r ?? 7) * s;
+          return [-1, 1].map((k) => (
+            <div key={`${j}${k}`} style={{ position: 'absolute', left: (e.x + (k * e.gap) / 2) * s - r, top: e.y * s - r, width: r * 2, height: r * 2, borderRadius: '50%', opacity: o,
+              background: 'radial-gradient(circle, #fff 0%, #ff3030 35%, rgba(255,0,0,0) 70%)', boxShadow: `0 0 ${r * 3}px ${r}px rgba(255,20,20,0.6)` }} />
+          ));
+        })}
       </div>
+      {(shot.streaks ?? []).map((k, j) => {
+        const q = interpolate(t, [k.at, k.at + k.dur], [0, 1], clamp);
+        if (q <= 0 || q >= 1) return null;
+        const x = (k.dir === -1 ? 1 - q : q) * (W + 900) - 600;
+        return (
+          <div key={`s${j}`} style={{ position: 'absolute', left: x, top: k.y - 520, width: 420, height: 1040, filter: 'blur(26px)', opacity: 0.92,
+            background: 'radial-gradient(ellipse 30% 12% at 50% 14%, #000 60%, transparent 100%), radial-gradient(ellipse 45% 46% at 50% 58%, #000 55%, transparent 100%)' }} />
+        );
+      })}
       {/* kabus bergerak (2 lapis) */}
       {[0, 1].map((k) => (
         <AbsoluteFill key={k} style={{ opacity: fog * (k ? 0.55 : 0.8),
