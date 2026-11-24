@@ -1,0 +1,13 @@
+{
+  "voiceStyle": "Lelaki bercerita kisah seram macam podcaster Malaysia, tenang, perlahan sikit dan misteri, semula jadi, bukan robot.",
+  "scenes": [
+    { "say": "Pukul dua belas empat puluh tujuh tengah malam. Amir, seorang rider food, sedang berehat di tepi jalan. Tiba-tiba, telefonnya berbunyi. Satu pesanan baharu masuk. Tanpa fikir panjang, dia terus terima.", "voiceName": "Achird", "duration": 14 },
+    { "say": "Navigasi bawa dia melalui jalan kampung yang sunyi dan gelap. Kabus mula turun. Tiada satu pun kenderaan lain di jalan itu.", "voiceName": "Achird", "duration": 10 },
+    { "say": "Akhirnya dia sampai. Tapi pin lokasi pelanggan... betul-betul di tengah tanah perkuburan lama. Mesej masuk. Bang, dah sampai ke? Amir balas, Bang, lokasi ni kubur. Betul ke alamat? Pelanggan jawab, Betul bang. Jalan masuk sikit. Kubur nombor tujuh belas.", "voiceName": "Achird", "duration": 20 },
+    { "say": "Amir beranikan diri masuk, sambil bawa beg makanan. Telefon berbunyi lagi. Saya nampak abang dah. Dia toleh ke belakang. Tiada sesiapa. Mesej seterusnya masuk. Letak makanan sebelah batu nisan tu, bang.", "voiceName": "Achird", "duration": 16 },
+    { "say": "Dia jumpa kubur nombor tujuh belas. Nama pada batu nisan itu... sama dengan nama pelanggan dalam aplikasi. Dia buka gambar profil pelanggan. Gambar seorang lelaki tua, yang sudah lama meninggal dunia.", "voiceName": "Achird", "duration": 15 },
+    { "say": "Bang... makanan saya mana?", "voiceName": "Achird", "voiceStyle": "Suara lelaki tua, serak, perlahan, berbisik dan menyeramkan.", "duration": 3 },
+    { "say": "Amir berpaling. Lelaki tua itu berdiri betul-betul di belakangnya.", "voiceName": "Achird", "duration": 6 },
+    { "say": "Amir lari, tinggalkan makanan dan motosikalnya. Keesokan paginya, seorang pekerja pembersihan jumpa beg makanan di sebelah kubur nombor tujuh belas. Telefon Amir masih ada di situ. Tiba-tiba, skrin telefon itu menyala. Pesanan baharu. Bang, boleh hantar lagi satu? Lokasi penghantaran... kubur nombor tujuh belas.", "voiceName": "Achird", "duration": 24 }
+  ]
+}

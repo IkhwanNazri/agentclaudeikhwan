@@ -1,0 +1,42 @@
+{
+  "voiceStyle": "Cakap santai dan semula jadi macam podcaster Malaysia berbual, sedikit misteri. Jangan kedengaran macam robot atau pembaca berita.",
+  "scenes": [
+    {
+      "say": "Kau pernah terima order makanan tengah malam... tapi alamatnya dekat kubur?",
+      "voiceName": "Achird",
+      "duration": 6,
+      "voice": "2026-11-24-pesanan-terakhir_0.wav",
+      "voiceSec": 5.52
+    },
+    {
+      "say": "Eh, seriuslah? Siapa pula yang order dari kubur?",
+      "voiceName": "Leda",
+      "voiceStyle": "Perempuan, terkejut dan ingin tahu, santai semula jadi.",
+      "duration": 5.5,
+      "voice": "2026-11-24-pesanan-terakhir_1.wav",
+      "voiceSec": 5.08
+    },
+    {
+      "say": "Malam ni aku nak cerita kisah seorang rider. Tajuknya, Pesanan Terakhir.",
+      "voiceName": "Achird",
+      "duration": 6.5,
+      "voice": "2026-11-24-pesanan-terakhir_2.wav",
+      "voiceSec": 6.01
+    },
+    {
+      "say": "Sebelum kita mulakan cerita, jangan lupa follow.",
+      "voiceName": "Leda",
+      "voiceStyle": "Perempuan, mesra dan santai.",
+      "duration": 3.7,
+      "voice": "2026-11-24-pesanan-terakhir_3.wav",
+      "voiceSec": 3.21
+    },
+    {
+      "say": "Baik. Sekarang, kita mulakan kisahnya.",
+      "voiceName": "Achird",
+      "duration": 3.3,
+      "voice": "2026-11-24-pesanan-terakhir_4.wav",
+      "voiceSec": 2.85
+    }
+  ]
+}
