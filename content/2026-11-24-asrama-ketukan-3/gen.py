@@ -35,7 +35,7 @@ shots=[
  sh('ak06-locker',13,**{'from':C(600,656,1.0),'to':C(900,700,1.35)},fog=0.05,
     glows=[{'x':990,'y':700,'r':200,'at':10.6,'flicker':0.03},{'x':990,'y':700,'r':70,'color':'#fff6d8','at':10.6,'flicker':0.03}],
     sfx=[S('knock',4.6,0.15,0.25),S('knock',7.6,0.15,0.3),S('knock',8.3,0.15,0.3),S('knock',10.5,0.15,0.35)],**n(4)),
- sh('ak07-bayang',10.2,**{'from':C(500,700,1.0),'to':C(800,700,1.45)},fog=0.05,sfx=[S('suspense',0,10.2,0.2,loop=True,fade=1)],**n(5)),
+ sh('ak07-bayang',10.2,**{'from':C(500,700,1.0),'to':C(800,700,1.45)},fog=0.05,**n(5)),
  sh('akL01-dorm',5.3,**{'from':C(150,830,2.6),'to':C(150,820,2.8)},fog=0.05,
     glows=[{'x':160,'y':800,'r':120,'flicker':0.02}],sfx=[S('whoosh',0,0.6,0.5)]),
  sh('ak09-dorm',4.2,**{'from':C(543,700,1.0),'to':C(800,600,1.25)},fog=0.05,glows=[{'x':720,'y':770,'r':120,'flicker':0.04}],
@@ -45,7 +45,7 @@ shots=[
  sh('akL03-tandas',12.5,**{'from':C(470,900,1.0),'to':C(500,1000,1.25)},fog=0.2,shake={'at':4.2,'dur':0.6,'amp':12},
     streaks=[{'at':4.15,'dur':0.4,'y':900}],sfx=[S('door_open',0,1.2,0.4),S('whoosh',4.0,0.6,0.9),S('impact',4.2,2.5,0.6)],**n(7)),
  sh('ak11-makhluk',4.6,**{'from':C(250,650,1.6),'to':C(260,640,1.65)},fog=0.1,**n(8)),
- sh('ak11-makhluk',8.9,**{'from':C(260,640,1.65),'to':C(620,760,2.1)},toAt=3.2,fog=0.1,sfx=[S('impact',3.3,2.5,0.5),S('suspense',0,8.9,0.25,loop=True,fade=1)]),
+ sh('ak11-makhluk',8.9,**{'from':C(260,640,1.65),'to':C(620,760,2.1)},toAt=3.2,fog=0.1,sfx=[S('impact',3.3,2.5,0.5)]),
  sh('akC03-makhluk',7.4,**{'from':C(590,960,2.4),'to':C(470,800,1.0)},toAt=5.5,fog=0.05,sfx=[S('impact',0,2.5,0.6)],**n(9,0.15)),
  sh('akC03-makhluk',2.6,**{'from':C(470,800,1.0),'to':C(590,960,2.9)},toAt=0.45,fog=0.0,shake={'at':0,'dur':1.4,'amp':26},
     sfx=[S('whoosh',0,0.6,1.0),S('scream',0.1,2.0,0.7),S('impact',0.3,2.3,1.0)]),
@@ -60,13 +60,14 @@ shots=[
  sh('ak17-selimut',11,**{'from':C(543,674,1.0),'to':C(520,560,1.35)},fog=0.0,sfx=[S('knock',5.4,0.4,0.45),S('knock',7.0,0.4,0.2)],**n(12,0.4)),
  sh('ak03b-tidur',13.2,**{'from':C(543,1000,1.2),'to':C(543,800,1.0)},fog=0.15,
     glows=[{'x':100,'y':350,'r':420,'color':'#ffdca8','flicker':0,'at':7.2},{'x':100,'y':350,'r':200,'color':'#cfd8ff','flicker':0}],**n(13)),
- sh('akL01-dorm',14.8,**{'from':C(470,850,1.0),'to':C(330,780,2.2)},toAt=12,fog=0.1,
-    eyes=[{'x':330,'y':790,'gap':26,'at':9.0,'r':5}],sfx=[S('suspense',0,14.8,0.3,loop=True,fade=1),S('impact',9.2,3,0.5)],**n(14)),
+ sh('ak03b-tidur',9.0,**{'from':C(543,900,1.0),'to':C(543,1000,1.25)},fog=0.1,glows=[{'x':100,'y':330,'r':160,'color':'#cfd8ff','flicker':0}],**n(14)),
+ sh('akC03-makhluk',5.8,**{'from':C(470,836,1.0),'to':C(590,960,2.0)},toAt=5.5,fog=0.05,shake={'at':0,'dur':0.6,'amp':18},
+    sfx=[S('whoosh',0,0.6,0.9),S('impact',0.1,3,0.8)]),
  sh('ak01-asrama',10.5,**{'from':C(543,700,1.2),'to':C(543,700,1.0)},fog=0.4,endCard={'at':7.6},
     sfx=[S('impact',8.4,2.1,0.6)],**n(15)),
 ]
 for s in shots: s.pop('frm',None)
-ep={'podcast':podcast,'music':[{'src':'sfx/suspense.wav','volume':0.12},{'src':'sfx/ambience.wav','volume':0.22}],'story':{'shots':shots}}
+ep={'podcast':podcast,'music':[{'src':'sfx/ambience.wav','volume':0.22}],'story':{'shots':shots}}
 json.dump(ep,open(D+'/episod.json','w'),indent=1,ensure_ascii=False)
 tot=podcast['duration']+sum(s['duration'] for s in shots)
 print('podcast',podcast['duration'],'jumlah',round(tot,1))

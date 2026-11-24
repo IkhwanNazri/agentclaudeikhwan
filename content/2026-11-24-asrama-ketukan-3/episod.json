@@ -41,10 +41,6 @@
  },
  "music": [
   {
-   "src": "sfx/suspense.wav",
-   "volume": 0.12
-  },
-  {
    "src": "sfx/ambience.wav",
    "volume": 0.22
   }
@@ -347,16 +343,6 @@
      "zoom": 1.45
     },
     "fog": 0.05,
-    "sfx": [
-     {
-      "src": "suspense",
-      "at": 0,
-      "volume": 0.2,
-      "dur": 10.2,
-      "loop": true,
-      "fade": 1
-     }
-    ],
     "voice": "akn_5.wav",
     "voiceAt": 0.3,
     "say": "Masa itu, dia nampak sesuatu, macam bayang hitam sedang duduk di atas kerusi. Bila dia halakan lampu suluh ke situ, bayang itu dah hilang. Rupa-rupanya, cuma tuala yang tersangkut.",
@@ -563,14 +549,6 @@
       "at": 3.3,
       "volume": 0.5,
       "dur": 2.5
-     },
-     {
-      "src": "suspense",
-      "at": 0,
-      "volume": 0.25,
-      "dur": 8.9,
-      "loop": true,
-      "fade": 1
      }
     ]
    },
@@ -911,51 +889,71 @@
     "voiceSec": 12.72
    },
    {
-    "image": "story/akL01-dorm.png",
-    "w": 941,
-    "h": 1582,
-    "duration": 14.8,
+    "image": "story/ak03b-tidur.png",
+    "w": 1087,
+    "h": 1347,
+    "duration": 9.0,
     "from": {
-     "x": 470,
-     "y": 850,
+     "x": 543,
+     "y": 900,
      "zoom": 1.0
     },
     "to": {
-     "x": 330,
-     "y": 780,
-     "zoom": 2.2
+     "x": 543,
+     "y": 1000,
+     "zoom": 1.25
     },
-    "toAt": 12,
     "fog": 0.1,
-    "eyes": [
+    "glows": [
      {
-      "x": 330,
-      "y": 790,
-      "gap": 26,
-      "at": 9.0,
-      "r": 5
-     }
-    ],
-    "sfx": [
-     {
-      "src": "suspense",
-      "at": 0,
-      "volume": 0.3,
-      "dur": 14.8,
-      "loop": true,
-      "fade": 1
-     },
-     {
-      "src": "impact",
-      "at": 9.2,
-      "volume": 0.5,
-      "dur": 3
+      "x": 100,
+      "y": 330,
+      "r": 160,
+      "color": "#cfd8ff",
+      "flicker": 0
      }
     ],
     "voice": "akn_14.wav",
     "voiceAt": 0.3,
     "say": "Tapi persoalannya... adakah makhluk itu benar-benar berada di luar dorm? Atau sebenarnya, sesuatu dah pun masuk ke dalam bilik, ketika mereka semua sedang tidur?",
     "voiceSec": 14.13
+   },
+   {
+    "image": "story/akC03-makhluk.png",
+    "w": 941,
+    "h": 1672,
+    "duration": 5.8,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 590,
+     "y": 960,
+     "zoom": 2.0
+    },
+    "toAt": 5.5,
+    "fog": 0.05,
+    "shake": {
+     "at": 0,
+     "dur": 0.6,
+     "amp": 18
+    },
+    "sfx": [
+     {
+      "src": "whoosh",
+      "at": 0,
+      "volume": 0.9,
+      "dur": 0.6
+     },
+     {
+      "src": "impact",
+      "at": 0.1,
+      "volume": 0.8,
+      "dur": 3
+     }
+    ]
    },
    {
     "image": "story/ak01-asrama.png",
