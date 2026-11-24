@@ -1,0 +1,75 @@
+{
+  "voiceStyle": "Lelaki bercerita kisah seram macam podcaster Malaysia, tenang, perlahan sikit dan misteri, semula jadi, bukan robot.",
+  "wordsPerSec": 2,
+  "scenes": [
+    {
+      "voiceName": "Achird",
+      "duration": 8.9,
+      "say": "Dua orang sahabat berehat di bilik pertama. Mereka ada dua katil, dan ruang yang cukup untuk berehat.",
+      "voice": "cerita_0.wav",
+      "voiceSec": 8.48
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 1,
+      "say": "Tapi sahabat ketiga mendapat Bilik 378. Bilik itu hanya ada satu katil. Pada mulanya, dia tak rasa apa-apa yang pelik."
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 11,
+      "say": "Malam pertama berlalu seperti biasa. Mereka sangka hotel itu cuma hotel lama yang sunyi. Namun, semuanya berubah pada malam kedua.",
+      "voice": "cerita_2.wav",
+      "voiceSec": 10.58
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 1,
+      "voiceStyle": "Berbisik perlahan dan tegang, macam cerita seram.",
+      "say": "Hampir pukul satu pagi, dia terdengar sesuatu dari bilik air. Tiga ketukan... perlahan."
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 8.1,
+      "voiceStyle": "Tegang, makin laju di hujung ayat.",
+      "say": "Dia cuba periksa. Tapi bilik air itu kosong. Bila dia berpaling, satu bayang hitam sedang berdiri di belakang pintu.",
+      "voice": "cerita_4.wav",
+      "voiceSec": 7.69
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 21.7,
+      "say": "Ketakutan, dia terus berlari ke kaunter hotel dan menceritakan semuanya. Receptionist itu terus terdiam bila mendengar nombor Bilik 378. Bilik itu sebenarnya sudah ditutup tiga bulan, selepas berlaku satu kematian.",
+      "voice": "cerita_5.wav",
+      "voiceSec": 21.28
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 11.1,
+      "say": "Receptionist menunjukkan sekeping gambar penghuni lama bilik itu. Dan dia kenal wajah itu. Itulah wajah yang dilihatnya di dalam bilik air.",
+      "voice": "cerita_6.wav",
+      "voiceSec": 10.69
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 10.3,
+      "say": "Dia segera kembali kepada dua sahabatnya, dan menceritakan semuanya. Malam itu, mereka tak mahu tidur berasingan lagi.",
+      "voice": "cerita_7.wav",
+      "voiceSec": 9.81
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 4.5,
+      "say": "Keesokan paginya, mereka terus tinggalkan hotel itu.",
+      "voice": "cerita_8.wav",
+      "voiceSec": 4.05
+    },
+    {
+      "voiceName": "Achird",
+      "duration": 17.1,
+      "voiceStyle": "Perlahan, berbisik dan menyeramkan.",
+      "say": "Tapi satu persoalan masih belum terjawab. Kalau Bilik 378 sudah ditutup tiga bulan... siapa sebenarnya yang berada di dalamnya malam itu?",
+      "voice": "cerita_9.wav",
+      "voiceSec": 16.62
+    }
+  ]
+}

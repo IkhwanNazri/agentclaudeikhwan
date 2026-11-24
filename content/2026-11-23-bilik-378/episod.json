@@ -1,0 +1,578 @@
+{
+ "podcast": {
+  "duration": 22.3,
+  "lines": [
+   {
+    "who": "host",
+    "from": 1.5,
+    "to": 5.7,
+    "voice": "2026-11-23-bilik-378_0.wav"
+   },
+   {
+    "who": "cohost",
+    "from": 6.1,
+    "to": 8.6,
+    "voice": "2026-11-23-bilik-378_1.wav"
+   },
+   {
+    "who": "host",
+    "from": 9.0,
+    "to": 13.6,
+    "voice": "2026-11-23-bilik-378_2.wav"
+   },
+   {
+    "who": "cohost",
+    "from": 14.0,
+    "to": 17.2,
+    "voice": "story/b378-p4.wav"
+   },
+   {
+    "who": "host",
+    "from": 17.6,
+    "to": 20.9,
+    "voice": "story/b378-p5.wav"
+   }
+  ]
+ },
+ "music": [
+  {
+   "src": "sfx/suspense.wav",
+   "volume": 0.14
+  },
+  {
+   "src": "sfx/ambience.wav",
+   "volume": 0.22
+  }
+ ],
+ "story": {
+  "shots": [
+   {
+    "image": "story/b378-01-hotel.png",
+    "w": 941,
+    "h": 1672,
+    "duration": 16,
+    "from": {
+     "x": 470,
+     "y": 700,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 400,
+     "y": 960,
+     "zoom": 1.28
+    },
+    "fog": 0.6,
+    "glows": [
+     {
+      "x": 430,
+      "y": 738,
+      "r": 95,
+      "flicker": 0.08
+     },
+     {
+      "x": 905,
+      "y": 728,
+      "r": 95,
+      "flicker": 0.06
+     },
+     {
+      "x": 315,
+      "y": 135,
+      "r": 160,
+      "color": "#cfd8ff",
+      "flicker": 0
+     },
+     {
+      "x": 705,
+      "y": 850,
+      "r": 140,
+      "flicker": 0.04
+     }
+    ],
+    "faces": [
+     {
+      "lid": "rgb(237,157,109)",
+      "seed": 0,
+      "eyes": [
+       {
+        "x": 165,
+        "y": 840,
+        "rx": 13,
+        "ry": 11
+       },
+       {
+        "x": 232,
+        "y": 843,
+        "rx": 13,
+        "ry": 11
+       }
+      ]
+     },
+     {
+      "lid": "rgb(240,160,111)",
+      "seed": 37,
+      "eyes": [
+       {
+        "x": 385,
+        "y": 893,
+        "rx": 13,
+        "ry": 10
+       },
+       {
+        "x": 438,
+        "y": 893,
+        "rx": 13,
+        "ry": 10
+       }
+      ]
+     },
+     {
+      "lid": "rgb(240,160,111)",
+      "seed": 71,
+      "eyes": [
+       {
+        "x": 577,
+        "y": 958,
+        "rx": 12,
+        "ry": 10
+       },
+       {
+        "x": 625,
+        "y": 958,
+        "rx": 12,
+        "ry": 10
+       }
+      ]
+     }
+    ],
+    "voice": "story/b378-n01.wav",
+    "voiceAt": 0.6
+   },
+   {
+    "image": "story/b378-02-bilik1.png",
+    "w": 941,
+    "h": 1672,
+    "duration": 10.2,
+    "fog": 0.15,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 470,
+     "y": 950,
+     "zoom": 1.15
+    },
+    "glows": [
+     {
+      "x": 385,
+      "y": 735,
+      "r": 130,
+      "flicker": 0.05
+     }
+    ],
+    "voice": "story/b378-n02.wav",
+    "voiceAt": 0.6
+   },
+   {
+    "image": "story/b378-03-koridor.png",
+    "w": 941,
+    "h": 1672,
+    "duration": 14.4,
+    "fog": 0.15,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 700,
+     "y": 560,
+     "zoom": 1.35
+    },
+    "glows": [
+     {
+      "x": 455,
+      "y": 300,
+      "r": 110,
+      "flicker": 0.08
+     },
+     {
+      "x": 170,
+      "y": 610,
+      "r": 60,
+      "flicker": 0.06
+     }
+    ],
+    "voice": "story/b378-n03.wav",
+    "voiceAt": 0.6,
+    "sfx": [
+     {
+      "src": "creak",
+      "at": 11.5,
+      "dur": 2,
+      "volume": 0.45
+     }
+    ]
+   },
+   {
+    "image": "story/b378-04-bilik378A.png",
+    "w": 941,
+    "h": 1672,
+    "duration": 12.4,
+    "fog": 0.1,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 800,
+     "y": 820,
+     "zoom": 1.25
+    },
+    "glows": [
+     {
+      "x": 80,
+      "y": 870,
+      "r": 130,
+      "flicker": 0.07
+     }
+    ],
+    "voice": "story/b378-n04.wav",
+    "voiceAt": 0.6,
+    "sfx": [
+     {
+      "src": "clock",
+      "at": 0,
+      "dur": 12.4,
+      "volume": 0.3,
+      "loop": true,
+      "fade": 0.8
+     },
+     {
+      "src": "impact",
+      "at": 10.6,
+      "dur": 2.5,
+      "volume": 0.4
+     }
+    ]
+   },
+   {
+    "image": "story/b378-04-bilik378A.png",
+    "w": 941,
+    "h": 1672,
+    "duration": 14.5,
+    "fog": 0.1,
+    "from": {
+     "x": 600,
+     "y": 900,
+     "zoom": 1.12
+    },
+    "to": {
+     "x": 700,
+     "y": 760,
+     "zoom": 1.3
+    },
+    "alt": {
+     "image": "story/b378-04-bilik378B.png",
+     "at": 11.6,
+     "flash": true
+    },
+    "shake": {
+     "at": 11.6,
+     "dur": 0.8,
+     "amp": 16
+    },
+    "glows": [
+     {
+      "x": 80,
+      "y": 870,
+      "r": 130,
+      "flicker": 0.12
+     }
+    ],
+    "voice": "story/b378-n05.wav",
+    "voiceAt": 0.6,
+    "sfx": [
+     {
+      "src": "clock",
+      "at": 0,
+      "dur": 9,
+      "volume": 0.25,
+      "loop": true,
+      "fade": 0.5
+     },
+     {
+      "src": "knock",
+      "at": 9.2,
+      "dur": 0.5,
+      "volume": 1
+     },
+     {
+      "src": "knock",
+      "at": 10.2,
+      "dur": 0.5,
+      "volume": 1
+     },
+     {
+      "src": "knock",
+      "at": 11.2,
+      "dur": 0.5,
+      "volume": 1
+     },
+     {
+      "src": "impact",
+      "at": 11.6,
+      "dur": 2.5,
+      "volume": 0.6
+     }
+    ]
+   },
+   {
+    "image": "story/b378-05-bilikairA.png",
+    "w": 599,
+    "h": 1312,
+    "duration": 11,
+    "fog": 0.2,
+    "from": {
+     "x": 300,
+     "y": 656,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 300,
+     "y": 560,
+     "zoom": 1.15
+    },
+    "alt": {
+     "image": "story/b378-05-bilikairB.png",
+     "at": 7.9,
+     "flash": true
+    },
+    "shake": {
+     "at": 7.9,
+     "dur": 0.7,
+     "amp": 14
+    },
+    "voice": "story/b378-n06.wav",
+    "voiceAt": 0.4,
+    "sfx": [
+     {
+      "src": "creak",
+      "at": 0.3,
+      "dur": 2,
+      "volume": 0.45
+     },
+     {
+      "src": "whoosh",
+      "at": 7.6,
+      "dur": 1.2,
+      "volume": 0.7
+     },
+     {
+      "src": "impact",
+      "at": 7.9,
+      "dur": 3,
+      "volume": 0.9
+     }
+    ]
+   },
+   {
+    "image": "story/b378-06-kaunterA.png",
+    "w": 1199,
+    "h": 656,
+    "duration": 23,
+    "fog": 0.05,
+    "from": {
+     "x": 330,
+     "y": 330,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 930,
+     "y": 330,
+     "zoom": 1.05
+    },
+    "alt": {
+     "image": "story/b378-06-kaunterB.png",
+     "at": 9.4,
+     "flash": false
+    },
+    "shake": {
+     "at": 9.4,
+     "dur": 0.5,
+     "amp": 8
+    },
+    "glows": [
+     {
+      "x": 690,
+      "y": 260,
+      "r": 120,
+      "flicker": 0.05
+     }
+    ],
+    "voice": "story/b378-n07.wav",
+    "voiceAt": 0.6,
+    "sfx": [
+     {
+      "src": "impact",
+      "at": 9.4,
+      "dur": 3,
+      "volume": 0.55
+     }
+    ],
+    "toAt": 8.8
+   },
+   {
+    "image": "story/b378-07-gambar.png",
+    "w": 1199,
+    "h": 1312,
+    "duration": 12.0,
+    "fog": 0.05,
+    "from": {
+     "x": 600,
+     "y": 656,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 640,
+     "y": 420,
+     "zoom": 1.45
+    },
+    "voice": "story/b378-n08.wav",
+    "voiceAt": 0.5,
+    "sfx": [
+     {
+      "src": "whoosh",
+      "at": 11.5,
+      "dur": 1.2,
+      "volume": 0.6
+     }
+    ]
+   },
+   {
+    "image": "story/b378-05-bilikairB.png",
+    "w": 599,
+    "h": 1312,
+    "duration": 1.6,
+    "fog": 0.2,
+    "from": {
+     "x": 380,
+     "y": 400,
+     "zoom": 1.5
+    },
+    "to": {
+     "x": 380,
+     "y": 380,
+     "zoom": 1.6
+    },
+    "shake": {
+     "at": 0,
+     "dur": 1.0,
+     "amp": 18
+    },
+    "sfx": [
+     {
+      "src": "impact",
+      "at": 0,
+      "dur": 1.6,
+      "volume": 1
+     }
+    ]
+   },
+   {
+    "image": "story/b378-08-bertiga.png",
+    "w": 1199,
+    "h": 1312,
+    "duration": 11.5,
+    "fog": 0.1,
+    "from": {
+     "x": 600,
+     "y": 656,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 560,
+     "y": 600,
+     "zoom": 1.1
+    },
+    "glows": [
+     {
+      "x": 100,
+      "y": 470,
+      "r": 140,
+      "flicker": 0.1
+     }
+    ],
+    "voice": "story/b378-n09.wav",
+    "voiceAt": 0.6
+   },
+   {
+    "image": "story/b378-09-pagi.png",
+    "w": 1199,
+    "h": 1312,
+    "duration": 6.0,
+    "fog": 0.2,
+    "from": {
+     "x": 560,
+     "y": 700,
+     "zoom": 1.05
+    },
+    "to": {
+     "x": 620,
+     "y": 700,
+     "zoom": 1.0
+    },
+    "glows": [
+     {
+      "x": 60,
+      "y": 260,
+      "r": 220,
+      "color": "#ffe6a8",
+      "flicker": 0
+     }
+    ],
+    "voice": "story/b378-n10.wav",
+    "voiceAt": 0.5
+   },
+   {
+    "image": "story/b378-10-pintu.png",
+    "w": 1199,
+    "h": 1312,
+    "duration": 21.0,
+    "fog": 0.1,
+    "from": {
+     "x": 650,
+     "y": 656,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 470,
+     "y": 700,
+     "zoom": 1.5
+    },
+    "voice": "story/b378-n11.wav",
+    "voiceAt": 0.6,
+    "endCard": {
+     "at": 17.8
+    },
+    "sfx": [
+     {
+      "src": "door_close",
+      "at": 17.6,
+      "dur": 1,
+      "volume": 0.9
+     },
+     {
+      "src": "impact",
+      "at": 18.7,
+      "dur": 2.3,
+      "volume": 0.7
+     }
+    ]
+   }
+  ]
+ }
+}

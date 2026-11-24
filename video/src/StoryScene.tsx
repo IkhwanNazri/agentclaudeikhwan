@@ -9,9 +9,10 @@ export type BlinkFace = { eyes: Ell[]; lid: string; seed?: number };
 export type SfxCue = { src: string; at: number; dur?: number; volume?: number; loop?: boolean; fade?: number };
 export type Shot = {
   image: string; w: number; h: number; duration: number;
-  from?: Cam; to?: Cam; glows?: Glow[]; faces?: BlinkFace[]; fog?: number;
+  from?: Cam; to?: Cam; toAt?: number; // toAt: saat kamera sampai 'to' (lalai: hujung syot) glows?: Glow[]; faces?: BlinkFace[]; fog?: number;
   alt?: { image: string; at: number; flash?: boolean }; // tukar ke versi B pada saat 'at'
   voice?: string; voiceAt?: number; sfx?: SfxCue[]; shake?: { at: number; dur: number; amp?: number };
+  endCard?: { at: number; logo?: string }; // gelap perlahan + logo
 };
 export type StoryProps = { shots: Shot[] };
 
@@ -23,7 +24,7 @@ const ShotView = ({ shot }: { shot: Shot }) => {
   const frame = useCurrentFrame();
   const { width: W, height: H, fps } = useVideoConfig();
   const t = frame / fps;
-  const p = ease(interpolate(t, [0, shot.duration], [0, 1], clamp));
+  const p = ease(interpolate(t, [0, shot.toAt ?? shot.duration], [0, 1], clamp));
   const a = shot.from ?? { x: shot.w / 2, y: shot.h / 2, zoom: 1 };
   const b = shot.to ?? { x: a.x, y: a.y, zoom: a.zoom * 1.08 };
   const base = Math.max(W / shot.w, H / shot.h);
@@ -77,6 +78,11 @@ const ShotView = ({ shot }: { shot: Shot }) => {
       })}
       <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 45%, transparent 50%, rgba(0,0,0,0.6) 100%)' }} />
       <AbsoluteFill style={{ backgroundColor: '#fff', opacity: flash * 0.85 }} />
+      {shot.endCard ? (
+        <AbsoluteFill style={{ backgroundColor: '#000', opacity: interpolate(t, [shot.endCard.at, shot.endCard.at + 1], [0, 1], clamp), alignItems: 'center', justifyContent: 'center' }}>
+          <Img src={staticFile(shot.endCard.logo ?? 'placthinc2/logo.png')} style={{ width: 760, opacity: interpolate(t, [shot.endCard.at + 0.9, shot.endCard.at + 1.6], [0, 1], clamp), transform: `scale(${interpolate(t, [shot.endCard.at + 0.9, shot.endCard.at + 3], [0.92, 1.02], clamp)})` }} />
+        </AbsoluteFill>
+      ) : null}
       {shot.voice ? <Sequence from={Math.round((shot.voiceAt ?? 0.4) * fps)}><Audio src={staticFile(shot.voice)} /></Sequence> : null}
       {(shot.sfx ?? []).map((x, i) => {
         const len = Math.round((x.dur ?? 4) * fps);

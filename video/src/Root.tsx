@@ -7,6 +7,8 @@ import demo from '../../content/contoh-demo/scenes.json';
 import { ImageScene, type ImageSceneProps } from './ImageScene';
 import scene1 from '../../content/2026-11-15-bilik-378/scene1.json';
 import { CharacterSheet } from './paper/CharacterSheet';
+import { Episode, episodeDuration, type EpisodeProps } from './Episode';
+import episod from '../../content/2026-11-23-bilik-378/episod.json';
 import { StoryScene, storyDuration, type StoryProps } from './StoryScene';
 import storyDemo from '../../content/2026-11-23-bilik-378/cerita/story.json';
 import { RefPodcast, type RefPodcastProps } from './RefPodcast';
@@ -32,6 +34,9 @@ export const RemotionRoot = () => (
   <Composition id="PaperShow" component={PaperShow} width={spec.width} height={spec.height} fps={spec.fps}
     durationInFrames={paperDuration(paperDemo as PaperShowProps, spec.fps)} defaultProps={paperDemo as PaperShowProps}
     calculateMetadata={({ props }) => ({ durationInFrames: paperDuration(props, spec.fps) })} />
+  <Composition id="Episode" component={Episode} width={spec.width} height={spec.height} fps={spec.fps}
+    durationInFrames={episodeDuration(episod as EpisodeProps, spec.fps)} defaultProps={episod as EpisodeProps}
+    calculateMetadata={({ props }) => ({ durationInFrames: episodeDuration(props, spec.fps) })} />
   <Composition id="StoryScene" component={StoryScene} width={spec.width} height={spec.height} fps={spec.fps}
     durationInFrames={storyDuration(storyDemo as StoryProps, spec.fps)} defaultProps={storyDemo as StoryProps}
     calculateMetadata={({ props }) => ({ durationInFrames: storyDuration(props, spec.fps) })} />
