@@ -1,0 +1,10 @@
+{
+  "voiceStyle": "Lelaki bercerita kisah seram macam podcaster Malaysia, tenang, perlahan sikit dan misteri, semula jadi, bukan robot.",
+  "scenes": [
+    { "say": "Akhirnya, dia jumpa kubur nombor tujuh belas. Dia letak makanan di sebelah batu nisan, macam yang diminta.", "voiceName": "Achird", "duration": 12 },
+    { "say": "Terima kasih, bang... dah lama saya lapar.", "voiceName": "Achird", "voiceStyle": "Suara lelaki tua, serak, perlahan, berbisik dan menyeramkan.", "duration": 7 },
+    { "say": "Amir terkaku. Wajah pakcik itu sama dengan gambar profil pelanggan. Bila dia tunduk ambil semula beg itu, lelaki tua itu sudah hilang. Beg makanan itu terasa berat... dan basah.", "voiceName": "Achird", "duration": 20 },
+    { "say": "Dia buka beg itu. Yang ada di dalamnya... bukan lagi nasi goreng.", "voiceName": "Achird", "duration": 9 },
+    { "say": "Amir lari, tinggalkan segalanya. Tapi malam itu, telefonnya berbunyi lagi. Pesanan baharu. Bang, boleh hantar lagi satu? Lokasi penghantaran... kubur nombor tujuh belas.", "voiceName": "Achird", "duration": 20 }
+  ]
+}
