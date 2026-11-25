@@ -1,0 +1,40 @@
+{
+ "duration": 27.17,
+ "lines": [
+  {
+   "who": "host",
+   "from": 1.5,
+   "to": 7.02,
+   "voice": "2026-11-24-pesanan-terakhir_0.wav",
+   "say": "Kau pernah terima order makanan tengah malam... tapi alamatnya dekat kubur?"
+  },
+  {
+   "who": "cohost",
+   "from": 7.42,
+   "to": 12.5,
+   "voice": "2026-11-24-pesanan-terakhir_1.wav",
+   "say": "Eh, seriuslah? Siapa pula yang order dari kubur?"
+  },
+  {
+   "who": "host",
+   "from": 12.9,
+   "to": 18.91,
+   "voice": "2026-11-24-pesanan-terakhir_2.wav",
+   "say": "Malam ni aku nak cerita kisah seorang rider. Tajuknya, Pesanan Terakhir."
+  },
+  {
+   "who": "cohost",
+   "from": 19.31,
+   "to": 22.52,
+   "voice": "2026-11-24-pesanan-terakhir_3.wav",
+   "say": "Sebelum kita mulakan cerita, jangan lupa follow."
+  },
+  {
+   "who": "host",
+   "from": 22.92,
+   "to": 25.77,
+   "voice": "2026-11-24-pesanan-terakhir_4.wav",
+   "say": "Baik. Sekarang, kita mulakan kisahnya."
+  }
+ ]
+}

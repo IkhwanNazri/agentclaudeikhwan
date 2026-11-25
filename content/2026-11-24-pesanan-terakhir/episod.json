@@ -1,0 +1,452 @@
+{
+ "podcast": {
+  "duration": 27.17,
+  "lines": [
+   {
+    "who": "host",
+    "from": 1.5,
+    "to": 7.02,
+    "voice": "2026-11-24-pesanan-terakhir_0.wav",
+    "say": "Kau pernah terima order makanan tengah malam... tapi alamatnya dekat kubur?"
+   },
+   {
+    "who": "cohost",
+    "from": 7.42,
+    "to": 12.5,
+    "voice": "2026-11-24-pesanan-terakhir_1.wav",
+    "say": "Eh, seriuslah? Siapa pula yang order dari kubur?"
+   },
+   {
+    "who": "host",
+    "from": 12.9,
+    "to": 18.91,
+    "voice": "2026-11-24-pesanan-terakhir_2.wav",
+    "say": "Malam ni aku nak cerita kisah seorang rider. Tajuknya, Pesanan Terakhir."
+   },
+   {
+    "who": "cohost",
+    "from": 19.31,
+    "to": 22.52,
+    "voice": "2026-11-24-pesanan-terakhir_3.wav",
+    "say": "Sebelum kita mulakan cerita, jangan lupa follow."
+   },
+   {
+    "who": "host",
+    "from": 22.92,
+    "to": 25.77,
+    "voice": "2026-11-24-pesanan-terakhir_4.wav",
+    "say": "Baik. Sekarang, kita mulakan kisahnya."
+   }
+  ]
+ },
+ "music": [
+  {
+   "src": "sfx/suspense.wav",
+   "volume": 0.14
+  },
+  {
+   "src": "sfx/ambience.wav",
+   "volume": 0.22
+  }
+ ],
+ "story": {
+  "shots": [
+   {
+    "image": "story/pt-01-tepijalan.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 8.0,
+    "from": {
+     "x": 470,
+     "y": 900,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 470,
+     "y": 780,
+     "zoom": 1.15
+    },
+    "fog": 0.3,
+    "glows": [
+     {
+      "x": 515,
+      "y": 160,
+      "r": 120,
+      "flicker": 0.08
+     }
+    ],
+    "voice": "pt-cerita_0.wav",
+    "voiceAt": 0.3,
+    "voiceSec": 14.02,
+    "say": "Pukul dua belas empat puluh tujuh tengah malam. Amir, seorang rider food, sedang berehat di tepi jalan. Tiba-tiba, telefonnya berbunyi. Satu pesanan baharu masuk. Tanpa fikir panjang, dia terus terima."
+   },
+   {
+    "image": "story/pt-02-telefon.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 6.9,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 470,
+     "y": 700,
+     "zoom": 1.12
+    }
+   },
+   {
+    "image": "story/pt-03-jalan.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 11.0,
+    "from": {
+     "x": 470,
+     "y": 900,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 430,
+     "y": 1000,
+     "zoom": 1.2
+    },
+    "fog": 0.6,
+    "glows": [
+     {
+      "x": 545,
+      "y": 820,
+      "r": 90,
+      "flicker": 0.05
+     }
+    ],
+    "voice": "pt-cerita_1.wav",
+    "voiceAt": 0.2,
+    "voiceSec": 10.49,
+    "say": "Navigasi bawa dia melalui jalan kampung yang sunyi dan gelap. Kabus mula turun. Tiada satu pun kenderaan lain di jalan itu."
+   },
+   {
+    "image": "story/pt-04-kubur.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 7.5,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 640,
+     "y": 780,
+     "zoom": 1.25
+    },
+    "fog": 0.5,
+    "glows": [
+     {
+      "x": 440,
+      "y": 1650,
+      "r": 110,
+      "flicker": 0.05
+     }
+    ],
+    "voice": "pt-cerita_2.wav",
+    "voiceAt": 0.3,
+    "voiceSec": 22.97,
+    "say": "Akhirnya dia sampai. Tapi pin lokasi pelanggan... betul-betul di tengah tanah perkuburan lama. Mesej masuk. Bang, dah sampai ke? Amir balas, Bang, lokasi ni kubur. Betul ke alamat? Pelanggan jawab, Betul bang. Jalan masuk sikit. Kubur nombor tujuh belas."
+   },
+   {
+    "image": "story/pt-05-chat.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 16.4,
+    "from": {
+     "x": 470,
+     "y": 560,
+     "zoom": 1.3
+    },
+    "to": {
+     "x": 470,
+     "y": 1150,
+     "zoom": 1.3
+    },
+    "toAt": 15,
+    "noCapsFrom": 0
+   },
+   {
+    "image": "story/pt-06-masuk.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 8.5,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 520,
+     "y": 760,
+     "zoom": 1.18
+    },
+    "fog": 0.5,
+    "glows": [
+     {
+      "x": 555,
+      "y": 650,
+      "r": 70,
+      "flicker": 0.1
+     }
+    ],
+    "voice": "pt-cerita_3.wav",
+    "voiceAt": 0.2,
+    "voiceSec": 20.25,
+    "say": "Amir beranikan diri masuk, sambil bawa beg makanan. Telefon berbunyi lagi. Saya nampak abang dah. Dia toleh ke belakang. Tiada sesiapa. Mesej seterusnya masuk. Letak makanan sebelah batu nisan tu, bang."
+   },
+   {
+    "image": "story/pt-07-toleh.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 12.6,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 540,
+     "y": 620,
+     "zoom": 1.22
+    },
+    "fog": 0.4,
+    "sfx": [
+     {
+      "src": "whoosh",
+      "at": 0.1,
+      "dur": 0.5,
+      "volume": 0.7
+     },
+     {
+      "src": "impact",
+      "at": 0.2,
+      "dur": 2.5,
+      "volume": 0.35
+     }
+    ]
+   },
+   {
+    "image": "story/pt-08-nisan.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 9.5,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 640,
+     "y": 820,
+     "zoom": 1.2
+    },
+    "fog": 0.3,
+    "voice": "pt-cerita2_0.wav",
+    "voiceAt": 0.3,
+    "voiceSec": 8.92,
+    "say": "Akhirnya, dia jumpa kubur nombor tujuh belas. Dia letak makanan di sebelah batu nisan, macam yang diminta."
+   },
+   {
+    "image": "story/pt-09-pakcik.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 4.9,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 520,
+     "y": 600,
+     "zoom": 1.25
+    },
+    "fog": 0.2,
+    "sfx": [
+     {
+      "src": "whoosh",
+      "at": 0,
+      "dur": 0.5,
+      "volume": 0.6
+     },
+     {
+      "src": "impact",
+      "at": 0.1,
+      "dur": 3,
+      "volume": 0.45
+     }
+    ],
+    "voice": "pt-cerita2_1.wav",
+    "voiceAt": 0.4,
+    "voiceSec": 4.11,
+    "say": "Terima kasih, bang... dah lama saya lapar."
+   },
+   {
+    "image": "story/pt-09-pakcik.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 6.6,
+    "from": {
+     "x": 520,
+     "y": 600,
+     "zoom": 1.25
+    },
+    "to": {
+     "x": 500,
+     "y": 470,
+     "zoom": 1.5
+    },
+    "fog": 0.2,
+    "voice": "pt-cerita2_2.wav",
+    "voiceAt": 0.2,
+    "voiceSec": 13.97,
+    "say": "Amir terkaku. Wajah pakcik itu sama dengan gambar profil pelanggan. Bila dia tunduk ambil semula beg itu, lelaki tua itu sudah hilang. Beg makanan itu terasa berat... dan basah."
+   },
+   {
+    "image": "story/pt-10-beg.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 8.4,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 560,
+     "y": 1000,
+     "zoom": 1.2
+    },
+    "fog": 0.2,
+    "sfx": [
+     {
+      "src": "clock",
+      "at": 0,
+      "dur": 8.4,
+      "volume": 0.25,
+      "loop": true,
+      "fade": 0.5
+     }
+    ]
+   },
+   {
+    "image": "story/pt-10-beg.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 8.5,
+    "from": {
+     "x": 560,
+     "y": 1000,
+     "zoom": 1.2
+    },
+    "to": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "toAt": 4.3,
+    "alt": {
+     "image": "story/pt-11-buka.png",
+     "at": 4.4,
+     "flash": true
+    },
+    "shake": {
+     "at": 4.4,
+     "dur": 0.9,
+     "amp": 16
+    },
+    "sfx": [
+     {
+      "src": "creak",
+      "at": 0.3,
+      "dur": 1,
+      "volume": 0.4
+     },
+     {
+      "src": "whoosh",
+      "at": 4.2,
+      "dur": 0.5,
+      "volume": 0.7
+     },
+     {
+      "src": "impact",
+      "at": 4.4,
+      "dur": 3,
+      "volume": 1
+     },
+     {
+      "src": "scream",
+      "at": 4.5,
+      "dur": 1.2,
+      "volume": 0.5
+     }
+    ],
+    "voice": "pt-cerita2_3.wav",
+    "voiceAt": 0.2,
+    "voiceSec": 6.05,
+    "say": "Dia buka beg itu. Yang ada di dalamnya... bukan lagi nasi goreng."
+   },
+   {
+    "image": "story/pt-12A-gelap.png",
+    "w": 941,
+    "h": 1670,
+    "duration": 27.47,
+    "from": {
+     "x": 470,
+     "y": 836,
+     "zoom": 1.0
+    },
+    "to": {
+     "x": 470,
+     "y": 760,
+     "zoom": 1.15
+    },
+    "alt": {
+     "image": "story/pt-12B-notifikasi.png",
+     "at": 8.0,
+     "flash": false
+    },
+    "shake": {
+     "at": 8.0,
+     "dur": 0.5,
+     "amp": 8
+    },
+    "sfx": [
+     {
+      "src": "run",
+      "at": 0,
+      "dur": 2.4,
+      "volume": 0.7
+     },
+     {
+      "src": "impact",
+      "at": 8.0,
+      "dur": 3,
+      "volume": 0.6
+     },
+     {
+      "src": "door_close",
+      "at": 24.369999999999997,
+      "dur": 1,
+      "volume": 0.8
+     }
+    ],
+    "endCard": {
+     "at": 24.47
+    },
+    "voice": "pt-cerita2_4.wav",
+    "voiceAt": 0.3,
+    "voiceSec": 22.97,
+    "say": "Amir lari, tinggalkan segalanya. Tapi malam itu, telefonnya berbunyi lagi. Pesanan baharu. Bang, boleh hantar lagi satu? Lokasi penghantaran... kubur nombor tujuh belas.",
+    "noCapsFrom": 8.0
+   }
+  ]
+ }
+}

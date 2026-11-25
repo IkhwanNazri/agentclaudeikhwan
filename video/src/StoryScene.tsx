@@ -17,6 +17,7 @@ export type Shot = {
   voice?: string; voiceAt?: number; say?: string; voiceSec?: number; sfx?: SfxCue[]; shake?: { at: number; dur: number; amp?: number };
   endCard?: { at: number; logo?: string }; // gelap perlahan + logo
   captions?: { text: string; at: number; sec: number }[]; // sari kata tanpa suara (cth TOK... TOK...)
+  noCapsFrom?: number; // sembunyi sari kata dari saat ini hingga hujung syot (teks dah ada atas skrin, cth chat telefon)
 };
 export type StoryProps = { shots: Shot[] };
 
@@ -115,10 +116,27 @@ const cuesOf = (shots: Shot[], fps: number): Cue[] => {
   return out.sort((x, y) => x.from - y.from);
 };
 
+const hiddenRanges = (shots: Shot[], fps: number): [number, number][] => {
+  const out: [number, number][] = [];
+  let start = 0;
+  for (const s of shots) {
+    const d = Math.round(s.duration * fps);
+    if (s.noCapsFrom !== undefined) out.push([start + Math.round(s.noCapsFrom * fps), start + d]);
+    start += d;
+  }
+  return out;
+};
+
+const CapGate = ({ offset, ranges, children }: { offset: number; ranges: [number, number][]; children: React.ReactNode }) => {
+  const f = useCurrentFrame() + offset;
+  return ranges.some(([a, b]) => f >= a && f < b) ? null : <>{children}</>;
+};
+
 export const StoryScene = ({ shots }: StoryProps) => {
   const { fps } = useVideoConfig();
   const total = storyDuration({ shots }, fps);
   const cues = cuesOf(shots, fps);
+  const hidden = hiddenRanges(shots, fps);
   let start = 0;
   return (
     <AbsoluteFill style={{ backgroundColor: '#000' }}>
@@ -137,7 +155,7 @@ export const StoryScene = ({ shots }: StoryProps) => {
             {c.voice ? <Audio src={staticFile(c.voice)} /> : null}
             {c.text ? (
               <Sequence durationInFrames={len}>
-                <Captions text={c.text} sec={c.sec} hold={len / fps} />
+                <CapGate offset={c.from} ranges={hidden}><Captions text={c.text} sec={c.sec} hold={len / fps} /></CapGate>
               </Sequence>
             ) : null}
           </Sequence>
